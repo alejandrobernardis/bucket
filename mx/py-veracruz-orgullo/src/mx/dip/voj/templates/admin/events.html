@@ -1,0 +1,327 @@
+{% extends '../master.html' %}
+{% block content_container %}
+{% if events %}
+<div class="container">
+    <div class="module white">
+        <div class="module-header clearfix">
+            <h2 class="module-title pull-left">Events (#{{ total_events }}):</h2>
+            <div class="pull-right">
+                <div class="btn-group">
+                    <button class="js-button-add btn btn-success"><i class="icon-plus icon-white"></i>&nbsp;Add Event</button>
+                    <button class="js-button-deploy btn btn-warning"><i class="icon-arrow-up icon-white"></i>&nbsp;Deploy</button>
+                </div>
+            </div>
+        </div>
+        <div class="module-top-pager">
+            <ul class="pager">
+                <li class="previous{% if page_number == 1 %} disabled{% end %}"><a href="?page={{ page_prev }}">Older</a></li>
+                <li><span>{{ page_number }} of {{ page_total }}</span></li>
+                <li class="next{% if page_number == page_total %} disabled{% end %}"><a href="?page={{ page_next }}">Newer</a></li>
+            </ul>
+        </div>
+        <div class="module-content">
+            <table class="table table-striped table-condensed table-hover">
+                <thead>
+                <tr>
+                    <th width="" class="tc">Year</th>
+                    <th width="" class="tc">Month</th>
+                    <th width="" class="tc">Day</th>
+                    <th width="">Title</th>
+                    <th width="">Place</th>
+                    <th width="">Created</th>
+                    <th width="">Enabled</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% from com.ak.common.utils import datetime_to_str %}
+                {% for event in events %}
+                <tr id="{{ event.id }}">
+                    <td class="tc">{{ event.date.year }}</td>
+                    <td class="tc">{{ event.get_literal_month() }}</td>
+                    <td class="tc">{{ event.date.day }}</td>
+                    <td>{{ event.title }}</td>
+                    <td>{{ event.place }}</td>
+                    <td>{{ datetime_to_str(event.created) }}</td>
+                    <td>{% if event.enabled %}<span class="label label-success">enabled</span>{% else %}<span class="label">disabled</span>{% end %}</td>
+                </tr>
+                {% end %}
+                </tbody>
+            </table>
+        </div>
+        <div class="module-footer">
+            <ul class="pager">
+                <li class="previous{% if page_number == 1 %} disabled{% end %}"><a href="?page={{ page_prev }}">Older</a></li>
+                <li><span>{{ page_number }} of {{ page_total }}</span></li>
+                <li class="next{% if page_number == page_total %} disabled{% end %}"><a href="?page={{ page_next }}">Newer</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% else %}
+<div class="container">
+    <div class="hero-unit">
+        <h1>Not Found</h1>
+        <p>{{message}}</p>
+        <button class="js-button-add btn btn-success btn-large"><i class="icon-plus icon-white"></i>&nbsp;Add Event</button>
+        <button class="js-button-deploy btn btn-warning btn-large"><i class="icon-arrow-up icon-white"></i>&nbsp;Reset Deploy</button>
+    </div>
+</div>
+{% end %}
+{% end %}
+
+
+{% block body_html %}
+<div id="js-modal-form" class="modal hide fade">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3 class="js-title">Event</h3>
+    </div>
+    <div class="js-alert modal-alert"></div>
+    <div class="modal-body">
+        {% include '../forms/register_event.html' %}
+    </div>
+    <div class="modal-footer">
+        <a href="#" class="js-button-delete btn btn-danger pull-left" data-action="delete">Delete</a>
+        <a href="#" class="js-button-cancel btn" data-action="cancel">Cancel</a>
+        <a href="#" class="js-button-update btn btn-success" data-action="update">Update</a>
+    </div>
+</div>
+<div id="js-modal-deploy" class="modal hide fade">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3 class="js-title">Deploy</h3>
+    </div>
+    <div class="js-alert modal-alert"></div>
+    <div class="modal-body">
+        {% include '../forms/events_deploy.html' %}
+    </div>
+    <div class="modal-footer">
+        <a href="#" class="js-button-cancel btn" data-action="cancel">Cancel</a>
+        <a href="#" class="js-button-dodeploy btn btn-success" data-action="deploy">Deploy</a>
+    </div>
+</div>
+{% end %}
+
+{% block body_script_init %}
+<script src="{{ static_url('js/jquery.upload.min.js') }}"></script>
+<script type="text/javascript">
+    window.user_list = {% raw events_list %};
+    window.page_number = {% raw page_number %};
+
+    $(function(){
+        var js_form = $('#js-form'),
+            js_modal = $('#js-modal-form'),
+            js_form_deploy = $('#js-form-deploy'),
+            js_modal_deploy = $('#js-modal-deploy'),
+            js_uid = $('#uid'),
+            js_token = $('#token'),
+            js_url_id = $('#url_id'),
+            js_image_id = $('#image_id'),
+            js_date_day = $('#date_day'),
+            js_date_month = $('#date_month'),
+            js_date_year = $('#date_year'),
+            js_title = $('#title'),
+            js_place = $('#place'),
+            js_phone = $('#phone'),
+            js_enabled = $('#enabled'),
+            js_url_title = $('#url_title'),
+            js_url_value = $('#url_value'),
+            js_track_category = $('#track_category'),
+            js_track_action = $('#track_action'),
+            js_track_label = $('#track_label'),
+            js_image_alt = $('#image_alt'),
+            js_image_src = $('#image_src'),
+            js_image_percentage = $('.js-image-percentage'),
+            js_button_cancel = $('.js-button-cancel'),
+            js_button_delete = $('.js-button-delete'),
+            js_button_update = $('.js-button-update'),
+            js_button_dodeploy = $('.js-button-dodeploy'),
+            js_deploy_year = $('#date_year_select'),
+            js_deploy_month = $('#date_month_select');
+
+        var get_date = function(){
+          var date =  js_date_year.val()
+                   + '/' + js_date_month.val()
+                   + '/' + js_date_day.val();
+          return date.match(/^\d{4}\/\d{1,2}\/\d{1,2}$/) ? date : '';
+        };
+
+        var ajax_deploy = function(){
+            var aks = new AKServer();
+            aks.post('/a/events/deploy',{
+                year:js_deploy_year.val()||0,
+                month:js_deploy_month.val()||0
+            }, function(json){});
+        };
+
+        var ajax_delete_item = function(){
+            var aks = new AKServer();
+            aks.post('/a/event/delete',{
+                uid:js_uid.val(),
+                token:js_token.val(),
+                page_number:window.page_number
+            }, function(json){
+                location.href = (json.response) ? '?page=' + json.response.page_number : '';
+            });
+        };
+
+        var ajax_update_item = function(){
+            var aks = new AKServer();
+            aks.post('/a/event/update',{
+                uid:js_uid.val(),
+                token:js_token.val(),
+                date:get_date(),
+                title:js_title.val(),
+                place:js_place.val(),
+                phone:js_phone.val(),
+                enabled:js_enabled.attr('checked')?1:'',
+                url_id:js_url_id.val(),
+                url_title:js_url_title.val(),
+                url_value:js_url_value.val(),
+                track_category:js_track_category.val(),
+                track_action:js_track_action.val(),
+                track_label:js_track_label.val(),
+                image_id:js_image_id.val(),
+                image_alt:js_image_alt.val(),
+                image_src:js_image_src.val(),
+                page_number:window.page_number
+            }, function(json){
+                location.href = '?page=' + window.page_number;
+            });
+        };
+
+        var ajax_add_item = function(){
+            var aks = new AKServer();
+            aks.post('/a/event/add', {
+                uid:'not-id',
+                token:'not-id',
+                date:get_date(),
+                title:js_title.val(),
+                place:js_place.val(),
+                phone:js_phone.val(),
+                enabled:js_enabled.attr('checked')?1:'',
+                url_title:js_url_title.val(),
+                url_value:js_url_value.val(),
+                track_category:js_track_category.val(),
+                track_action:js_track_action.val(),
+                track_label:js_track_label.val(),
+                image_alt:js_image_alt.val(),
+                image_src:js_image_src.val(),
+                page_number:window.page_number
+            }, function(json){
+                location.href = '?page=' + window.page_number;
+            });
+        };
+
+        $('#js-modal-form,#js-modal-deploy').on('show', function(){
+            $('body').css('overflow','hidden');
+        }).on('hide', function(){
+            reset_form_ids();
+            js_form.formReset();
+            js_form_deploy.formReset();
+            js_enabled.attr('checked',false);
+            new AKAlert().remove();
+            $('body').css('overflow','auto');
+        });
+
+        var reset_form_ids = function(){
+            var list = [js_uid,js_token,js_url_id,js_image_id];
+            while(list.length){
+                list.pop().val('not-id');
+            }
+        };
+
+        $('tr').bind('click', function (e) {
+            var date, obj = window.user_list[this.id];
+            if (obj) {
+                js_uid.val(this.id);
+                js_token.val(obj.token);
+                date = obj.date.replace(/(\s+|(00:?))+/gi, '').split('-');
+                js_date_day.val(date[2]);
+                js_date_month.val(date[1]);
+                js_date_year.val(date[0]);
+                js_title.val(obj.title);
+                js_place.val(obj.place);
+                js_phone.val(obj.phone);
+                js_enabled.attr('checked',obj.enabled);
+                if(obj.url){
+                    js_url_id.val(obj.url.id);
+                    js_url_title.val(obj.url.title);
+                    js_url_value.val(obj.url.value);
+                    js_track_category.val(obj.url.track.category);
+                    js_track_action.val(obj.url.track.action);
+                    js_track_label.val(obj.url.track.label);
+                }
+                if(obj.image){
+                    js_image_id.val(obj.image.id);
+                    js_image_alt.val(obj.image.alt);
+                    js_image_src.val(obj.image.src);
+                }
+                js_button_delete.show();
+                js_button_update.attr('data-action','update');
+                js_button_update.text('Update');
+                js_modal.modal();
+            }
+        });
+
+        $('#image_upload').fileupload({
+            dataType: 'json',
+            progressall: function (e, data) {
+                if(!js_image_percentage.is(':visible')){js_image_percentage.show()}
+                var p = parseInt((data.loaded/data.total)*100, 10),
+                    m = (p < 100) ? 'Upload Progress... %' + p : 'Upload Complete.';
+                if(p >= 100){js_image_percentage.delay(1500).fadeOut(500);}
+                js_image_percentage.text(m);
+            },
+
+            done: function (e, data) {
+                var json = data.result;
+                if(json.error.id != 0){
+                    new AKAlert().add_error(json.error.message);
+                } else{
+                    js_image_src.val(json.response.src);
+                }
+            }
+
+        });
+
+        $('.js-button-add').bind('click', function(e){
+            js_button_delete.hide();
+            js_button_update.attr('data-action','add');
+            js_button_update.text('Add');
+            js_modal.modal();
+        });
+
+        $('.js-button-deploy').bind('click', function(e){
+            js_modal_deploy.modal();
+        });
+
+        $('.js-button-delete,.js-button-cancel,.js-button-update,.js-button-dodeploy').bind('click', function(e){
+            var ref = $(e.currentTarget);
+            switch(ref.attr('data-action')){
+                case 'delete':
+                    var r = confirm("Are you sure you want to delete the user?");
+                    if (r == true){
+                        ajax_delete_item();
+                    }
+                    break;
+                case 'cancel':
+                    js_modal.modal('hide');
+                    js_modal_deploy.modal('hide');
+                    break;
+                case 'update':
+                    ajax_update_item();
+                    break;
+                case 'add':
+                    ajax_add_item();
+                    break;
+                case 'deploy':
+                    ajax_deploy();
+                    break;
+            }
+        });
+
+    });
+
+</script>
+{% end %}

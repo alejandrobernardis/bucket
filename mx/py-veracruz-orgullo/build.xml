@@ -1,0 +1,161 @@
+<?xml version="1.0"?>
+<project name="mx-dipa-veracruz-orgullo" default="deploy" basedir=".">
+
+    <property file="build.properties" />
+
+    <!-- == common ========================================================= -->
+
+    <macrodef name="common.data">
+        <sequential>
+            <tstamp>
+                <format property="build.date" pattern="yyyyMMddHHmmss" unit="minute" locale="en" />
+                <format property="build.fullDate" pattern="yyyy/MM/dd HH:mm:ss" unit="minute" locale="en" />
+            </tstamp>
+        </sequential>
+    </macrodef>
+
+    <macrodef name="common.compress">
+        <attribute name="file" />
+        <attribute name="input" />
+        <attribute name="output" />
+        <attribute name="excludes" default="" />
+        <sequential>
+            <mkdir dir="@{output}" />
+            <zip destfile="@{output}/@{file}">
+                <fileset dir="@{input}" excludes="@{excludes}" />
+            </zip>
+        </sequential>
+    </macrodef>
+
+    <macrodef name="common.backup">
+        <attribute name="file" default="${project.name}-${build.version}.zip" />
+        <attribute name="input" default="" />
+        <attribute name="output" default="${dir.backup}" />
+        <attribute name="excludes" default="" />
+        <sequential>
+            <mkdir dir="@{output}" />
+            <common.data />
+            <common.compress excludes="@{excludes}" file="${build.date}-@{file}" input="@{input}" output="@{output}" />
+        </sequential>
+    </macrodef>
+
+    <macrodef name="common.execute.file">
+        <attribute name="file" />
+        <attribute name="program" />
+        <sequential>
+            <exec executable="open">
+                <arg value="-a" />
+                <arg value="@{program}" />
+                <arg value="@{file}" />
+            </exec>
+            <echo message="Execute: @{file}" />
+        </sequential>
+    </macrodef>
+
+    <macrodef name="common.manifest.create">
+        <attribute name="file" />
+        <sequential>
+            <manifest file="@{file}">
+                <attribute name="Created-By" value="${project.copyright} of ${project.author}" />
+                <attribute name="Project-Name" value="${project.name}" />
+                <attribute name="Project-FullName" value="${project.fullname}" />
+                <attribute name="Project-Version" value="${build.version}" />
+                <attribute name="Built-By" value="${project.author}" />
+                <attribute name="Built-Date" value="${TODAY}" />
+            </manifest>
+        </sequential>
+    </macrodef>
+
+    <!-- == macros ========================================================= -->
+
+    <macrodef name="compress-css">
+        <sequential>
+            <apply executable="java" parallel="false">
+                <fileset dir="${dir.deploy.css}" includes="bootstrap-fixes.min.css, ie-fixes.min.css" />
+                <arg line="-jar" />
+                <arg path="${compress.css}" />
+                <arg line="-v" />
+                <srcfile />
+                <arg line="-o" />
+                <mapper type="glob" from="*.css" to="${dir.deploy.css}/*-min.css" />
+                <targetfile />
+            </apply>
+            <move todir="${dir.deploy.css}" overwrite="true">
+                <fileset dir="${dir.deploy.css}" />
+                <mapper type="glob" from="*-min.css" to="*.css" />
+            </move>
+        </sequential>
+    </macrodef>
+
+    <macrodef name="compress-js">
+        <sequential>
+            <apply executable="java" parallel="false">
+                <fileset dir="${dir.deploy.js}" includes="destiny.min.js, scrollspy.min.js" />
+                <arg line="-jar" />
+                <arg path="${compress.js}" />
+                <arg line="--js" />
+                <srcfile />
+                <arg line="--js_output_file" />
+                <mapper type="glob" from="*.js" to="${dir.deploy.js}/*-min.js" />
+                <targetfile />
+            </apply>
+            <move todir="${dir.deploy.js}" overwrite="true">
+                <fileset dir="${dir.deploy.js}" />
+                <mapper type="glob" from="*-min.js" to="*.js" />
+            </move>
+        </sequential>
+    </macrodef>
+
+    <macrodef name="compress-html">
+        <sequential>
+            <apply executable="java" parallel="false">
+                <fileset dir="${dir.deploy}" includes="**/*.html" />
+                <arg line="-jar" />
+                <arg path="${compress.html}" />
+                <arg line="--compress-js" />
+                <arg line="--compress-css" />
+                <arg line="--output" />
+                <mapper type="glob" from="*.html" to="${dir.deploy}/*-min.html" />
+                <targetfile />
+                <srcfile />
+            </apply>
+            <move todir="${dir.deploy}" overwrite="true">
+                <fileset dir="${dir.deploy}" />
+                <mapper type="glob" from="*-min.html" to="*.html" />
+            </move>
+        </sequential>
+    </macrodef>
+
+    <macrodef name="prepare-deploy">
+        <sequential>
+            <common.backup input="${dir.deploy}" />
+            <delete dir="${dir.deploy}" />
+            <mkdir dir="${dir.deploy}" />
+            <copy todir="${dir.deploy}" verbose="true">
+                <fileset dir="${dir.public}">
+                    <exclude name="**/.DS_Store" />
+                    <exclude name="**/_svn" />
+                    <exclude name="**/_svn/**" />
+                    <exclude name="**/.svn" />
+                    <exclude name="**/.svn/**" />
+                    <exclude name="**/.hg/**" />
+                    <exclude name="**/.git/**" />
+                    <exclude name="**/master/**" />
+                    <exclude name="**/master.html" />
+                    <exclude name="**/template.html" />
+                </fileset>
+            </copy>
+            <common.manifest.create file="${dir.deploy}/MANIFEST" />
+        </sequential>
+    </macrodef>
+
+    <!-- == targets ======================================================== -->
+
+    <target name="deploy">
+        <prepare-deploy />
+        <compress-css />
+        <compress-js />
+        <compress-html />
+    </target>
+
+</project>

@@ -1,0 +1,41 @@
+{
+    "version": "1.0",
+    "date": "",
+    "store": [
+        {
+            "pack": "paquete_maestro",
+            "coinsa": "300,000",
+            "gratis": "90%",
+            "coinsb": "570,000",
+            "money": "99.99 USD"
+        },
+        {
+            "pack": "paquete_experto",
+            "coinsa": "100,000",
+            "gratis": "60%",
+            "coinsb": "160,000",
+            "money": "49.99 USD"
+        },
+        {
+            "pack": "paquete_avanzado",
+            "coinsa": "30,000",
+            "gratis": "40%",
+            "coinsb": "42,000",
+            "money": "19.99 USD"
+        },
+        {
+            "pack": "paquete_jugador",
+            "coinsa": "10,000",
+            "gratis": "25%",
+            "coinsb": "12,500",
+            "money": "9.99 USD"
+        },
+        {
+            "pack": "Paquete_Arranques",
+            "coinsa": "1,000",
+            "gratis": "5%",
+            "coinsb": "1,050",
+            "money": "1.99 USD"
+        }
+    ]
+}

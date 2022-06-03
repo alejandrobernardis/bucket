@@ -1,0 +1,478 @@
+body, html {
+	background-color:#fff;
+
+}
+
+a.button-back:link,a.button-edit:link,a.mas-edit:link,a.mas:link {font-family:Arial, Helvetica, sans-serif; color:#a5c0e2; font-size:10px;text-decoration:none;}
+a.button-back:active,a.button-edit:active,a.mas-edit:active,a.mas:active {font-family:Arial, Helvetica, sans-serif; color:#a5c0e2; font-size:10px;text-decoration:none;}
+a.button-back:visited,a.button-edit:visited,a.mas-edit:visited,a.mas:visited {font-family:Arial, Helvetica, sans-serif; color:#a5c0e2; font-size:10px;text-decoration:none;}
+a.button-back:hover,a.button-edit:hover,a.mas-edit:hover,a.mas:hover {font-family:Arial, Helvetica, sans-serif; color:#FFF; font-size:10px;text-decoration:none;}
+a.button-back:link,a.button-edit:link {font-size: 16px;font-weight: bold;}
+
+.clear-fix-view {
+	clear: both;
+	padding-top: 16px;
+}
+
+.white12px {
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:12px;
+	color:#666;
+}
+
+.title {
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:14px;
+	color:#FFF;
+}
+
+.white {
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:12px;
+	color:#FFF;
+	line-height:14px;
+}
+
+
+#content {
+	position:absolute;
+	width:780px;
+	height:950px;
+	left:50%;
+	margin-left:-390px;
+	top:99px;
+	background-image:url(../img/backgroundIndex.jpg);
+	background-position: 0 -99px;
+	background-repeat:no-repeat;
+}
+
+
+/* Botón "Sube tu Historia" */
+
+.uploadButton {
+	position:absolute;
+	width:411px;
+	height:99px;
+	top:0px;
+	left:369px;
+}
+
+.uploadButton a {
+ outline: none;
+ text-indent: -5000px ;
+ display:block;
+ width:411px;
+ height:99px;
+ background:url(../img/uploadButton.jpg) 0 0 no-repeat;
+ }
+
+ .uploadButton a:hover {
+ background-position: 0 -151px;
+ }
+
+
+
+
+
+#googleMaps {
+	position:absolute;
+	width:755px;
+	height:405px;
+	left:0px;
+	top:1px;
+	background-color:#fff;
+}
+
+#filtro {
+	position:absolute;
+	width:503px;
+	height:25px;
+	left:9px;
+	top:412px;
+}
+
+/* Botonera Filtro */
+
+
+	/* RECIENTES */
+	.recientes {
+		position:absolute;
+		width:168px;
+		height:25px;
+		top:0px;
+		left:0px;
+		z-index:2;
+	}
+
+	.recientes a {
+ 	outline: none;
+ 	text-indent: -5000px ;
+ 	display:block;
+ 	width:168px;
+ 	height:25px;
+ 	background:url(../img/recientesButton.jpg) 0 0 no-repeat;
+ 	}
+
+ 	.recientes a:hover, .recientes a.active {
+ 	background-position: 0 -25px;
+ 	}
+
+	/*AMISTAD */
+
+	.amistad {
+		position:absolute;
+		width:113px;
+		height:25px;
+		top:0px;
+		left:168px;
+		z-index:2;
+	}
+
+	.amistad a {
+ 	outline: none;
+ 	text-indent: -5000px ;
+ 	display:block;
+ 	width:113px;
+ 	height:25px;
+ 	background:url(../img/amistadButton.jpg) 0 0 no-repeat;
+ 	}
+
+ 	.amistad a:hover, .amistad a.active {
+ 	background-position: 0 -25px;
+ 	}
+
+	/*FAMILIA */
+
+	.familia {
+		position:absolute;
+		width:91px;
+		height:25px;
+		top:0px;
+		left:281px;
+		z-index:2;
+	}
+
+	.familia a {
+ 	outline: none;
+ 	text-indent: -5000px ;
+ 	display:block;
+ 	width:91px;
+ 	height:25px;
+ 	background:url(../img/familiaButton.jpg) 0 0 no-repeat;
+ 	}
+
+ 	.familia a:hover, .familia a.active {
+ 	background-position: 0 -25px;
+ 	}
+
+	/*ROMANCE */
+
+	.romance {
+		position:absolute;
+		width:131px;
+		height:25px;
+		top:0px;
+		left:372px;
+		z-index:2;
+	}
+
+	.romance a {
+ 	outline: none;
+ 	text-indent: -5000px ;
+ 	display:block;
+ 	width:131px;
+ 	height:25px;
+ 	background:url(../img/romanceButton.jpg) 0 0 no-repeat;
+ 	}
+
+ 	.romance a:hover, .romance a.active {
+ 	background-position: 0 -25px;
+ 	}
+
+
+/* SEARCH BUTTON */
+
+.lupa {
+	position:absolute;
+	width:39px;
+	height:25px;
+	top:0px;
+	left:163px;
+	z-index:2;
+}
+
+.lupa a {
+ 	outline: none;
+ 	text-indent: -5000px ;
+ 	display:block;
+ 	width:39px;
+ 	height:25px;
+ 	background:url(../img/searchButton.jpg) 0 0 no-repeat;
+ 	}
+
+.lupa a:hover {
+ 	background-position: 0 -35px;
+ 	}
+
+/* Botón PÁGINA ATRÁS */
+
+.prevPage {
+	position:absolute;
+	width:37px;
+	height:37px;
+	top:900px;
+	left:320px;
+}
+
+.prevPage a {
+ 	outline: none;
+ 	text-indent: -5000px ;
+ 	display:block;
+ 	width:37px;
+ 	height:37px;
+ 	background:url(../img/backArrow.png) 0 0 no-repeat;
+ 	}
+
+.prevPage a:hover {
+ 	background-position: 0 -42px;
+ 	}
+
+
+
+/* Botón PÁGINA SIGUIENTE */
+
+.nextPage {
+	position:absolute;
+	width:37px;
+	height:37px;
+	top:900px;
+	left:380px;
+}
+
+.nextPage a {
+ 	outline: none;
+ 	text-indent: -5000px ;
+ 	display:block;
+ 	width:37px;
+ 	height:37px;
+ 	background:url(../img/nextArrow.png) 0 0 no-repeat;
+ 	}
+
+.nextPage a:hover {
+ 	background-position: 0 -42px;
+ 	}
+
+
+
+
+
+
+#search {
+	position:absolute;
+	width:205px;
+	height:25px;
+	top:412px;
+	left:532px;
+	background-image:url(../img/search.jpg);
+	background-position:left;
+	background-repeat:no-repeat;
+}
+
+
+#textfield {
+	position:absolute;
+	width:149px;
+	height:23px;
+	top:1px;
+	left:15px;
+}
+
+input {
+	position:absolute;
+	top:0px;
+	left:0px;
+	width:149px;
+	height:23px;
+	border:0px;
+	background-color:transparent;
+}
+
+#historiasContent {
+	position:absolute;
+	width:710px;
+	height:440px;
+	top:450px;
+	left:0px;
+	padding:0px 50px 0px 20px;
+
+}
+
+.historiasCompletas {
+	position:relative;
+	width:710px;
+	height:144px;
+	border-top:1px solid #6e82af;
+}
+
+#leerHistorias{
+	position:relative;
+	width:710px;
+	max-width:710px;
+	height:930px;
+	top:10px;
+	left:30px;
+	overflow:hidden;
+}
+
+
+.fotografias{
+	position:absolute;
+	width:203px;
+	height:144px;
+	top:0px;
+	left:0px;
+	background-image:url(../img/shadowStory.png);
+	background-repeat:no-repeat;
+}
+
+.pic1{
+	position:absolute;
+	width:104px;
+	height:104px;
+	border:1px solid #637eb1;
+	left:90px;
+	top:20px;
+	z-index:2;
+	overflow: hidden;
+	background-color: #274079;
+	color: #ccc;
+	font-size: 10px;
+	font-family: Arial;
+}
+
+.pic2{
+	position:absolute;
+	width:93px;
+	height:93px;
+	border:1px solid #637eb1;
+	left:2px;
+	top:25px;
+	z-index:1;
+	overflow: hidden;
+	background-color: #274079;
+	color: #ccc;
+	font-size: 10px;
+	font-family: Arial;
+}
+
+
+.icon{
+	position:absolute;
+	width:35px;
+	height:35px;
+	left:80px;
+	top:105px;
+	z-index:3;
+}
+
+
+.myStory{
+	position:absolute;
+	width:370px;
+	height:auto;
+	left:220px;
+	top:5px;
+}
+
+
+.share{
+	position:absolute;
+	width:95px;
+	height:139px;
+	left:610px;
+	top:5px;
+	padding-top: 16px;
+}
+
+
+.share2{
+	position:absolute;
+	width:200px;
+	height:100px;
+	left:30px;
+	top:170px;
+}
+
+
+#resistolLogo {
+	position:absolute;
+	width:104px;
+	height:75px;
+	top:863px;
+	left:635px;
+	z-index:3;
+}
+
+
+/* 20/08/2012*/
+
+
+
+#header{
+	position:absolute;
+	height:99px;
+	width:780px;
+	top:0px;
+	left:50%;
+	margin-left:-390px;
+	z-index:4;
+	background-image:url(../img/header.jpg);
+	background-repeat:no-repeat;
+	background-position:0 0px;
+}
+
+.fotografias2{
+	position:absolute;
+	width:203px;
+	height:144px;
+	top:0px;
+	left:30px;
+	background-image:url(../img/shadowStory.png);
+	background-repeat:no-repeat;
+}
+
+#content2 {
+	position:absolute;
+	width:780px;
+	height:auto;
+	left:50%;
+	margin-left:-390px;
+	top:99px;
+	background-image:url(../img/backgroundTile.jpg);
+	background-repeat:repeat-y;
+	padding-bottom:50px;
+}
+
+.myStory2{
+	position:relative;
+	width:470px;
+	left:260px;
+	top:5px;
+	padding-right:25px;
+}
+
+.primerBloque {
+	width:780px;
+	min-height:300px;
+	float:left;
+}
+
+
+.facebookComments {
+	width:780px;
+	float:left;
+}
+
+.fb-comments {
+	background-color: #fff;
+}

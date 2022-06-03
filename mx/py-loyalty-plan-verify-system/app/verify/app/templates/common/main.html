@@ -1,0 +1,48 @@
+{% extends '../master.html' %}
+{% include 'navbar.html' %}
+{% block content_container %}
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default panel-search">
+            <div class="panel-body">
+                <form role="form" class="form-auth form-recovery" method="post">
+                    {% module xsrf_form_html() %}
+                    <fieldset>
+                        <h3>addicted / <small>Buscar</small></h3>
+                        <hr>
+                        {% if form.errors %}
+                            {% module ViewErrors(form.errors) %}
+                        {% end %}
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="q" name="q" value="{{ form.q.data or '' }}" autofocus="1" required="1" />
+                            <div class="input-group-btn">
+                                <input type="submit" value="Buscar" class="btn btn-primary" tabindex="-1" />
+                            </div>
+                        </div>
+                        <div class="input-group input-group-filters">
+                            <label class="radio-inline"><input type="radio" name="filter" id="all" value="all" /> All</label>
+                            <label class="radio-inline"><input type="radio" name="filter" id="first_name" value="first_name" /> Nombre(s)</label>
+                            <label class="radio-inline"><input type="radio" name="filter" id="last_name" value="last_name" /> Apellido(s)</label>
+                            <label class="radio-inline"><input type="radio" name="filter" id="email" value="email" /> Email</label>
+                            <label class="radio-inline"><input type="radio" name="filter" id="address" value="address" /> Direcci&oacute;n</label>
+                            <label class="radio-inline"><input type="radio" name="filter" id="phone" value="phone" /> Tel&eacute;fono</label>
+                            <label class="radio-inline"><input type="radio" name="filter" id="card" value="card" /> Tarjeta</label>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% if recordset %}
+        {% module ViewSearchResult(form, recordset) %}
+    {% end %}
+</div>
+{% end %}
+{% block body_scripts_init %}
+<script>
+    $(function(){
+        var filter = "#{% raw form.filter.data %}".toLowerCase();
+        $((filter == "#none") ? "#all" : filter).attr('checked', true);
+    });
+</script>
+{% end %}

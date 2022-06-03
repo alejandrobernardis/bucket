@@ -1,0 +1,154 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# Copyright (c) 2013 Asumi Kamikaze Inc.
+# Copyright (c) 2013 The Octopus Apps Inc.
+# Licensed under the Apache License, Version 2.0 (the "License")
+# Author: Alejandro M. Bernardis
+# Email: alejandro.bernardis at gmail.com
+# Created: 11/Dec/2013 13:40
+
+
+import bisect
+from array import array
+
+DEFAULT_N4_L200_RAILS = ((
+    (array('c', 'AAAABBBBCCDDDDEEEFFFGGHIJJJJJKLL'),
+     array('c', 'AAABBBBBCCCCDDDDEEFFGHHIIJJJJKLL'),
+     array('c', 'AAAAABBBCCCDDDEEEFFGGHHIIIJJJJJK'),
+     array('c', 'AAABBBCCCDDDEEEEFFFFGGGGHHIIIIJK'),
+     array('c', 'AAABBCCCDDEEFFFFGGGGHHHHHIIIIIJK')),
+
+    (array('c', 'AAABBBCCDDDDEEEFFFGGHHIIJJJJJKLL'),
+     array('c', 'AAABBBBBCCCCDDDDEEFFGHHIIJJJJKLL'),
+     array('c', 'AAAAABBBCCCDDDEEEFFGGHHIIIJJJJJK'),
+     array('c', 'AAABBBCCCDDDEEEEFFFFGGGGHHIIIIJK'),
+     array('c', 'AAABBCCCDDEEFFFFGGGGHHHHHIIIIIJK')),
+
+    (array('c', 'AAABBBCCDDDDEEEFFFGGHHIIJJJJJKLL'),
+     array('c', 'AAAAABBBBBCCCCDDDDEEFFGHHIIJJJJK'),
+     array('c', 'AAAAABBBCCCDDDEEEFFGGHHIIIJJJJJK'),
+     array('c', 'AAABBBCCCDDDEEEFFFFGGGGHHHIIIIJK'),
+     array('c', 'AABBCCCDDEEFFFFGGGGHHHHHIIIIIJKL')),
+
+    (array('c', 'AAAABBBCCDDDDEEEFFFFGGHHIJJJJJKL'),
+     array('c', 'AAAABBBBCCCCDDDDEEEEFFGHHIJJJJKL'),
+     array('c', 'AAAABBBCCCDDDDEEEFFGGHHIIJJJJJKL'),
+     array('c', 'AAABBBCCCDDDEEEFFFGGGGHHHIIIJKLL'),
+     array('c', 'AABBCCDDEEEEFFFFGGGGHHHHHIIIIJKL')),
+
+    (array('c', 'AAAABBBCCCCDDDDEEEEFFFGHIJJJJJKL'),
+     array('c', 'AAAABBBBCCCCDDDDEEEEFFGGHIJJJJKL'),
+     array('c', 'AAAABBBBCCDDDDEEEFFGGHHIIJJJJJKL'),
+     array('c', 'AAABBBCCCDDDEEEFFFGGGGHHHIIIJKLL'),
+     array('c', 'AABBCCDDEEEFFFFGGGGHHHHHIIIIJKKL')),
+
+    (array('c', 'AAAABBCCDDDEEEFFFGGGHHIIJJJJJKLL'),
+     array('c', 'AAAABBBBCCCCDDDDEEEEFFGGHIJJJJKL'),
+     array('c', 'AAABBBBCCDDDDEEEEFFGGHHIIJJJJJKL'),
+     array('c', 'AAABBBCCCDDDEEEFFFGGGGHHHIIIIJKL'),
+     array('c', 'AABBCCCDDDEEEEFFFFGGGHHHHHIIJKKL')),
+
+    (array('c', 'AAAABBCCDDDEEEFFFGGGHHHIIJJJJJKL'),
+     array('c', 'AAAABBBCCCCDDDDEEEEFFGGHIJJJJKLL'),
+     array('c', 'AAABBBBCCCDDDDEEEEFFGGHIIJJJJJKL'),
+     array('c', 'AAAABBBCCCDDDEEEFFFFGGGGHHIIIJKL'),
+     array('c', 'AABBCCCDDDEEEEFFFFGGGHHHHHIIJKKL')),
+
+    (array('c', 'AAAABBCCDDDEEEFFFGGGHHHIIJJJJJKL'),
+     array('c', 'AAAABBBCCCCDDDDEEEFFGGHHIJJJJKLL'),
+     array('c', 'AAABBBCCCDDDDEEEEFFGGHHIIJJJJJKL'),
+     array('c', 'AAAABBBCCCDDDEEEFFFFGGGGHHIIIJKL'),
+     array('c', 'AABBCCCDDDEEEEFFFFGGGHHHHHIIJKKL')),
+
+    (array('c', 'AAAABBCCDDDEEEFFFGGGHHIIJJJJJKLL'),
+     array('c', 'AAAABBBCCCCDDDEEEEFFFGHHIIJJJJKL'),
+     array('c', 'AAABBBBCCCCDDDDEEFFFGGHHIJJJJJKL'),
+     array('c', 'AAABBBCCCDDDEEEFFFFGGGGHHIIIJKLL'),
+     array('c', 'AABBCCCDDDEEEEFFFFGGGHHHHHIIJKKL')),
+
+    (array('c', 'AAAABBCCDDDEEEFFFGGGHHIIJJJJJKLL'),
+     array('c', 'AAABBBCCCCDDDEEEEFFFGGHHIIJJJJKL'),
+     array('c', 'AAABBBBCCCCDDDDEEFFGGHIIJJJJJKLL'),
+     array('c', 'AAABBBCCCDDDEEEEFFFFGGGGHHIIIJKL'),
+     array('c', 'AABBBCCDDDEEEEFFFFGGGHHHHHIIJKKL')),
+
+    (array('c', 'AAAABBCCDDEEEFFFGGGHHHIIJJJJJKLL'),
+     array('c', 'AABBBCCCDDDEEEFFFGGGHHHIIJJJJKLL'),
+     array('c', 'AAABBBCCDDDEEEFFFFGGGHHIIJJJJJKL'),
+     array('c', 'AAABBBCCCDDDEEEEFFFFGGGGHHIIIJKL'),
+     array('c', 'AABBBCCDDDEEEEFFFFGGGHHHHHIIJKKL')),
+
+    (array('c', 'AAAABBCCDDEEEFFFGGGHHHIIJJJJJKLL'),
+     array('c', 'AABBBCCCDDDEEEFFFGGGHHHIIJJJJKLL'),
+     array('c', 'AABBBCCDDDEEEFFFFGGGHHIIJJJJJKLL'),
+     array('c', 'AAABBBCCCDDDEEEEFFFFGGGGHHIIIJKL'),
+     array('c', 'AABBBCCDDDEEEEFFFFGGGHHHHHIIJKKL')),
+
+    (array('c', 'AAAABBCCDDEEEFFFGGGHHHIIJJJJJKLL'),
+     array('c', 'AABBBCCCDDDEEEFFFGGGHHHIIJJJJKLL'),
+     array('c', 'AABBBCCDDDEEEFFFFGGGHHIIJJJJJKLL'),
+     array('c', 'AAABBBCCDDDEEEEFFFFGGGGHHIIIJKLL'),
+     array('c', 'AABBBCCDDDEEEEFFFFGGGHHHHHIIJKKL')),
+
+    (array('c', 'AAAABBCCDDEEEFFFGGGHHHIIJJJJJKLL'),
+     array('c', 'AABBCCDDDEEEFFFGGGHHHHIIJJJJKLLL'),
+     array('c', 'AABBCCCDDDEEEFFFFGGGHHIIJJJJJKLL'),
+     array('c', 'AAABBBCCDDDEEEEFFFFGGGGHHIIIJKLL'),
+     array('c', 'AABBBCCDDDEEEEFFFFGGGHHHHHIIJKKL')),
+
+    (array('c', 'AAAABBCCDDEEFFFGGGHHHIIJJJJJKLLL'),
+     array('c', 'AABBBCCDDDEEEFFFGGGHHHHIIJJJJKLL'),
+     array('c', 'AABBCCCDDDEEEFFFFGGGHHIIJJJJJKLL'),
+     array('c', 'AAABBBCCDDDEEEEFFFFGGGGHHIIIJKLL'),
+     array('c', 'AABBBCCDDDEEEEFFFFGGGHHHHHIIJKKL')),
+
+    (array('c', 'AAAABBCCDDEEFFFGGGHHHIIJJJJJKLLL'),
+     array('c', 'AABBBCCDDDEEEFFFGGGHHHHIIJJJJKLL'),
+     array('c', 'AABBCCCDDDEEEFFFGGGHHIIJJJJJKLLL'),
+     array('c', 'AAABBBCCDDDEEEEFFFFGGGGHHIIIJKLL'),
+     array('c', 'AABBBCCDDDEEEEFFFFGGGHHHHHIIJKKL')),
+
+    (array('c', 'AAAABBCCDDEEFFFGGGHHHIIJJJJJKLLL'),
+     array('c', 'AABBBCCDDDEEEFFFGGGHHHHIIJJJJKLL'),
+     array('c', 'AABBCCCDDDEEEFFFGGGHHIIJJJJJKLLL'),
+     array('c', 'AAABBCCDDDEEEEFFFFGGGGHHIIIJKLLL'),
+     array('c', 'AABBBCCDDDEEEEFFFFGGGHHHHHIIJKKL')),
+
+    (array('c', 'AAAABBCCDDEEFFFGGGHHHIIJJJJJKLLL'),
+     array('c', 'AABBCCDDDEEEFFFGGGHHHHIIJJJJKLLL'),
+     array('c', 'AABBCCCDDDEEEFFFGGGHHIIJJJJJKLLL'),
+     array('c', 'AAABBCCDDDEEEEFFFFGGGGHHIIIJKLLL'),
+     array('c', 'AABBBCCDDDEEEEFFFFGGGHHHHHIIJKKL')),
+),)
+
+DEFAULT_N4_L200_LINES = (
+    (200, (1, 3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 15, 16, 17, 19, 23, 25, 30,),),
+)
+
+
+class RailsValidator(object):
+    rails_levels = DEFAULT_N4_L200_LINES
+    rails_values = DEFAULT_N4_L200_RAILS
+
+    def __init__(self, level, lines):
+        i, d = self._search_rails(level)
+        ii = bisect.bisect_left(self.rails_levels[i][1], lines)
+        print i, ii, d[ii]
+
+    def _search_rails(self, level):
+        if level < 1:
+            level = 1
+        lo, hi = 0, len(self.rails_levels)
+        while lo < hi:
+            mid = (lo+hi)//2
+            if self.rails_levels[mid][0] < level:
+                lo = mid + 1
+            else:
+                hi = mid
+        return lo, self.rails_values[lo]
+
+
+RailsValidator(4, 1)
+RailsValidator(4, 10)
+RailsValidator(4, 16)
+RailsValidator(4, 30)

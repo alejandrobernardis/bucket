@@ -1,0 +1,30 @@
+{% extends '../master.html' %}
+{% block body_tag %}<body class="body-auth">{% end %}
+{% block content_container %}
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default panel-auth">
+            <div class="panel-body">
+                <form role="form" class="form-auth form-recovery" method="post">
+                    {% module xsrf_form_html() %}
+                    <fieldset>
+                        <h3>{{handler.settings.get('site_title').lower()}} / <small>Recuperar contrase&ntilde;a</small></h3>
+                        <hr>
+                        {% if form.errors %}
+                            {% module ViewErrors(form.errors) %}
+                        {% end %}
+                        <p>Ingrese el email que esta asociado a su cuenta:</p>
+                        <div class="form-group">
+                            <input class="form-control" required="1" autofocus="1" name="email" id="email" value="" type="email" />
+                        </div>
+                        <small class="help-block text-muted">Si no recuerda su email, por favor, pongase en contacto con el <a href="mailto:sysadmin@feedback.com.mx">administrador del sistema</a>.</small>
+                        <hr>
+                        <a href="/auth/signin" class="btn btn-default pull-left">Cancelar</a>
+                        <button type="submit" class="btn btn-success pull-right">Recuperar</button>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% end %}

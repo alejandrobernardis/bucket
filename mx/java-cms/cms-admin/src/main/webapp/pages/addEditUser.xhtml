@@ -1,0 +1,215 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	template="/templates/tmplAdmin.xhtml">
+
+	<ui:define name="workarea">
+		<f:loadBundle var="label" basename="labels.labels" />
+		<a4j:form id="userForm">
+			<a4j:keepAlive beanName="userForm" />
+			
+			<h:inputHidden value="#{userForm.selectedUser.idUser}" id="idUser" />
+			<h:panelGrid columnClasses="title" width="100%">
+				<h:outputText value="#{label.add} #{label.user}"
+					rendered="#{userForm.selectedUser.idUser == null}" />
+				<h:outputText value="#{label.edit} #{label.user}"
+					rendered="#{userForm.selectedUser.idUser != null}" />
+			</h:panelGrid>
+			<rich:spacer height="15px"/>		
+			<h:panelGrid style="width: 100%;height: 485px; border: 1pt solid #B6AD84; padding: 20px;" columnClasses="alignTop">
+			<table align="center"><tr><td>
+			<h:panelGrid>	
+				
+					
+					<h:panelGrid width="100%" id="message" rendered="#{userCtrl.error != null}" >
+						<h:panelGrid rendered="#{userCtrl.error}" styleClass="bad">
+							<h:panelGroup>
+								<h:graphicImage  value="/web-resources/img/icons/error.png" />
+								<rich:spacer width="15px"/>
+								<h:outputText value="#{userCtrl.message}"  />
+							</h:panelGroup>
+						</h:panelGrid>
+						<h:panelGrid rendered="#{!userCtrl.error}" styleClass="good">
+							<h:panelGroup>
+								<h:outputText value="#{userCtrl.message}"  />
+							</h:panelGroup>
+						</h:panelGrid>
+					</h:panelGrid>
+					
+					<h:panelGrid style="width:1000px;" columns="3" columnClasses="userFormLabelNoBG,userFormField,userFormMessage">
+						<rich:spacer width="1"/>
+						<h:panelGroup styleClass="right">
+							<a4j:commandButton value="#{label.back}" style="background-image: url('#{request.contextPath}/web-resources/img/icons/back.png')" 
+								action="#{userCtrl.listUser}" immediate="true"
+								styleClass="button" onmouseover="this.className='buttonHover'" onmouseout="this.className='button'"/>
+						</h:panelGroup>
+						<rich:spacer width="1"/>
+					</h:panelGrid>
+					<h:panelGrid style="width:1000px;" columns="3" columnClasses="userFormLabel,userFormField,userFormMessage">
+						<h:outputLabel value="#{label.id}"/>
+						<h:outputLabel value="#{userForm.selectedUser.idUser}"/>
+						<rich:spacer width="1"/>
+						
+						<h:panelGroup>
+							<h:outputLabel value="#{label.username}"/>
+							<h:outputLabel value="*" styleClass="error"/>
+						</h:panelGroup>
+						<h:inputText label="#{label.username}" id="username" value="#{userForm.selectedUser.username}" 
+							maxlength="45" style="width: 300px" >
+							<f:converter converterId="Trim" />
+							<rich:ajaxValidator event="onblur" />
+						</h:inputText>
+						<rich:message for="username" styleClass="error">
+							<f:facet name="errorMarker">
+								<h:panelGroup>
+									<h:graphicImage value="/web-resources/img/icons/error.png" />
+									<rich:spacer width="5px"/>
+								</h:panelGroup>
+							</f:facet>
+						</rich:message>
+						
+						<h:panelGroup>
+							<h:outputLabel value="#{label.password}"/>
+							<h:outputLabel value="*" styleClass="error"/>
+						</h:panelGroup>
+						<h:inputSecret label="#{label.password}" id="password" value="#{userForm.selectedUser.password}" 
+							maxlength="45" style="width: 300px" redisplay="true" >
+							<rich:ajaxValidator event="onblur" />
+						</h:inputSecret>
+						<rich:message for="password" styleClass="error">
+							<f:facet name="errorMarker">
+								<h:panelGroup>
+									<h:graphicImage value="/web-resources/img/icons/error.png" />
+									<rich:spacer width="5px"/>
+								</h:panelGroup>
+							</f:facet>
+						</rich:message>
+	
+						<h:panelGroup>
+							<h:outputLabel value="#{label.firstName}"/>
+							<h:outputLabel value="*" styleClass="error"/>
+						</h:panelGroup>
+						<h:inputText label="#{label.firstName}" id="firstName" value="#{userForm.selectedUser.firstName}" 
+							maxlength="160" style="width: 300px"  >
+							<rich:ajaxValidator event="onblur" />
+						</h:inputText>
+						<rich:message for="firstName" styleClass="error">
+							<f:facet name="errorMarker">
+								<h:panelGroup>
+									<h:graphicImage value="/web-resources/img/icons/error.png" />
+									<rich:spacer width="5px"/>
+								</h:panelGroup>
+							</f:facet>
+						</rich:message>
+	
+						<h:panelGroup>
+							<h:outputLabel value="#{label.primaryLastName}"/>
+							<h:outputLabel value="*" styleClass="error"/>
+						</h:panelGroup>
+						<h:inputText label="#{label.primaryLastName}" id="lastName" value="#{userForm.selectedUser.primaryLastName}" 
+							maxlength="80" style="width: 300px" >
+							<rich:ajaxValidator event="onblur" />
+						</h:inputText>
+						<rich:message for="lastName" styleClass="error">
+							<f:facet name="errorMarker">
+								<h:panelGroup>
+									<h:graphicImage value="/web-resources/img/icons/error.png" />
+									<rich:spacer width="5px"/>
+								</h:panelGroup>
+							</f:facet>
+						</rich:message>
+	
+						<h:outputLabel value="#{label.secondaryLastName}"/>
+						<h:inputText label="#{label.secondaryLastName}" id="secondaryLastName" value="#{userForm.selectedUser.secondaryLastName}" 
+							maxlength="80" style="width: 300px" >
+							<rich:ajaxValidator event="onblur" />
+						</h:inputText>
+						<rich:message for="secondaryLastName" styleClass="error">
+							<f:facet name="errorMarker">
+								<h:panelGroup>
+									<h:graphicImage value="/web-resources/img/icons/error.png" />
+									<rich:spacer width="5px"/>
+								</h:panelGroup>
+							</f:facet>
+						</rich:message>
+	
+						<h:panelGroup>
+							<h:outputLabel value="#{label.email}"/>
+							<h:outputLabel value="*" styleClass="error"/>
+						</h:panelGroup>
+						<h:inputText label="#{label.email}" id="email" value="#{userForm.selectedUser.email}" 
+							maxlength="80" style="width: 300px"  >
+								<rich:ajaxValidator event="onblur" />
+							</h:inputText>
+						<rich:message for="email" styleClass="error">
+							<f:facet name="errorMarker">
+								<h:panelGroup>
+									<h:graphicImage value="/web-resources/img/icons/error.png" />
+									<rich:spacer width="5px"/>
+								</h:panelGroup>
+							</f:facet>
+						</rich:message>
+						
+						<h:panelGroup>
+							<h:outputLabel value="#{label.role}"/>
+							<h:outputLabel value="*" styleClass="error"/>
+						</h:panelGroup>
+						<h:selectOneMenu style="width: 300px" id="role" value="#{userForm.selectedUser.role}" >
+							<f:converter converterId="Role" />
+							<f:selectItems value="#{userCtrl.roles}"/>
+							<rich:ajaxValidator event="onblur" />
+						</h:selectOneMenu>
+						<rich:message for="role" styleClass="error">
+							<f:facet name="errorMarker">
+								<h:panelGroup>
+									<h:graphicImage value="/web-resources/img/icons/error.png" />
+									<rich:spacer width="5px"/>
+								</h:panelGroup>
+							</f:facet>
+						</rich:message>
+						
+						<h:panelGroup>
+							<h:outputLabel value="#{label.active}"/>
+							<h:outputLabel value="*" styleClass="error"/>
+						</h:panelGroup>
+						<h:selectBooleanCheckbox id="active" value="#{userForm.selectedUser.active}">
+							<rich:ajaxValidator event="onblur" />
+						</h:selectBooleanCheckbox>
+						<rich:message for="active" styleClass="error">
+							<f:facet name="errorMarker">
+								<h:panelGroup>
+									<h:graphicImage value="/web-resources/img/icons/error.png" />
+									<rich:spacer width="5px"/>
+								</h:panelGroup>
+							</f:facet>
+						</rich:message>
+					</h:panelGrid>
+					<h:panelGrid style="width:1000px;" columns="3" columnClasses="userFormLabelNoBG,userFormField,userFormMessage">
+						<rich:spacer width="1"/>
+						<h:panelGroup styleClass="right">
+							<h:panelGrid columns="2" border="0">
+								<a4j:commandButton value="#{label.save}" style="background-image: url('#{request.contextPath}/web-resources/img/icons/save.png')" 
+									action="#{userCtrl.saveUser}" reRender="userForm,message"
+									styleClass="buttonPrefered" onmouseover="this.className='buttonPreferedHover'" onmouseout="this.className='buttonPrefered'"/>
+								
+								
+								<a4j:commandButton value="#{label.cancel}" style="background-image: url('#{request.contextPath}/web-resources/img/icons/cancel.png')" 
+									action="#{userCtrl.listUser}" immediate="true"
+									styleClass="button" onmouseover="this.className='buttonHover'" onmouseout="this.className='button'"/>
+
+							</h:panelGrid>
+						</h:panelGroup>
+						<rich:spacer width="1"/>
+					</h:panelGrid>
+			</h:panelGrid>
+			</td></tr></table>
+			</h:panelGrid>
+		</a4j:form>
+	</ui:define>
+</ui:composition>
+

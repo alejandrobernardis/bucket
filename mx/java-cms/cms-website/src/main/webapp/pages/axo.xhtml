@@ -1,0 +1,252 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:ui="http://java.sun.com/jsf/facelets"
+  xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:h="http://java.sun.com/jsf/html"
+  xmlns:rich="http://richfaces.org/rich"
+  xmlns:a4j="http://richfaces.org/a4j"
+  template="#{config.templateFolder.mediaFolder}#{contentCtrl.template}">
+ 
+	<ui:define name="menu">
+		<rich:dataList var="menu" value="#{contentFrm.menu}" styleClass="dropdown" >
+			<h:outputLink value="#{request.contextPath}/pages/axo.jsf" rendered="#{menu.contentTypeDisplay.childNum != 0}" >
+            	<h:outputText value="#{menu.contentTypeDisplay.contentTypeLabel}"/>
+            	<f:param name="lang" value="#{config.locale}" />
+				<f:param name="content" value="#{menu.contentTypeDisplay.idContentType}" />
+            </h:outputLink>
+            <h:outputText value="#{menu.contentTypeDisplay.contentTypeLabel}" rendered="#{menu.contentTypeDisplay.childNum == 0}"/>
+        	<rich:dataList var="submenu" value="#{menu.children}" >
+        		<h:outputLink value="#{request.contextPath}/pages/axo.jsf"  rendered="#{submenu.childNum != 0}">
+        			<h:outputText value="#{submenu.contentTypeLabel}"/>
+        			<f:param name="lang" value="#{config.locale}" />
+					<f:param name="content" value="#{submenu.idContentType}" />
+        		</h:outputLink>
+        		<h:outputText value="#{submenu.contentTypeLabel}" rendered="#{submenu.childNum == 0}"/>
+        	</rich:dataList>    
+        </rich:dataList>
+  	</ui:define>
+ 
+	<ui:define name="animation">
+		
+		<h:panelGroup layout="block" class="slideshow" rendered="#{contentFrm.content.animationType == 'SLIDESHOW'}">
+			<a4j:repeat value="#{contentFrm.listAnimation}" var="animation" rowKeyVar="index">
+				<h:graphicImage value="/media/animation/#{animation.idAnimation}.#{animation.extension}" styleClass="#{index==0?'active':''}"/>
+    		</a4j:repeat>
+	    	<a4j:loadScript src="resource://jquery.js"></a4j:loadScript>
+
+
+			<script type="text/javascript">
+				function slideSwitch() {
+				    var active = jQuery('.slideshow IMG.active');
+				    if ( !active[0].src ){ 
+				    	active = jQuery('.slideshow IMG:last');
+				    }
+				    
+				    var next = active.next();
+				    if( !next[0].src ){
+				    	next = jQuery('.slideshow IMG:first');
+				    }
+	 
+				    active.addClass('last-active');
+				
+				    next.css({opacity: 0.0}).addClass('active').animate({opacity: 1.0}, 750, function() {
+				            active.removeClass('active last-active');
+				        });
+				}
+				
+				jQuery( function() { 
+					setInterval( "slideSwitch()", 10000 );
+				});
+			</script>
+	    </h:panelGroup>
+		<h:panelGroup layout="block" class="slideshow" rendered="#{contentFrm.content.animationType == 'FLASH'}">
+			<a4j:loadScript src="resource:///org/richfaces/renderkit/html/js/swfobject.js"></a4j:loadScript>
+			<DIV id="flashcontent" style="z-index: 1;" >
+				<a href="http://www.adobe.com/go/getflashplayer">
+					<img src="http://www.adobe.com/images/shared/download_buttons/get_flash_player.gif" alt="Get Adobe Flash player" />
+				</a>
+			</DIV>
+			<a4j:repeat value="#{contentFrm.listAnimation}" var="animation" rowKeyVar="index">
+				<script type="text/javascript">
+					var flashvars = {};
+					var params = {
+						bgcolor:"#000000",
+						scale:"exactfit",
+						loop:true,
+						play:true,
+						wmode:"transparent"
+					};
+					var attributes = {};
+					swfobject.embedSWF("#{request.contextPath}/media/animation/#{animation.idAnimation}.#{animation.extension}", 
+						"flashcontent", animWidth, animHeight, "9.0.0",false, flashvars, params, attributes);
+						
+				</script>
+    		</a4j:repeat>
+		</h:panelGroup>
+		
+		
+	</ui:define>
+
+	<ui:define name="stores">
+		<f:loadBundle var="label" basename="labels.labels" />
+		<h:outputText value="#{label.storeLocator}" styleClass="storeTit"/>
+		<a4j:form>
+		<a4j:keepAlive beanName="contentFrm"/>
+		<h:panelGrid width="100%" columnClasses="alignLeft"  styleClass="storesContiner">
+			<rich:dataGrid id="storeList" value="#{contentFrm.stores}" var="store" 
+				rowKeyVar="index" columns="2" elements="6" width="100%" rendered="#{contentFrm.stores != null}" columnClasses="storeCell" styleClass="storeGrid">
+				<h:panelGrid cellpadding="0" cellspacing="0" columnClasses="storeText">
+					<h:outputText value="#{store.name}" styleClass="storeName"/>
+					<h:outputText value="#{store.mall}"/>
+					<h:outputText value="#{store.address1}"/>
+					<h:outputText value="#{store.address2}"/>
+					<h:outputText value="#{store.tels}"/>
+				</h:panelGrid>
+	       	</rich:dataGrid>
+	       	<rich:datascroller for="storeList" style="border:0px" fastControls="hide" renderIfSinglePage="false"  >
+	       		<f:facet name="first">
+	       			<h:graphicImage value="/web-resources/img/dataScroller/skip_back.jpg"/>
+	       		</f:facet>
+	       		<f:facet name="first_disabled">
+	       			<h:graphicImage value="/web-resources/img/dataScroller/skip_back_disabled.jpg"/>
+	       		</f:facet>
+	       		<f:facet name="previous">
+	       			<h:graphicImage value="/web-resources/img/dataScroller/back.jpg"/>
+	       		</f:facet>
+	       		<f:facet name="previous_disabled">
+	       			<h:graphicImage value="/web-resources/img/dataScroller/back_disabled.jpg"/>
+	       		</f:facet>
+	       		<f:facet name="next">
+	       			<h:graphicImage value="/web-resources/img/dataScroller/forward.jpg"/>
+	       		</f:facet>
+	       		<f:facet name="next_disabled">
+	       			<h:graphicImage value="/web-resources/img/dataScroller/forward_disabled.jpg"/>
+	       		</f:facet>
+	       		<f:facet name="last">
+	       			<h:graphicImage value="/web-resources/img/dataScroller/skip_forward.jpg"/>
+	       		</f:facet>
+	       		<f:facet name="last_disabled">
+	       			<h:graphicImage value="/web-resources/img/dataScroller/skip_forward_disabled.jpg"/>
+	       		</f:facet>
+	       	</rich:datascroller>
+	    </h:panelGrid>
+	    </a4j:form>
+	</ui:define>
+
+
+	<ui:define name="publications">
+		<a4j:form id="formPublications">
+			<a4j:keepAlive beanName="contentFrm"/>		
+			<h:panelGrid width="100%" rendered="#{contentFrm.listPublication != null}" columnClasses="alignLeft" cellspacing="0" cellpadding="0">
+				<f:loadBundle var="label" basename="labels.labels" />
+				<h:outputText value="#{label.publications}" styleClass="storeTit"/>
+	
+					 
+					<h:panelGrid columnClasses="alignCenter" width="100%" cellspacing="0" cellpadding="0" styleClass="storesContiner">
+						<table align="center"><tr><td>
+							<rich:dataGrid id="publications" value="#{contentFrm.listPublication}" var="publication" rowKeyVar="index" columns="5" elements="5" styleClass="publicationGrid" columnClasses="publicationCell" >
+								<h:panelGrid>
+									<a4j:commandLink action="#{contentCtrl.findPublicationPages}" id="link" reRender="controlPubs">
+										<a4j:actionparam name="page" assignTo="#{contentFrm.publication}" value="#{publication.idPublication}"/>
+										<a4j:actionparam name="content" value="#{contentFrm.contentType}"/>
+										<h:graphicImage value="/media/publication/#{publication.idPublication}.#{publication.imageType}" styleClass="publicationImg" style="border:0px;"/>
+									</a4j:commandLink>
+								</h:panelGrid>
+								<rich:componentControl for="panelPubs" attachTo="link" operation="show"  event="onclick" />
+					       	</rich:dataGrid>
+				       	</td></tr></table>
+				       	<rich:datascroller for="publications" renderIfSinglePage="false" fastControls="hide" >
+							<f:facet name="first">
+				       			<h:graphicImage value="/web-resources/img/dataScroller/skip_back.jpg"/>
+				       		</f:facet>
+				       		<f:facet name="first_disabled">
+				       			<h:graphicImage value="/web-resources/img/dataScroller/skip_back_disabled.jpg"/>
+				       		</f:facet>
+				       		<f:facet name="previous">
+				       			<h:graphicImage value="/web-resources/img/dataScroller/back.jpg"/>
+				       		</f:facet>
+				       		<f:facet name="previous_disabled">
+				       			<h:graphicImage value="/web-resources/img/dataScroller/back_disabled.jpg"/>
+				       		</f:facet>
+				       		<f:facet name="next">
+				       			<h:graphicImage value="/web-resources/img/dataScroller/forward.jpg"/>
+				       		</f:facet>
+				       		<f:facet name="next_disabled">
+				       			<h:graphicImage value="/web-resources/img/dataScroller/forward_disabled.jpg"/>
+				       		</f:facet>
+				       		<f:facet name="last">
+				       			<h:graphicImage value="/web-resources/img/dataScroller/skip_forward.jpg"/>
+				       		</f:facet>
+				       		<f:facet name="last_disabled">
+				       			<h:graphicImage value="/web-resources/img/dataScroller/skip_forward_disabled.jpg"/>
+				       		</f:facet>
+						</rich:datascroller>
+			       	</h:panelGrid>
+				
+		    </h:panelGrid>
+	    
+	    
+			<rich:modalPanel id="panelPubs" autosized="true" minHeight="50" minWidth="200" style="z-index:110" moveable="false" >
+		        <f:facet name="controls">
+		        	<h:panelGrid cellpadding="8px">
+		                <h:graphicImage value="/web-resources/img/button/close.png" id="hidelink" 
+		                		style="cursor:hand; cursor:pointer;z-index:111;opacity:0.4; filter:alpha(opacity=40);" 
+		                		onmouseover="apearClose()" onmouseout="hideClose()" onclick="#{rich:element('cleanPannelButt')}.click();hidePanelPubs();">
+		                </h:graphicImage>
+		                <rich:componentControl name="hidePanelPubs" for="panelPubs" operation="hide"  event="onclick" />
+	                </h:panelGrid>
+	           	</f:facet>
+	           	<a4j:commandButton id="cleanPannelButt" style="display:none" action="#{contentCtrl.cleanPublicationPages}" reRender="controlPubs" >
+	        		<a4j:actionparam name="content" value="#{contentFrm.contentType}" />
+	        	</a4j:commandButton>
+	           	<a4j:loadScript src="resource://jquery.js"></a4j:loadScript>
+				<a4j:loadScript src="/web-resources/galleria/galleria.js"></a4j:loadScript>
+				<script>
+					Galleria.loadTheme('#{request.contextPath}/web-resources/galleria/themes/classic/galleria.classic.js');
+				</script>
+	           	<h:panelGroup id="controlPubs" layout="block">
+	           		<h:panelGroup id="imagesPubs" layout="block" styleClass="galleria">
+						<a4j:repeat value="#{contentFrm.pages}" var="pubPage" rowKeyVar="index">
+			      			<h:graphicImage value="/media/publication_page/#{pubPage.idPublicationPage}.#{pubPage.imageType}" height="1"/>
+				    	</a4j:repeat>
+					</h:panelGroup>
+					<script>
+						jQuery(".galleria").galleria();
+					</script>
+				</h:panelGroup>
+			</rich:modalPanel>
+			<rich:effect name="apearClose" type="Opacity" targetId="hidelink" params="duration:0.3,from:0.4,to:1.0" />	    
+			<rich:effect name="hideClose" type="Opacity" targetId="hidelink" params="duration:0.3,from:1.0,to:0.4" />
+		</a4j:form>
+	</ui:define>
+  
+	<ui:define name="contentLeft">
+		<h:panelGrid width="100%">
+			<h:graphicImage value="/media/content/#{contentFrm.content.idContent}.jpg"/>
+			<h:outputText value="#{contentFrm.content.text}" escape="false"/>
+		</h:panelGrid>
+	</ui:define>
+	
+	<ui:define name="contentRight">
+		<h:panelGrid width="100%">
+			<h:outputText value="#{contentFrm.content.text2}" escape="false"/>
+		</h:panelGrid>
+	</ui:define>
+  
+  	<ui:define name="header">
+  		<meta name="description" content="#{contentFrm.content.metaDescription}" />
+  		<meta name="kewords" content="#{contentFrm.content.metaKewords}" />
+  		<title><h:outputText value="#{contentFrm.content.pageTitle}"/></title>
+  	</ui:define>
+	
+	<ui:define name="languageSelector">
+		<a4j:repeat value="#{contentCtrl.languages}" var="language" rowKeyVar="index">
+			<h:outputText value="/" rendered="#{index > 0}"/>
+			<h:outputLink value="#{request.contextPath}/pages/axo.jsf" >
+           		<h:outputText value="#{language.label}"/>
+				<f:param name="lang" value="#{language.value}"/>
+				<f:param name="content" value="#{contentFrm.contentType}"/>
+			</h:outputLink>
+		</a4j:repeat>
+	</ui:define>
+  
+</ui:composition>

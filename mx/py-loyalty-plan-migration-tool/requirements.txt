@@ -1,0 +1,3 @@
+mysql-connector-python>=1.1.4
+pycolorterm>=0.2.1
+unicodecsv>=0.9.4

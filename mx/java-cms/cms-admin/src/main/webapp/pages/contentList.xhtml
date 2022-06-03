@@ -1,0 +1,170 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	template="/templates/tmplAdmin.xhtml">
+
+	<ui:define name="workarea">
+		<f:loadBundle var="label" basename="labels.labels" />
+		<a4j:form>
+			<a4j:keepAlive beanName="contentForm"/>
+			<h:panelGrid columnClasses="title" width="100%">
+				<h:outputText value="#{label.listContents}"/>
+			</h:panelGrid>
+			<rich:spacer height="15px"/>
+		
+			<h:panelGrid columns="2" width="100%" columnClasses="categoriesTreeContiner, alignTop" cellpadding="0" cellspacing="0">
+				<rich:panel id="categoryList" style="height: 600px;">
+					<f:facet name="header">
+						<h:outputText value="#{label.categories}"/>
+					</f:facet>
+						<rich:tree  adviseNodeOpened="#{contentCtrl.nodeOpened}" style="width:300px" nodeFace="#{item.type}" treeNodeVar="nodeVar"  
+							switchType="client" value="#{contentForm.contentTypeTree}" 
+							var="item" ajaxKeys="#{null}" reRender="contentListContiner, buttons" 
+							ajaxSubmitSelection="true" nodeSelectListener="#{contentCtrl.processSelection}" >
+							 <rich:treeNode type="Root" iconLeaf="/web-resources/img/icons/nodeRoot.png" icon="/web-resources/img/icons/nodeRoot.png" onselected="return false;">
+	                			<h:outputText value="" />
+	            			 </rich:treeNode >
+							 <rich:treeNode type="Parent" iconLeaf="/web-resources/img/icons/nodeParent.png" icon="/web-resources/img/icons/nodeParent.png">
+	                			<h:outputText value="#{item.value.contentTypeName}" style="cursor:hand;cursor:pointer"/>
+	            			</rich:treeNode>
+	            			<rich:treeNode type="Child" iconLeaf="/web-resources/img/icons/nodeChild.png" icon="/web-resources/img/icons/nodeChild.png">
+	                			<h:outputText value="#{item.value.contentTypeName}" style="cursor:hand;cursor:pointer"/>
+	            			</rich:treeNode>
+	            			<rich:treeNode type="Inactive" iconLeaf="/web-resources/img/icons/nodeInactive.png" icon="/web-resources/img/icons/nodeInactive.png">
+	                			<h:outputText value="#{item.value.contentTypeName}" style="cursor:hand;cursor:pointer"/>
+	            			</rich:treeNode>
+	            		</rich:tree>
+				</rich:panel>
+				<rich:panel id="contentListContiner" style="width: 100%;height: 600px;">
+					<f:facet name="header">
+						<h:outputText value="#{contentForm.selectedContentType.contentTypeName}  "/>
+					</f:facet>
+					
+					<table align="center"><tr><td>
+						<table align="right"><tr><td>				
+							<h:panelGrid id="buttons" columns="2" border="0">
+								<a4j:commandButton value="#{label.add} #{label.content}" style="background-image: url('#{request.contextPath}/web-resources/img/icons/addDoc.png')" 
+									action="#{contentCtrl.addContent}" 
+									styleClass="button" onmouseover="this.className='buttonHover'" onmouseout="this.className='button'" 
+									rendered="#{contentForm.selectedContentType.idContentType != null}"/>
+							
+								<a4j:commandButton id="deleteContentBtn" value="#{label.delete} #{label.contents}" style="background-image: url('#{request.contextPath}/web-resources/img/icons/removeDoc.png')" 
+									onclick="return false"
+									styleClass="button" onmouseover="this.className='buttonHover'" onmouseout="this.className='button'">
+									<rich:componentControl for="confirmation" operation="show" event="onclick" attachTo="deleteContentBtn" />
+								</a4j:commandButton>
+								
+							</h:panelGrid>
+						</td></tr></table>
+					</td></tr>
+					<tr><td>
+					
+						<rich:extendedDataTable align="left" id="contentList" value="#{contentForm.contentList}" var="contentAgent" styleClass="datatable" 
+							height="480px" width="900px" rowClasses="rowPair,rowEven"  rows="10" reRender="ds" footerClass="footer" rowKeyVar="index" >
+							
+							<rich:column width="30" label="#{label.line}" >
+								<h:outputText value="#{index + 1}" />
+							</rich:column>
+							<rich:column width="25" label="#{label.control}">
+								<h:selectBooleanCheckbox value="#{contentAgent.selected}" />
+							</rich:column>
+							<rich:column width="80" sortBy="#{contentAgent.value.active}" label="#{label.status}" styleClass="alignCenter">
+								<f:facet name="header">
+									<h:outputText value="#{label.status}" />
+								</f:facet>
+								<h:graphicImage value="/web-resources/img/icons/published.png"
+									rendered="#{contentAgent.value.active}" alt="#{label.published}" title="#{label.published}"/>
+								<h:graphicImage value="/web-resources/img/icons/unpublished.png"
+									rendered="#{!contentAgent.value.active}" alt="#{label.unpublished}" title="#{label.unpublished}"/>
+							</rich:column>
+							
+							<rich:column width="30" label="#{label.language}" >
+								<f:facet name="header">
+               				 		<h:outputText value="#{label.language}" />
+               				 	</f:facet>
+								<h:outputText value="#{contentAgent.value.language}" />
+							</rich:column>
+							
+							<rich:column width="150" label="#{label.category}" >
+								<f:facet name="header">
+               				 		<h:outputText value="#{label.category}" />
+               				 	</f:facet>
+								<h:outputText value="#{contentForm.selectedContentType.contentTypeName}" />
+							</rich:column>
+							
+							<rich:column width="120" label="#{label.animationType}" 
+								styleClass="alignCenter" filterBy="#{contentAgent.value.animationType}" sortBy="#{contentAgent.value.animationType}" filterEvent="onchange">
+								<f:facet name="header">
+               				 		<h:outputText value="#{label.animationType}" />
+               				 	</f:facet>
+								<h:outputText
+									value="#{contentAgent.value.animationType}"/>
+							</rich:column>
+							
+							<rich:column width="270"  label="#{label.shortDesc}" 
+								styleClass="alignLeft" filterBy="#{contentAgent.value.shortDesc}" sortBy="#{contentAgent.value.shortDesc}" filterEvent="onchange">
+								<f:facet name="header">
+               				 		<h:outputText value="#{label.shortDesc}" />
+               				 	</f:facet>
+								<h:outputText value="#{contentAgent.value.shortDesc}">
+									<f:converter converterId="UpperCase" />
+								</h:outputText>
+							</rich:column>
+							<rich:column width="200px" label="#{label.action}" styleClass="alignCenter">
+								<a4j:commandButton value="#{label.edit} #{label.content}" style="background-image: url('#{request.contextPath}/web-resources/img/icons/editDoc.png')" 
+									 action="#{contentCtrl.editContent}"									
+									styleClass="button" onmouseover="this.className='buttonHover'" onmouseout="this.className='button'">
+									<a4j:actionparam name="selectedContentId" value="#{contentAgent.value.idContent}" assignTo="#{contentForm.selectedContent.idContent}" />
+								</a4j:commandButton>
+							</rich:column>
+							<f:facet name="footer">
+								<h:panelGrid width="100%">
+                					<rich:datascroller id="ds" renderIfSinglePage="true"/>
+                				</h:panelGrid>
+            				</f:facet>
+						</rich:extendedDataTable>
+					</td></tr></table>
+				</rich:panel>
+			</h:panelGrid>
+			
+			
+			<rich:modalPanel id="confirmation" width="300" height="165" overlapEmbedObjects="true" >
+ 				<f:facet name="header"><h:outputText value="#{label.deleteConfirmation}"/></f:facet>
+				<h:panelGrid>
+					<h:panelGrid columns="2" width="280">
+   						<h:graphicImage value="/web-resources/img/icons/alertBig.png" />
+						<h:outputText value="#{label.deleteMessage1} #{label.contents} #{label.deleteMessage2}" />
+					</h:panelGrid>
+					<h:panelGrid columns="1" width="100%" columnClasses="alignCenter">
+						<h:outputText value="#{label.deleteMessage3}" />
+					</h:panelGrid>
+					<table align="center"><tr><td>
+ 						<h:panelGrid columns="3">			
+ 							<a4j:commandButton id="confDeleteConte" value="#{label.ok}" style="background-image: url('#{request.contextPath}/web-resources/img/icons/ok.png')" 
+									action="#{contentCtrl.deleteContents}" reRender="contentListContiner" 					
+									styleClass="button" onmouseover="this.className='buttonHover'" onmouseout="this.className='button'">
+								<rich:componentControl for="confirmation" operation="hide" event="onclick" attachTo="confDeleteConte" />
+							</a4j:commandButton>
+							<rich:spacer width="15px"/>
+							<a4j:commandButton id="canDeleteConte" value="#{label.cancel}" style="background-image: url('#{request.contextPath}/web-resources/img/icons/cancel.png')" 
+									onclick="return false"					
+									styleClass="button" onmouseover="this.className='buttonHover'" onmouseout="this.className='button'">
+									
+								<rich:componentControl for="confirmation" operation="hide" event="onclick" attachTo="canDeleteConte" />
+							</a4j:commandButton>
+ 						</h:panelGrid>
+					</td></tr></table>
+				</h:panelGrid>
+			</rich:modalPanel>
+			
+			
+		</a4j:form>
+	</ui:define>
+
+</ui:composition>
+

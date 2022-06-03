@@ -1,0 +1,17 @@
+message.satrtup 				= Startup empty project
+message.satrtup.fdt 			= ${message.satrtup} for FDT
+message.satrtup.full 			= Startup full project
+message.satrtup.full.fdt 		= ${message.satrtup.full} for FDT
+message.shutdown		 		= Shutdown project
+message.reopen			 		= Reopen project
+message.fdt 					= null
+message.version.increase 		= null
+message.version.increase.major 	= null
+message.version.increase.minor 	= null
+message.version.increase.build 	= null
+message.version.increase.test 	= null
+message.version.reset 			= null
+message.version.reset.major 	= null
+message.version.reset.minor 	= null
+message.version.reset.build 	= null
+message.version.reset.test 		= null

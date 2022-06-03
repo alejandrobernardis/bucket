@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Videos>
+	<Video id="6Wgp_wLF9Cg">
+		<nombre>Entrada</nombre>
+		<segundoIni>5</segundoIni>
+		<segundoEnd>15</segundoEnd>
+		<elementos total="2">
+		    <nextVideo val_x="200" val_y="130" val_w="250" val_h="100" gotoID="SZtgYy3Cego">Con Salsita</nextVideo>
+			<nextVideo val_x="550" val_y="130" val_w="250" val_h="100" gotoID="4o6l6wG63LM">Sin Salsita</nextVideo>		
+		</elementos>
+	</Video>
+	
+	<Video id="SZtgYy3Cego">
+		<nombre>Con Salsita</nombre>
+		<segundoIni>13</segundoIni>
+		<segundoEnd>20</segundoEnd>
+		<elementos total="3">
+		    <nextVideo val_x="250" val_y="30" val_w="140" val_h="100" gotoID="TS4HrQOViYo">Cohete</nextVideo>
+			<nextVideo val_x="420" val_y="30" val_w="140" val_h="100" gotoID="SztQRTovpHU">Arbol</nextVideo>
+			<nextVideo val_x="580" val_y="30" val_w="140" val_h="100" gotoID="FbME1rvJtzg">Capa</nextVideo>
+		</elementos>
+	</Video>
+	
+	
+	
+	<Video id="4o6l6wG63LM">
+		<nombre>Sin Salsita</nombre>
+		<segundoIni>10</segundoIni>
+		<segundoEnd>20</segundoEnd>
+		<elementos total="3">
+		    <nextVideo val_x="250" val_y="30" val_w="140" val_h="100" gotoID="qH6_eFhEyYc">capa de torero</nextVideo>
+			<nextVideo val_x="420" val_y="30" val_w="140" val_h="100" gotoID="j8kFoFkSjqo">tabla de surf</nextVideo>
+			<nextVideo val_x="580" val_y="30" val_w="140" val_h="100" gotoID="9s98iS3xNdE">aspiradora</nextVideo>
+		</elementos>
+	</Video>
+	
+</Videos>

@@ -1,0 +1,27 @@
+{% extends '../master.html' %}
+{% block body_tag %}<body class="body-auth">{% end %}
+{% block content_container %}
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default panel-auth">
+            <div class="panel-body">
+                <div class="form-auth">
+                    <h3>addicted / <small>Verificaci&oacute;n</small></h3>
+                    <hr>
+                    <div class="text-center">
+                        {% if 'username' in data %}
+                        <p class="lead">Usuario habilitado</p>
+                        <h2 class="text-success">{{ data.username }}</h2>
+                        {% else %}
+                        <p class="lead">Usuario denegado</p>
+                        <h2 class="text-danger">{{ data.last_name }}</h2>
+                        {% end %}
+                    </div>
+                    <hr>
+                </div>
+                <a href="/auth/signin" class="btn btn-block btn-success">Aceptar</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% end %}

@@ -1,0 +1,75 @@
+{% extends "../master.html" %}
+{% block head_style_extra %}
+
+<link rel="stylesheet" type="text/css" media="screen" href="{{ static_url('css/resistol_pasos.css') }}">
+<link rel="stylesheet" type="text/css" media="screen" href="{{ static_url('css/bootstrap.css') }}">
+
+<style type="text/css">
+	#number1 {left: 265px; top: 280px;}
+	#number1 label {color: #fff;}
+	#number1 label a {color: #fff; text-decoration: underline;}
+	#number1 label a:hover {color: #6ECEE6;}
+</style>
+
+{% end %}{% block body_wrap_container %}
+
+<div id="content1" style="display:block;">
+	<div class="closeButton">
+		<a href="javascript:;" class="button-step" data-action="close">Cerrar</a>
+	</div>
+	<div id="Step1" class="pasosContent" style="">
+		<div class="paso1">
+			<img src="{{ static_url('img/paso1.jpg') }}" alt="Paso 1" width="69" height="42">
+		</div>
+		<form id="termsform" action="/facebook/app_new_pegando_historias/auth/terms" method="post">
+			{% module xsrf_form_html() %}
+			<div id="number1">
+				<label class="checkbox">
+					<input type="checkbox" id="policy" name="policy" value="1" checked> Acepto las <a href="http://www.henkel.mx/cps/rde/xchg/henkel_mxe/hs.xsl/70_MXE_HTML.htm" target="_blank">Pol&iacute;ticas de Privacidad</a>
+				</label>
+				<label class="checkbox">
+					<input type="checkbox" id="news" name="news" value="1"> Deseo recibir noticias.
+				</label>
+				<br>
+				<a href="javascript:;" class="btn btn-large btn-danger button-step" data-action="close">No Acepto</a>
+				<button type="submit" class="btn btn-large btn-success">Acepto</button>
+			</div>
+		</form>
+	</div>
+</div>
+
+{% end %}{% block body_script_ready %}
+
+<!-- lib's -->
+<script type="text/javascript" src="{{ static_url('js/jquery.form.js') }}"></script>
+
+<!-- resistol -->
+<script type="text/javascript">
+(function($self){
+	'use strict';
+	$('.button-step').bind('click', function(e){
+		var scope = $(this);
+		var action = scope.attr("data-action");
+		switch(action.toLowerCase()){
+			case 'close':
+				return location.href = '/facebook/app_new_pegando_historias';
+		}
+	});
+	$('#termsform').ajaxForm({
+		beforeSubmit:function(){
+			if(!$('#policy').attr("checked")) {
+				alert('Para continuar debes a ceptar las pol\xEDticas de privacidad.');
+				return false;
+			}
+		}, complete:function(xhr){
+			var json = eval('('+xhr.responseText+')');
+			if(json.error.id == 0){
+				return location.href = json.response.next;
+			}else if(confirm(json.error.message)){
+				return location.href = json.response.next;
+			}
+		}
+	});
+}).call(this);
+</script>
+{% end %}

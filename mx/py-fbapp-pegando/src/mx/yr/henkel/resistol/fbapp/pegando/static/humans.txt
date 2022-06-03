@@ -1,0 +1,17 @@
+/* the humans responsible & colophon */
+/* humanstxt.org */
+
+/* TEAM */
+Name: Alejandro M. Bernardis
+Contact: alejandro.bernardis [at] gmail.com
+Site: http://alejandromb.com.ar
+Twitter: @alejandromb
+Location: Distrito Federal, Mexico
+                  
+/* SITE */    
+Last update: 2012
+Doctype: HTML5
+Language: English
+IDE: Eclipse
+Tech: Python, MongoDB, HTML5, JavaScript, CSS
+Frameworks: Tornado, PyMongo, Mongoengine, jQuery, Bootstrap

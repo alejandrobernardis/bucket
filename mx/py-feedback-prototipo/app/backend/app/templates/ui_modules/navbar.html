@@ -1,0 +1,115 @@
+{% block header %}
+{% if bool(handler.current_user) %}
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+    {% block navbar_news %}
+    <div class="alert-warning text-center" style="border: 1px solid transparent;">
+        <span class="fa fa-warning"></span>
+        <small>Versi&oacute;n <strong>Prototype</strong>, a&uacute;n no es productiva.</small>
+    </div>
+    {% end %}
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">NAV</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <p class="navbar-text brand">
+                <strong id="navbar-title-brand" style="display: none;">{{handler.settings.get('site_title').lower()}} / </strong>
+                <span id="navbar-user-icon" class="glyphicon glyphicon-user"></span>
+                Hola, {{ current_user.get('first_name') }}
+            </p>
+        </div>
+        <div class="collapse navbar-collapse navbar-right" id="bs-example-navbar-collapse-1">
+            <p class="navbar-text">
+                <a href="/profile" class="">
+                    <span class="fa fa-gear"></span>
+                    Perfil (<small>{{ current_user.get('username') }}</small>)
+                </a>
+            </p>
+            {% if handler.identity.is_admin %}
+            <p class="navbar-text">
+                <a href="/a/evaluations" class="">
+                    <span class="fa fa-star-half-o"></span>
+                    Evaluaciones
+                </a>
+            </p>
+            <p class="navbar-text">
+                <a href="/a/register" class="">
+                    <span class="fa fa-tasks"></span>
+                    Registros
+                </a>
+            </p>
+            <p class="navbar-text">
+                <a href="/a/users" class="">
+                    <span class="fa fa-users"></span>
+                    Usuarios
+                </a>
+            </p>
+            <p class="navbar-text">
+                <a href="/a/users/new" class="">
+                    <span class="fa fa-user"></span>
+                    Crear Usuario
+                </a>
+            </p>
+            {% else %}
+            <p class="navbar-text">
+                <a href="/evaluations" class="">
+                    <span class="fa fa-star-half-o"></span>
+                    Mis Evaluaciones
+                </a>
+            </p>
+            <p class="navbar-text">
+                <a href="/evaluations/new" class="">
+                    <span class="fa fa-star-o"></span>
+                    Evaluar
+                </a>
+            </p>
+            <p class="navbar-text">
+                <a href="/contact-us" class="">
+                    <span class="fa fa-briefcase"></span>
+                    Contacto
+                </a>
+            </p>
+            {% end %}
+            <p class="navbar-text">
+                <a href="/auth/signout" class="">
+                    <span class="fa fa-sign-out"></span>
+                    Cerrar Sesi&oacute;n
+                </a>
+            </p>
+        </div>
+    </div>
+</nav>
+{% else %}
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <p class="navbar-text brand">
+                <strong id="navbar-title-brand" style="display: none;">{{handler.settings.get('site_title').lower()}} / </strong>
+                <a href="/">
+                    <span class="fa fa-home"></span>
+                    Volver al home
+                </a>
+            </p>
+        </div>
+    </div>
+</nav>
+{% end %}
+{% end %}
+
+{% block body_scripts_spy %}
+<script src="{{ static_url('js/jquery-scrollspy.js') }}"></script>
+<script>
+    $(function() {
+        var _brand = $('#navbar-title-brand'), 
+            _icon = $('#navbar-user-icon');
+        $(window).scrollspy({
+            min: 100, max: 999999,
+            onEnter: function(element, position) {_brand.show(); _icon.hide();},
+            onLeave: function(element, position) {_brand.hide(); _icon.show();}
+        });
+    });
+</script>
+{% end %}

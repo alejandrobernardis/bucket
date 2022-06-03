@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<f:view contentType="text/html" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	beforePhaseListener="#{contentCtrl.init}"
+	locale="#{config.locale}">
+	
+<f:loadBundle var="label" basename="labels.labels" />
+	
+<rich:effect for="window" event="onload" 
+    type="Appear" params="targetId:'content',duration:0.8,from:0.0,to:1.0" />
+    
+<rich:effect for="window"  event="onbeforeunload" 
+    type="Fade" params="targetId:'content',duration:0.8,from:1.0,to:0.0" />	    
+    
+    	
+<html>
+	<head>
+		<ui:insert name="header" />
+		<link href="#{request.contextPath}/web-resources/media600/styles.css?dummy=#{config.dummy}" rel="stylesheet" type="text/css" /> 
+		<link href="#{request.contextPath}/web-resources/media600/dropdown.css?dummy=#{config.dummy}" rel="stylesheet" type="text/css" />
+		<link href="#{request.contextPath}/web-resources/media600/theme.css?dummy=#{config.dummy}" rel="stylesheet" type="text/css" />
+		<script type="text/javascript">
+			var animWidth = 455;
+			var animHeight = 117;
+		</script> 
+	</head>
+	<body>
+		<table width="100%" cellspacing="0" cellpadding="0" style="margin:0px">
+			<tr>
+				<td>
+					<table id="main" align="center" cellpadding="0" cellspacing="0" >
+						<tr>
+							<td id="header">
+								<table cellspacing="0" cellpadding="0">
+									<tr>
+										<td id="preAnimation"></td>
+										<td id="animation">
+											<div id="slideshow">
+												<ui:insert name="animation" />
+												<table id="languageSelector" cellpadding="15" cellspacing="0">
+													<tr><td>
+														<ui:insert name="languageSelector" />
+													</td></tr>
+												</table>
+											</div>
+										</td>
+										<td id="postAnimation"></td>
+									</tr>
+								</table>	
+							</td>
+						</tr>
+						
+						<tr>
+							<td id="menu" style="vertical-align: top">
+								<ui:insert name="menu" />
+							</td>
+						</tr>
+						<tr>
+							<td id="workarea">
+								<table cellspacing="0" cellpadding="0" style="opacity:0;filter:alpha(opacity=0);" id="content">
+									<tr>
+										<td class="contentLeft">
+											<ui:insert name="contentLeft" />									
+										</td>
+										<td class="contentRight">
+											<table cellspacing="0" cellpadding="0" width="100%" class="stores" style="position:absolute;display:none;" id="storeContiner"  >
+												<tr>
+													<td>
+														<div class="store Continer">
+															<ui:insert name="stores" />
+														</div>		
+														<table align="right">
+															<tr><td>
+																<input type="button" value="#{label.hideStores}" onclick="$('storeContiner').style.display='none'" class="storeButton"/>	
+															</td></tr>
+														</table>
+															
+													</td>
+												</tr>
+											</table>
+											<table cellspacing="0" cellpadding="0" width="100%">
+												<tr><td><ui:insert name="publications" /></td></tr>
+												<tr><td><ui:insert name="contentRight" /></td></tr>
+												<tr><td>
+													<input type="button" value="#{label.storeLocator}" onclick="$('storeContiner').style.display=''" style="display: #{contentFrm.stores == null ? 'none' : ''}" class="storeButton" />
+												</td></tr>
+											</table>
+										</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td id="footer">
+					<ui:include src="/pages/analitics.xhtml" />
+				</td>
+			</tr>
+		</table>		
+		
+	</body>
+</html>
+</f:view>

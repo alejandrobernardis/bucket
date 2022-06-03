@@ -1,0 +1,119 @@
+{% extends '../../master.html' %}
+{% include '../../ui_modules/navbar.html' %}
+{% block content_container %}
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default panel-search">
+            <div class="panel-body">
+                <form role="form" class="form-auth form-request" method="post">
+                    {% module xsrf_form_html() %}
+                    <fieldset>
+                        <h3>{{handler.settings.get('site_title').lower()}} / <small>Crear usuario</small></h3>
+                        <hr>
+                        {% if form.errors %}
+                            {% module ViewErrors(form.errors) %}
+                        {% end %}
+                    </fieldset>
+                    <fieldset>
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6">
+                                <div class="form-group">
+                                    <label>Nivel</label>
+                                    <div>
+                                        {% set permissions = str(form.permissions.data) %}
+                                        <label class="radio-inline">
+                                            <input type="radio" name="permissions" id="permissions_user" value="user" {{ 'checked' if permissions == 'user' else '' }}>
+                                            Usuario
+                                        </label>
+                                        <label class="radio-inline"><input type="radio" name="permissions" id="permissions_admin" value="admin" {{ 'checked' if permissions == 'admin' else '' }}>
+                                            Administrador
+                                        </label>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="form-group">
+                                    <label>Es cliente o parte de</label>
+                                    <div>
+                                        {% set provider = str(form.provider.data) %}
+                                        <label class="radio-inline"><input type="radio" name="provider" id="provider_all" value="1" {{ 'checked' if provider == '1' else '' }}/>Todos</label>
+                                        <label class="radio-inline"><input type="radio" name="provider" id="provider_figment" value="2" {{ 'checked' if provider == '2' else '' }}/>Figment</label>
+                                        <label class="radio-inline"><input type="radio" name="provider" id="provider_kinetiq" value="3" {{ 'checked' if provider == '3' else '' }}/>Kinetiq</label>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="form-group">
+                                    <label for="first_name">Nombre(s)</label>
+                                    <input class="form-control" required="1" name="first_name" id="first_name" value="{{ form.first_name.data }}" type="text" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="last_name">Apellido(s)</label>
+                                    <input class="form-control" required="1" name="last_name" id="last_name" value="{{ form.last_name.data }}" type="text" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="company">Empresa</label>
+                                    <input class="form-control" required="1" name="company" id="company" value="{{ form.company.data }}" type="text" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="position">Cargo</label>
+                                    <input class="form-control" required="1" name="position" id="position" value="{{ form.position.data }}" type="text" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Email</label>
+                                    <input class="form-control" required="1" name="email" id="email" value="{{ form.email.data }}" type="email" />
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-xs-4">
+                                        <label for="phone_lada">Lada</label>
+                                        <input class="form-control" required="1" name="phone_lada" id="phone_lada" value="{{ form.phone_lada.data }}" type="text" />
+                                        <small class="help-block">Ej: +52 044</small>
+                                    </div>
+                                    <div class="col-xs-8">
+                                        <label for="phone_number">N&uacute;mero de tel&eacute;fono</label>
+                                        <input class="form-control" required="1" name="phone_number" id="phone_number" value="{{ form.phone_number.data }}" type="text" />
+                                        <small class="help-block">Ej: 9874 5895 ext. 444</small>
+                                    </div>
+                                </div>
+                                <div class="checkbox hidden-sm hidden-xs">
+                                    <label><input name="policy" value="1" type="checkbox" {{ 'checked' if form.policy.data else '' }}/> Acepto el <a href="/legal/privacy">Aviso de Privacidad</a>.</label>
+                                </div>
+                                <hr>
+                                <div class="form-group hidden-sm hidden-xs">
+                                    <a href="/a/users" class="btn btn-default">Cancelar</a>
+                                    <button type="submit" class="btn btn-success pull-right">Crear</button>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-5">
+                                <div class="panel panel-warning">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title"><span class="fa fa-bullhorn"></span>&nbsp;&nbsp;Personas involucradas con el cliente</h4>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="form-group">
+                                            {% module ViewExecutives(form, executives) %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row hidden-lg hidden-md">
+                            <div class="col-lg-6 col-md-6">
+                                <div class="checkbox">
+                                    <label><input name="policy" value="1" type="checkbox" {{ 'checked' if form.policy.data else '' }}/> Acepto el <a href="/legal/privacy">Aviso de Privacidad</a>.</label>
+                                </div>
+                                <hr>
+                                <div class="form-group">
+                                    <a href="/a/users" class="btn btn-default">Cancelar</a>
+                                    <button type="submit" class="btn btn-success pull-right">Crear</button>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% end %}
+{% block body_scripts_init %}
+{% include '../../ui_modules/default-growl.html' %}
+{% end %}

@@ -1,0 +1,214 @@
+{% extends "../master.html" %}
+
+{% block head_metada %}
+
+<meta name="title" content="Resistol, Pegando Historias">
+<meta name="description" content="{% raw fb_history_title %}">
+<meta property="og:image" content="{{ static_url('img/facebook.png') }}"/>
+<meta property="og:title" content="Resistol, Pegando Historias"/>
+<meta property="og:description" content="{% raw fb_history_title %}"/>
+<meta property="og:url" content="{% raw fb_history_url %}"/>
+<meta property="og:site_name" content="Resistol, Pegando Historias"/>
+<meta property="og:type" content="website"/>
+<meta property="fb:app_id" content="{{ handler.settings.get('facebook_app_id') }}" />
+<meta property="fb:admins" content="{{ handler.settings.get('facebook_uid') }}" />
+
+{% end %}{% block head_style_extra %}
+
+<link rel="stylesheet" type="text/css" media="screen" href="{{ static_url('css/resistol_base.css') }}">
+
+<style type="text/css">
+	#filtro {left: 22px; top: 420px; color:#a5c0e2;}
+	#filtro a {font-family: Arial, Helvetica, sans-serif; color:#a5c0e2; font-size:12px; text-decoration: none;}
+	#filtro a:hover {color:#fff; text-decoration: underline;}
+</style>
+
+{% end %}{% block body_wrap_container %}
+
+<div id="header">
+	<div id="Resumen" class="uploadButton">
+		<a href="/facebook/app_new_pegando_historias/history/create" class="button-step" data-action="sube">Sube tu Historia</a>
+	</div>
+</div>
+
+<div id="content" style="">
+    <div id="googleMaps">
+        <div id="map_canvas" class="cls-map"></div>
+    </div>
+    <div id="filtro">
+        <a href="/facebook/app_new_pegando_historias/" class="" data-action="">Volver al Home</a>
+    </div>
+    <div id="resistolLogo">
+        <img src="{{ static_url('img/resistolLogo.png') }}" width="104" height="75" alt="Resistol" />
+    </div>
+    <div id="historiasContent" style=""></div>
+</div>
+
+<!-- maps -->
+<script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=false"></script>
+
+<!-- twitter -->
+<script type="text/javascript" src="https://platform.twitter.com/widgets.js"></script>
+
+<!-- facebook -->
+<div id="fb-root"></div>
+<script type="text/javascript">(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/es_LA/all.js#xfbml=1&appId=478746198811594";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+<!-- resistol -->
+<script type="text/javascript">
+(function($self){
+	'use strict';
+
+	// MISC
+
+	var base_url = '/facebook/app_new_pegando_historias';
+	var tmpl_hisotry = '<div id=\"history_token\" class=\"historiasCompletas\" style=\"display:none;\"><div class=\"fotografias\"><div class=\"pic1\"><img src=\"{1}\" alt=\"Foto1\" width=\"104\" height=\"104\" /></div><div class=\"pic2\"><img src=\"{2}\" alt=\"Foto1\" width=\"93\" height=\"93\" /></div><div class=\"icon\"><img src=\"/static/img/relation_{3}.png\" alt=\"Love\" width=\"26\" height=\"24\" /></div></div><div class=\"myStory\"><p style=\"font-weight:800;\" class=\"title\">{4}</p><p class=\"white\">{5}</p><p class=\"white\"><ul class="view-images-list">{photos}</ul></p></div><div class=\"share\"><a href=\"https://twitter.com/share\" class=\"twitter-share-button\" data-url=\"{7}\" data-text=\"{8}\" data-via=\"resistolmexico\" data-lang=\"es\" data-hashtags=\"pegando_historias\">Twittear</a><div class=\"fb-like\" data-href=\"{9}\" data-send=\"false\" data-layout=\"button_count\" data-width=\"450\" data-show-faces=\"false\" data-font=\"verdana\"></div></div></div>';
+	var tmpl_hisotry_images = '<li id="{1}"><img src="{2}" alt=""/></li>';
+	var user_profile = {% raw user_profile %}
+
+	// MAP's
+
+	var map = new google.maps.Map(document.getElementById('map_canvas'), {
+		zoom:2,
+		center: new google.maps.LatLng(20.341219, -25.142264),
+		mapTypeId: google.maps.MapTypeId.ROADMAP,
+		panControl: true,
+		zoomControl: true,
+		mapTypeControl: false,
+		scaleControl: false,
+		streetViewControl: true,
+		overviewMapControl: true
+	});
+
+	var tmp_storage = [];
+
+	function RemoveMap(){
+		if(!tmp_storage.length) return;
+		while(tmp_storage.length){
+			tmp_storage.pop().setMap(null);
+		}
+	}
+
+	function CreateMap(){
+		RemoveMap();
+		var profile, image, category, paths, relations, m_lat_lng, m_marker, f_lat_lng, f_marker;
+		var tmpl_color = ['#000', '#EA2F8C', '#3365CA', '#EC0000'];
+		var tmpl_image = '/static/img/maps/ping_{1}.png';
+		profile = user_profile;
+		category = profile.history_category;
+		image = new google.maps.MarkerImage(tmpl_image.replace('{1}', category),
+				new google.maps.Size(32,32), new google.maps.Point(0,0), new google.maps.Point(16,16));
+		m_lat_lng = new google.maps.LatLng(profile.my_location_x, profile.my_location_y);
+		m_marker = new google.maps.Marker({map: map, position: m_lat_lng, icon: image});
+		tmp_storage.push(m_marker);
+		f_lat_lng = new google.maps.LatLng(profile.friend_location_x, profile.friend_location_y);
+		f_marker = new google.maps.Marker({map: map, position: f_lat_lng, icon: image});
+		tmp_storage.push(f_marker);
+		paths = [m_lat_lng, f_lat_lng]
+		relations = new google.maps.Polyline({
+			path: [m_lat_lng, f_lat_lng],
+			strokeColor: tmpl_color[category],
+		    strokeOpacity: 1.0,
+		    strokeWeight: 2});
+		relations.setMap(map);
+		tmp_storage.push(relations);
+	}
+
+	/* --- */
+
+	function load_image_profile(url, to, w, h){
+		if(!url || !to) return;
+		var img = new Image();
+		img.onload = function(){
+			var scope = $(to);
+			var max_h = h || 176, max_w = w || 176, ratio = this.height/this.width;
+			if(this.width > max_w) {
+				this.width = max_w;
+				this.height = Math.round(this.width*ratio);
+				if(this.height < max_h){
+					this.height = max_h;
+				    this.width = Math.round(this.height/ratio);
+				}
+			} else if(this.height > max_h) {
+			    this.height = max_h;
+			    this.width = Math.round(this.height/ratio);
+			    if(this.width < max_w){
+			    	this.width = max_w;
+					this.height = Math.round(this.width*ratio);
+				}
+			} if(scope.children().length>1){
+				scope.children(':first').remove();
+			} scope.prepend(this);
+		}; img.src = url;
+	}
+
+	function RemoveHistories(category, page_number, page_size){
+		$("#historiasContent").empty();
+	}
+
+	var hisotry_title = "{my} y {friend}";
+	var hisotry_twitter = "{my} y {friend} quedaron pegados con su historia.";
+	var hisotry_url = "http://apps.facebook.com/pegando_historias/history/view/{token}";
+
+	function CreateHistories(){
+		RemoveHistories();
+		var profile, h_title, h_detail, h_url, h_tweet;
+		var scope = $("#historiasContent");
+
+		profile = user_profile;
+		h_title = hisotry_title.replace("{my}", profile.my_name).replace("{friend}", profile.friend_name);
+		h_detail = profile.history_detail.split(" ").slice(0, 180).join(" ") + "...";
+		h_url = hisotry_url.replace("{token}", profile.token);
+		h_tweet = hisotry_twitter.replace("{my}", profile.my_name).replace("{friend}", profile.friend_name);
+
+		var h_img_ref, h_img_q=0, h_img_list='', h_img_baseid='img_view_0';
+
+		for(var a=0; a<3; a++){
+			h_img_ref = profile["image_0"+(a+1)];
+			if(h_img_ref && h_img_ref.length){
+				h_img_list += tmpl_hisotry_images.replace('{1}', h_img_baseid+(a+1)).replace('{2}', ''/* h_img_ref */);
+				h_img_q++;
+			}
+		}
+
+		scope.append(tmpl_hisotry.replace("display:none;", "")
+			 .replace("history_token", profile.token)
+			 .replace("{1}", profile.friend_photo)
+			 .replace("{2}", profile.my_photo)
+			 .replace("{3}", profile.history_category)
+			 .replace("{4}", h_title)
+			 .replace("{5}", h_detail)
+			 .replace("{6}", profile.token)
+			 .replace("{7}", h_url)
+			 .replace("{8}", h_tweet)
+			 .replace("{9}", h_url)
+			 .replace("{photos}", h_img_list)
+		);
+
+		for(var a=0; a<h_img_q; a++){
+			h_img_ref = profile["image_0"+(a+1)];
+			load_image_profile(h_img_ref, ('#'+h_img_baseid+(a+1)), 93, 93);
+		}
+
+		load_image_profile(profile.my_photo,'.pic2', 93, 93);
+		load_image_profile(profile.friend_photo,'.pic1', 104, 104);
+
+		try{
+			twttr.widgets.load();
+			FB.XFBML.parse();
+		}catch(e){}
+	}
+
+	CreateMap();
+	CreateHistories();
+
+}).call(this);
+</script>
+{% end %}
+

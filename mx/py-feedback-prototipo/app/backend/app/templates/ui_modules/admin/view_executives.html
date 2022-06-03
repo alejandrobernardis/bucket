@@ -1,0 +1,12 @@
+{% set executive_list = form.executives.data or [] %}
+{% for executive in executives %}
+{% set executive = helpers.normalize_user(executive) %}
+<div class="checkbox">
+    <label>
+        <input type="checkbox" name="executives" value="{{ executive.id }}" {{ 'checked' if executive.id in executive_list else '' }}><strong>{{ executive.first_name }} {{ executive.last_name }}</strong>&nbsp;
+        <br><small>{{ executive.email }}</small>
+        <br><small class="text-muted"><span class="fa fa-briefcase"></span>&nbsp;{{ executive.company }}</small>&nbsp;&nbsp;
+        <small class="text-muted"><span class="fa fa-user"></span>&nbsp;{{ executive.username }}</small>&nbsp;&nbsp;
+    </label>
+</div>
+{% end %}

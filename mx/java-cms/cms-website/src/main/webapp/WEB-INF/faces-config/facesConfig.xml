@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<!DOCTYPE faces-config PUBLIC "-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.1//EN"
+                              "http://java.sun.com/dtd/web-facesconfig_1_1.dtd">
+<faces-config>
+	<application>
+		<variable-resolver>
+			org.springframework.web.jsf.DelegatingVariableResolver
+		</variable-resolver>
+		<view-handler>
+			com.sun.facelets.FaceletViewHandler
+		</view-handler>
+	</application>
+
+	<managed-bean>
+		<managed-bean-name>contentCtrl</managed-bean-name>
+		<managed-bean-class>com.clarus.cms.web.controller.ContentCtrl</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+		<managed-property>
+			<property-name>config</property-name>
+			<value>#{config}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>contentSrvc</property-name>
+			<value>#{contentService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>contentFrm</property-name>
+			<value>#{contentFrm}</value>
+		</managed-property>
+		
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>config</managed-bean-name>
+		<managed-bean-class>com.clarus.cms.vo.Config</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>contentFrm</managed-bean-name>
+		<managed-bean-class>com.clarus.cms.web.controller.ContentFrm</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+	
+	
+
+</faces-config>

@@ -1,0 +1,209 @@
+{% extends "../master.html" %}
+{% block body_content %}
+<link rel="stylesheet" type="text/css" media="screen" href="{{ static_url('css/bootstrap.css') }}">
+<!-- fomrs -->
+<div class="container" style="margin-left:32px;">
+	<div id="Step1" class="">
+		<form action="javascript:;">
+			<div>
+				<div>
+					<img id="my_photo" src="" alt=""/>
+					<a href="javascript:;" class="photo-change" data-action="my">Cambiar Foto</a>
+				</div>
+			</div>
+			<div>
+				<div>
+					<img id="my_photo" src="" alt=""/>
+					<a href="javascript:;" class="photo-change" data-action="friend">Cambiar Foto</a>
+				</div>
+			</div>
+		</form>
+	</div>
+	<div id="Step3" class="" style="">
+		<form id="uploadimages" action="/history/create/image/upload" method="post" enctype="multipart/form-data">
+			{% module xsrf_form_html() %}
+			<input type="hidden" name="action_token" value="{% raw action_token %}"/>
+			<label>Desde mi computadoras</label>
+			<input type="file" name="image1" accept="image/gif,image/png,image/jpg,image/jpge"><br>
+			<input type="file" name="image2" accept="image/gif,image/png,image/jpg,image/jpge"><br>
+			<input type="file" name="image3" accept="image/gif,image/png,image/jpg,image/jpge"><br>
+			<input type="file" name="image4" accept="image/gif,image/png,image/jpg,image/jpge"><br>
+			<input type="file" name="image5"><br>
+			<button type="submit" class="btn btn-danger">Subir Im&aacute;genes</button>
+			<span class="label label-percent" style="display: none;">0%</span>
+		</form>
+	</div>
+</div>
+
+<!-- modal images -->
+<div class="modal hide" id="imageslist">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal">×</button>
+		<h3 class="modal-title">Cambiar imagen</h3>
+	</div>
+	<div class="modal-body">
+		<form id="uploadimage" action="/history/create/image/upload" method="post" enctype="multipart/form-data">
+			{% module xsrf_form_html() %}
+			<input type="hidden" name="action_token" value="{% raw action_token %}"/>
+			<input type="hidden" id="profile_photo" name="aid" value="">
+			<label>Desde mi computadoras</label>
+			<input type="file" name="image" accept="image/gif,image/png,image/jpg,image/jpge"><br>
+			<button type="submit" class="btn btn-danger">Subir Im&aacute;genes</button>
+			<span class="label label-percent-profile" style="display:none;">0%</span>
+			<br/>
+		</form>
+	</div>
+	<div class="modal-footer">
+		<a href="#" class="btn" data-dismiss="modal">Cancelar</a>
+		<a href="#" class="btn btn-primary" data-action="save">Guardar</a>
+	</div>
+</div>
+
+<!-- lib's -->
+<script type="text/javascript" src="{{ static_url('js/jquery.form.js') }}"></script>
+
+<!-- resistol -->
+<script type="text/javascript">
+
+(function($self){
+	'use strict';
+	var cnx = new Young.Server();
+
+	var action_token = '{% raw action_token %}';
+
+	var data_send = {
+		my_name: "",
+		my_location: "",
+		my_photo: "",
+		friend_name: "",
+		friend_location: "",
+		friend_photo: "",
+		friend_fbuid: "",
+		history_category: "",
+		history_location: "",
+		history_detail: "",
+		image_01: null,
+		image_02: null,
+		image_03: null,
+	};
+
+	/* images */
+	/* ---------------------------------------------------------------------- */
+
+	var upload_percent = $('.label-percent');
+
+	$('#uploadimages').ajaxForm({
+		beforeSubmit: function() {
+			return true; /* xp's */
+
+			var file, size, message, errors=[], count=false, size_max=300;
+			upload_percent.hide();
+			$('input:file').each(function(){
+				if(this.files.length){
+					file = this.files[0];
+					size = Math.round(file.size/1024);
+					if(size > size_max || size == 0){
+						count = -1;
+						errors.push(file.name);
+					}else{count++;}
+				}
+			});
+			if(count == -1) {
+				message = 'El peso de las im\xE1genes no puede ser mayor a {1}KB';
+				alert(message.replace("{1}", size_max));
+				return false;
+			}else if(!count){
+				return false;
+			}
+			upload_percent.show();
+		}, uploadProgress: function(event, position, total, percentComplete) {
+			upload_percent.html('cargando: '+percentComplete+' %');
+		}, complete: function(xhr) {
+			upload_percent.html('ok!');
+			var json = eval('('+xhr.responseText+')');
+			console.log(json);
+			if(json.error.id == 0){
+				var images = json.response;
+				for(var a=0; a<images.length; a++){
+					data_send["image_0"+(a+1)] = images[a];
+				};
+			}else{
+				alert("["+json.error.id+"] :: "+json.error.message);
+			}
+
+		}
+	});
+
+	/* ---------------------------------------------------------------------- */
+
+	var label_percent_profile = $('.label-percent-profile');
+
+	function modal_reset_image_user(){
+		label_percent_profile.hide();
+		$('#profile_photo').attr('value', null);
+		var button = $('#imageslist a[data-action="save"]');
+		button.attr('data-type', null);
+		button.attr('data-photo', null);
+		$('#uploadimage').resetForm();
+	}
+
+	$('#uploadimage').ajaxForm({
+		beforeSubmit: function() {
+			/* var file, size, message, errors=[], count=false, size_max=300;
+			label_percent_profile.hide();
+			$('input:file').each(function(){
+				if(this.files.length){
+					file = this.files[0];
+					size = Math.round(file.size/1024);
+					if(size > size_max || size == 0){
+						count = -1;
+						errors.push(file.name);
+					}else{count++;}
+				}
+			});
+			if(count == -1) {
+				message = 'El peso de las im\xE1genes no puede ser mayor a {1}KB.';
+				alert(message.replace("{1}", size_max));
+				return false;
+			}else if(!count){
+				return false;
+			} label_percent_profile.show(); */
+		},
+
+		uploadProgress: function(event, position, total, percentComplete) {
+			label_percent_profile.html('cargando: '+percentComplete+' %');
+		},
+
+		complete: function(xhr) {
+			label_percent_profile.html('ok!');
+			var json = eval('('+xhr.responseText+')');
+			console.log(json);
+
+			var image = json.response;
+			var button = $('#imageslist a[data-action="save"]');
+			button.attr('data-type', image.type);
+			button.attr('data-photo', image.id);
+		}
+	});
+
+	$('#imageslist a[data-action="save"]').bind('click', function(e){
+		var scope = $(this);
+		data_send[scope.attr('data-type')+'_photo'] = scope.attr('data-photo');
+		$('#imageslist').modal('hide');
+		modal_reset_image_user();
+	});
+
+	/* ---------------------------------------------------------------------- */
+
+	$('.photo-change').bind('click', function(e){
+		modal_reset_image_user();
+		var scope = $(this);
+		$('#profile_photo').attr('value', scope.attr('data-action'));
+		$('#imageslist').modal();
+	});
+
+}).call(this);
+</script>
+
+{% end %}
+

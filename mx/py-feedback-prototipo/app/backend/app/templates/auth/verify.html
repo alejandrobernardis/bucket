@@ -1,0 +1,31 @@
+{% extends '../master.html' %}
+{% block body_tag %}<body class="body-auth">{% end %}
+{% block content_container %}
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default panel-auth">
+            <div class="panel-body">
+                <form role="form" class="form-auth form-recovery" method="post">
+                    {% module xsrf_form_html() %}
+                    <fieldset>
+                        <h3>{{handler.settings.get('site_title').lower()}} / <small>Recuperar contrase&ntilde;a</small></h3>
+                        <hr>
+                        {% if form.errors %}
+                            {% module ViewErrors(form.errors) %}
+                        {% end %}
+                        <p>Por favor, ingrese la clave de verificaci&oacute;n recibida v&iacute;a email:</p>
+                        <div class="form-group">
+                            <input class="form-control" required="1" autofocus="1" name="activation_key" id="activation_key" value="" type="text" />
+                        </div>
+                        <small class="help-block text-muted">Ej: a6a886abb5af8694eac0a8a093a7ce03</small>
+                        <small class="help-block text-muted">En caso de no recibir el email con la clave de verificaci&oacute;n, por favor, pongase en contacto con el <a href="mailto:sysadmin@feedback.com.mx">administrador del sistema</a>.</small>
+                        <hr>
+                        <a href="{% raw handler.request.headers.get('Referer') or '/' %}" class="btn btn-default pull-left">Cancelar</a>
+                        <button type="submit" class="btn btn-success pull-right">Verificar</button>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% end %}

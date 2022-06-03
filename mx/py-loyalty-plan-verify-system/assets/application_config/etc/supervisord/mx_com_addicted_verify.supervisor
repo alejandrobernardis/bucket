@@ -1,0 +1,11 @@
+# -*- conf -*-
+[program:a1]
+process_name=%(process_num)s
+environment=PYTHONPATH="/data/sys/verify/app:/data/sys/verify/bin:/data/sys/verify/lib:$PYTHONPATH"
+command=/usr/local/bin/python2.7 -m main
+    --port=%(process_num)s
+    --debug=False
+    --log_file_prefix=/var/log/supervisord/%(program_name)s-%(process_num)s.log
+numprocs=8
+numprocs_start=8000
+user=supervisord

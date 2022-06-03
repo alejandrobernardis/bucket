@@ -1,0 +1,142 @@
+{% extends '../master.html' %}
+{% include '../ui_modules/navbar.html' %}
+{% block content_container %}
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default panel-search">
+            <div class="panel-body">
+                <div class="form-auth form-request">
+                    <h3>{{handler.settings.get('site_title').lower()}} / <small>Perfil</small></h3>
+                    <hr>
+                    {% if form.errors %}
+                        {% module ViewErrors(form.errors) %}
+                    {% end %}
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6">
+                            <form role="form" class="form-auth form-request" method="post" action="/profile/update">
+                                <fieldset>
+                                    {% module xsrf_form_html() %}
+                                    <div class="form-group">
+                                        <label for="first_name">Nombre(s)</label>
+                                        <input class="form-control" required="1" name="first_name" id="first_name" value="{{ current_user.get('first_name') }}" type="text" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="last_name">Apellido(s)</label>
+                                        <input class="form-control" required="1" name="last_name" id="last_name" value="{{ current_user.get('last_name') }}" type="text" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="company">Empresa</label>
+                                        <input class="form-control" required="1" name="company" id="company" value="{{ current_user.get('company') or '' }}" type="text" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="position">Cargo</label>
+                                        <input class="form-control" required="1" name="position" id="position" value="{{ current_user.get('position') or '' }}" type="text" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email">Email</label>
+                                        <input class="form-control" required="1" disabled="1" name="email" id="email" value="{{ current_user.get('email') }}" type="email" />
+                                    </div>
+                                    <div class="row form-group">
+                                        <div class="col-xs-4">
+                                            <label for="phone_lada">Lada</label>
+                                            <input class="form-control" required="1" name="phone_lada" id="phone_lada" value="{{ current_user.get('phone_lada') or '' }}" type="text" />
+                                            <small class="help-block">Ej: +52 044, 722</small>
+                                        </div>
+                                        <div class="col-xs-8">
+                                            <label for="phone_number">N&uacute;mero de tel&eacute;fono</label>
+                                            <input class="form-control" required="1" name="phone_number" id="phone_number" value="{{ current_user.get('phone_number') or '' }}" type="text" />
+                                            <small class="help-block">Ej: 5568 5568, 9874 5895 ext. 444</small>
+                                        </div>
+                                    </div>
+                                    <div class="panel panel-warning">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title"><span class="fa fa-calendar"></span>&nbsp;&nbsp;Recibir la evaluación</h4>
+                                        </div>
+                                        <div class="panel-body">
+                                            <div class="form-group">
+                                                <div>
+                                                    {% set dispatch = str(current_user.get('dispatch')) %}
+                                                    <label class="radio-inline"><input type="radio" name="dispatch" id="4w" value="4" {{ 'checked' if dispatch == '4' else '' }}/>Cada 4 semanas</label>
+                                                    <label class="radio-inline"><input type="radio" name="dispatch" id="2w" value="2" {{ 'checked' if dispatch == '2' else '' }}/>Cada 2 semanas</label>
+                                                    <label class="radio-inline"><input type="radio" name="dispatch" id="1w" value="1" {{ 'checked' if dispatch == '1' else '' }} />Cada semana</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row form-group">
+                                        <div class="col-xs-8">
+                                            <p class="profile-policy">
+                                                <span class="label label-success"><span class="fa fa-check"></span></span>&nbsp;
+                                                <a href="/legal/privacy">Aviso de Privacidad</a>.
+                                            </p>
+                                        </div>
+                                        <div class="col-xs-4">
+                                            <button type="submit" class="btn btn-success pull-right">Actualizar</button>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </form>
+                        </div>
+                        <div class="col-lg-4 col-md-4">
+                            <div class="panel panel-warning">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title"><span class="fa fa-lock"></span>&nbsp;&nbsp;Datos de acceso</h4>
+                                </div>
+                                <div class="panel-body">
+                                    <form role="form" class="form-auth form-request" method="post" action="/profile/password">
+                                        <fieldset>
+                                            {% module xsrf_form_html() %}
+                                            <div class="form-group">
+                                                <label for="password">Contrase&ntilde;a actual</label>
+                                                <input class="form-control" required="1" name="password" id="password" value="" type="password" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="password">Contrase&ntilde;a nueva</label>
+                                                <input class="form-control" required="1" name="password_new" id="password_new" value="" type="password" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="password_verify">Confirmar contrase&ntilde;a nueva</label>
+                                                <input class="form-control" required="1" name="password_verify" id="password_verify" value="" type="password" />
+                                            </div>
+                                            <button type="submit" class="btn btn-success pull-right">Actualizar</button>
+                                        </fieldset>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-danger">
+            <div class="panel-heading">
+                <h3 class="panel-title text-center">ELIMINAR CUENTA</h3>
+            </div>
+            <div class="panel-body">
+                <fieldset>
+                    <div class="row">
+                        <div class="col-lg-8 col-md-8">
+                            <small class="help-block">
+                                Los datos ser&aacute;n resguardados por 90 d&iacute;as, a partir de la fecha de baja.
+                                En caso de requerir una reactivaci&oacute;n, por favor, pongase en contacto con el
+                                <a href="mailto:sysadmin@feedback.com.mx">administrador del sistema</a>.
+                            </small>
+                        </div>
+                        <div class="col-lg-4 col-md-4">
+                            <a href="/profile/terminate" class="btn btn-danger btn-block" style="margin-top: 7px;">Eliminar Cuenta</a>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+    </div>
+</div>
+{% end %}
+{% block body_scripts_init %}
+{% include '../ui_modules/default-growl.html' %}
+{% end %}

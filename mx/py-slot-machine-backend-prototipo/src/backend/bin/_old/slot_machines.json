@@ -1,0 +1,51 @@
+{
+    "modified": null,
+    "settings": {
+        "100": {
+            "id": 100,
+            "name": "Banda Ancha",
+            "short_name": "DB",
+            "version": 1,
+            "enabled": true,
+            "lines": 10,
+            "required_level": 0,
+            "assets": "http://s3-us-west-2.amazonaws.com/media-casino-8-net/static/machines/{}/100.zip",
+            "rails": {
+                "default": [
+                    "AAABBBBCCCCDDDEEFFFGGHHIIJJJJKLL",
+                    "AAABBBCCCDDDEEFFGGHHHIIJJJJJKLLL",
+                    "AAAAABBBBCCCCDDEEEFFGGHHIJJJJJKL",
+                    "AAAABBBBBCCCDDDEEEEFFFFGGGHHIJKL",
+                    "AAAABBBCCDDDDEEEEFFFFGGHHHHHIJKL"
+                ],
+                "level": {
+                    "3": {
+                        "10": [
+                            "AAABBBBCCCDDDEEFFFGGHHIIJJJJJKLL",
+                            "AAABBBCCCDDDEEFFGGHHHIIJJJJJKLLL",
+                            "AAAAABBBBCCCCDDEEFFGGHHIJJJJJKLL",
+                            "AAAABBBBBCCCDDDEEEFFFFGGGHHIJKKL",
+                            "AAAABBBCCDDDEEEEFFFFGGHHHHHIJKKL"
+                        ]
+                    },
+                    "139": {
+                        "7": [
+                            "AAAABBBCCDDDEEFFFGGGHHHIIJJJJKLL",
+                            "AAABBBCCCDDEEFFFGGGGHHHIIJJJJKLL",
+                            "AAAAABBBBBCCCCCDDEEFGGHHIJJJJJKL",
+                            "AAAABBBBCCCCDDDDEEEEFFFGGGHHIJKL",
+                            "AAAABBBCCDDDDEEEEFFFFGGHHHHHIJKL"
+                        ],
+                        "10": [
+                            "AAABBBBCCCCDDDEEFFFGGHHIIJJJJKLL",
+                            "AAABBBCCCDDDEEFFGGHHHIIJJJJJKLLL",
+                            "AAAAABBBBCCCCDDEEEFFGGHHIJJJJJKL",
+                            "AAAABBBBBCCCDDDEEEEFFFFGGGHHIJKL",
+                            "AAAABBBCCDDDDEEEEFFFFGGHHHHHIJKL"
+                        ]
+                    }
+                }
+            }
+        }
+    }
+}

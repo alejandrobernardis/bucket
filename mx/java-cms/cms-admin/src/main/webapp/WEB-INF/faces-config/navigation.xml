@@ -1,0 +1,87 @@
+<?xml version="1.0"?>
+<!DOCTYPE faces-config PUBLIC "-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.1//EN"
+                              "http://java.sun.com/dtd/web-facesconfig_1_1.dtd">
+<faces-config>
+	<application>
+		<view-handler>com.sun.facelets.FaceletViewHandler</view-handler>
+		<variable-resolver>org.springframework.web.jsf.DelegatingVariableResolver</variable-resolver>
+		<message-bundle>messages.Messages</message-bundle>
+	</application>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>LoginController:login:OK</from-outcome>
+			<to-view-id>/pages/contentList.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>LoginController:login:ERROR</from-outcome>
+			<to-view-id>/pages/login.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>LoginController:logout</from-outcome>
+			<to-view-id>/pages/login.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>ContentController:addContent</from-outcome>
+			<to-view-id>/pages/addEditContent.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>ContentController:editContent</from-outcome>
+			<to-view-id>/pages/addEditContent.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>ContentController:listContent</from-outcome>
+			<to-view-id>/pages/contentList.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>CategoryController:listCategory</from-outcome>
+			<to-view-id>/pages/categoryList.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>StoreController:listStores</from-outcome>
+			<to-view-id>/pages/storeList.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>StoreController:addStore</from-outcome>
+			<to-view-id>/pages/addEditStore.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>PublicationController:listPublications</from-outcome>
+			<to-view-id>/pages/publicationList.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>PublicationController:addPublication</from-outcome>
+			<to-view-id>/pages/addEditPublication.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>UserController:listUser</from-outcome>
+			<to-view-id>/pages/userList.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>UserController:addUser</from-outcome>
+			<to-view-id>/pages/addEditUser.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>UserController:edditUser</from-outcome>
+			<to-view-id>/pages/addEditUser.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+</faces-config>

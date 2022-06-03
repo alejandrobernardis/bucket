@@ -1,0 +1,19 @@
+/* TEAM */
+    Developer: Alejandro M. Bernardis
+    Contact: alejandro.bernardis [at] gmail.com
+    Site: http://www.asumikamikaze.com
+    Location: Distrito Federal, Mexico
+
+    Agency: di Paola Márquez
+    Contact: contacto [at] dipaolamarquez.com
+    Site: http://dipaolamarquez.com
+    Twitter: @dPMxx
+    Location: Distrito Federal, Mexico
+
+/* SITE */
+    Last update: 2012
+    Doctype: HTML5
+    Language: Spanish
+    IDE: Eclipse
+    Technologies: Python, MongoDB, HTML5, JavaScript, CSS
+    Frameworks: Tornado, PyMongo, Mongoengine, jQuery, Bootstrap

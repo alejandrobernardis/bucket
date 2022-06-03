@@ -1,0 +1,162 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	template="/templates/tmplAdmin.xhtml">
+
+	<ui:define name="workarea">
+		<f:loadBundle var="label" basename="labels.labels" />
+			<a4j:form id="listUserForm">
+				<a4j:keepAlive beanName="userForm"/>
+				<h:panelGrid columnClasses="title" width="100%">
+					<h:outputText value="#{label.listUsers}"/>
+				</h:panelGrid>
+				<rich:spacer height="15px"/>
+				<h:panelGrid id="editNode" style="width: 100%;height: 485px; border: 1pt solid #B6AD84; padding: 20px;" columnClasses="alignTop">
+					<table align="center"><tr><td>
+						<table align="right"><tr><td>				
+							<h:panelGrid columns="2" border="0">
+								<a4j:commandButton value="#{label.add} #{label.user}" style="background-image: url('#{request.contextPath}/web-resources/img/icons/addUser.png')" 
+									action="#{userCtrl.addUser}"					
+									styleClass="button" onmouseover="this.className='buttonHover'" onmouseout="this.className='button'"/>
+							
+								<a4j:commandButton id="deleteUser" value="#{label.delete} #{label.users}" style="background-image: url('#{request.contextPath}/web-resources/img/icons/removeUser.png')" 
+									onclick="return false" styleClass="button" onmouseover="this.className='buttonHover'" onmouseout="this.className='button'">
+									
+									<rich:componentControl for="confirmation" event="onclick" operation="show" attachTo="deleteUser" />
+								</a4j:commandButton>
+								
+							</h:panelGrid>
+						</td></tr></table>
+					</td></tr>
+					<tr><td>
+						<rich:extendedDataTable align="left" id="userList" value="#{userForm.users}" var="userAgent" styleClass="datatable" 
+							height="480px" width="1180px" rowClasses="rowPair,rowEven"  rows="10" reRender="ds" footerClass="footer"
+							rowKeyVar="index" >
+							
+							<rich:column width="30" label="#{label.line}" >
+								<h:outputText value="#{index + 1}" />
+							</rich:column>
+							<rich:column width="25" label="#{label.control}">
+								<h:selectBooleanCheckbox value="#{userAgent.selected}" />
+							</rich:column>
+							<rich:column width="80" sortBy="#{userAgent.value.active}" label="#{label.status}" styleClass="alignCenter">
+								<f:facet name="header">
+									<h:outputText value="#{label.status}" />
+								</f:facet>
+								<h:graphicImage value="/web-resources/img/icons/user.png"
+									rendered="#{userAgent.value.active}" alt="#{label.active}" title="#{label.active}"/>
+								<h:graphicImage value="/web-resources/img/icons/offline.png"
+									rendered="#{!userAgent.value.active}" alt="#{label.inactive}" title="#{label.inactive}"/>
+							</rich:column>
+							<rich:column width="150" label="#{label.username}"  
+								filterBy="#{userAgent.value.username}" sortBy="#{userAgent.value.username}" filterEvent="onchange" >
+								<f:facet name="header">
+               				 		<h:outputText value="#{label.username}" />
+               				 	</f:facet>
+								<h:outputText value="#{userAgent.value.username}" />
+							</rich:column>
+							<rich:column width="200" label="#{label.firstName}" 
+								styleClass="alignLeft" filterBy="#{userAgent.value.firstName}" sortBy="#{userAgent.value.firstName}" filterEvent="onchange">
+								<f:facet name="header">
+               				 		<h:outputText value="#{label.firstName}" />
+               				 	</f:facet>
+								<h:outputText
+									value="#{userAgent.value.firstName}">
+									<f:converter converterId="UpperCase" />
+								</h:outputText>
+							</rich:column>
+							<rich:column width="150"  label="#{label.primaryLastName}" 
+								styleClass="alignLeft" filterBy="#{userAgent.value.primaryLastName}" sortBy="#{userAgent.value.primaryLastName}" filterEvent="onchange">
+								<f:facet name="header">
+               				 		<h:outputText value="#{label.primaryLastName}" />
+               				 	</f:facet>
+								<h:outputText value="#{userAgent.value.primaryLastName}">
+									<f:converter converterId="UpperCase" />
+								</h:outputText>
+							</rich:column>
+							<rich:column width="150"  label="#{label.secondaryLastName}" 
+								styleClass="alignLeft" filterBy="#{userAgent.value.secondaryLastName}" sortBy="#{userAgent.value.secondaryLastName}" filterEvent="onchange">
+								<f:facet name="header">
+               				 		<h:outputText value="#{label.secondaryLastName}" />
+               				 	</f:facet>
+								<h:outputText value="#{userAgent.value.secondaryLastName}">
+									<f:converter converterId="UpperCase" />
+								</h:outputText>
+							</rich:column>
+							<rich:column width="150"  label="#{label.email}" 
+								filterBy="#{userAgent.value.email}" sortBy="#{userAgent.value.email}" filterEvent="onchange">
+								<f:facet name="header">
+               				 		<h:outputText value="#{label.email}" />
+               				 	</f:facet>
+								<h:outputText value="#{userAgent.value.email}" />
+							</rich:column>
+							<rich:column width="80"  label="#{label.role}" styleClass="alignCenter"
+								filterBy="#{userAgent.value.role}" sortBy="#{userAgent.value.role}" filterEvent="onchange" >
+								<f:facet name="header">
+               				 		<h:outputText value="#{label.role}" />
+								</f:facet>
+								<h:outputText value="#{userAgent.value.role}" />
+							</rich:column>
+							<rich:column width="150px" label="#{label.action}" styleClass="alignCenter">
+							
+								<a4j:commandButton value="#{label.edit} #{label.user}" style="background-image: url('#{request.contextPath}/web-resources/img/icons/editUser.png')" 
+									action="#{userCtrl.editUser}"
+									styleClass="button" onmouseover="this.className='buttonHover'" onmouseout="this.className='button'">
+									
+									<a4j:actionparam name="selectedUserId" value="#{userAgent.value.idUser}" assignTo="#{userForm.selectedUser.idUser}" />
+								</a4j:commandButton>
+									
+							</rich:column>
+							<f:facet name="footer">
+								<h:panelGrid width="100%">
+                					<rich:datascroller id="ds" renderIfSinglePage="true"/>
+                				</h:panelGrid>
+            				</f:facet>
+						</rich:extendedDataTable>
+					</td></tr></table>
+					
+					<rich:modalPanel id="confirmation" width="300" height="165" overlapEmbedObjects="true" >
+   						<f:facet name="header"><h:outputText value="#{label.deleteConfirmation}"/></f:facet>
+						<h:panelGrid>
+  							<h:panelGrid columns="2" width="280">
+     							<h:graphicImage value="/web-resources/img/icons/alertBig.png" />
+								<h:outputText value="#{label.deleteMessage1} #{label.users} #{label.deleteMessage2}" />
+  							</h:panelGrid>
+  							<h:panelGrid columns="1" width="100%" columnClasses="alignCenter">
+								<h:outputText value="#{label.deleteMessage3}" />
+  							</h:panelGrid>
+  							<table align="center"><tr><td>
+	  							<h:panelGrid columns="3">		
+	  								<a4j:commandButton id="confDeleteButton" value="#{label.ok}" style="background-image: url('#{request.contextPath}/web-resources/img/icons/ok.png')" 
+										action="#{userCtrl.deleteUsers}" reRender="userList" 
+										styleClass="button" onmouseover="this.className='buttonHover'" onmouseout="this.className='button'">
+										<rich:componentControl for="confirmation" event="onclick" operation="hide" attachTo="confDeleteButton"/>
+									</a4j:commandButton>
+									<rich:spacer width="15px"/>
+									
+									<a4j:commandButton id="cancelDeleteButton" value="#{label.cancel}" style="background-image: url('#{request.contextPath}/web-resources/img/icons/cancel.png')" 
+										onclick="return false;" styleClass="button" onmouseover="this.className='buttonHover'" onmouseout="this.className='button'">
+										<rich:componentControl for="confirmation" event="onclick" operation="hide" attachTo="cancelDeleteButton" />
+									</a4j:commandButton>
+
+	  							</h:panelGrid>
+	  							
+	  							
+	  							
+  							</td></tr></table>
+						</h:panelGrid>
+					</rich:modalPanel>
+				</h:panelGrid>
+			</a4j:form>
+
+
+	</ui:define>
+
+</ui:composition>
+
+

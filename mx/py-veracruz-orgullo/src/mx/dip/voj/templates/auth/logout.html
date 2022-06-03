@@ -1,0 +1,25 @@
+{% extends '../master.html' %}
+{% block body %}
+<div class="container">
+    <div class="logout clearfix">
+        <div class="module white span4">
+            <div class="module-header">
+                <h2 class="module-title">Sign out to Admin</h2>
+            </div>
+            <div class="module-alert js-alert"></div>
+            <form class="js-form" action="/auth/logout" method="post">
+                <div class="module-content">
+                    <fieldset>
+                    	<p>Are you sure you want to log out?</p>
+                        {% raw xsrf_form_html() %}
+                    </fieldset>
+                </div>
+                <div class="module-footer clearfix">
+                    <button class="pull-left btn" type="button" onclick="history.back();">Cancel</button>
+                    <button class="pull-right btn btn-danger" type="submit">Sign Out</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% end %}

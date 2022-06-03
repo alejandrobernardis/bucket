@@ -1,0 +1,29 @@
+{% extends "../master.html" %}
+{% block head_style_extra %}
+
+<link rel="stylesheet" type="text/css" media="screen" href="{{ static_url('css/resistol_pasos.css') }}">
+<link rel="stylesheet" type="text/css" media="screen" href="{{ static_url('css/bootstrap.css') }}">
+
+<style type="text/css">
+	#number1 {left: 189px; top: 250px; width: 374px; color:#fff;}
+</style>
+
+{% end %}{% block body_wrap_container %}
+
+<div id="content1" style="display:block;">
+	<div id="Step1" class="pasosContent" style="">
+		<div class="paso1">
+			<img src="{{ static_url('img/error1.jpg') }}" alt="Paso 1" width="69" height="42">
+		</div>
+		<div id="number1">
+			<div>
+				<h2>Yeahh!:</h2>
+				<p>{{message}}</p>
+				<br>
+				<p><a href="{{next}}" class="btn btn-large">Continuar</a></p>
+			</div>
+		</div>
+	</div>
+</div>
+
+{% end %}

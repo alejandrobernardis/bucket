@@ -1,0 +1,37 @@
+{
+    "version": "1.0",
+    "date": "",
+    "masapps": [
+        {
+            "name": "La Botella 2",
+            "description": "El juego de castigos para fiestas mas divertido y chistoso.",
+            "url": "https://itunes.apple.com/mx/app/la-botella-2-juego-castigos/id538182763",
+            "iconname": "mapss_logo2"
+        },
+        {
+            "name": "Spin'n Dare",
+            "description": "Spin the Bottle. The best dare game for you party. Laugh for hours.",
+            "url": "https://itunes.apple.com/mx/app/spin-n-dare-spin-bottle.-best/id554742154",
+            "iconname": "mapss_logo3"
+        },
+        {
+            "name": "PicPix",
+            "description": "Fotos con marcos, filtros y efectos para que las compartas con tus amigos en facebook y twitter.",
+            "url": "https://itunes.apple.com/mx/app/picpix-fotos-con-marcos-filtros/id562016472",
+            "iconname": "mapss_logo1"
+        },
+        {
+            "name": "PicPix",
+            "description": "Supercharge your pics and blast them onto facebook & twitter with this all in one camera, frame, effect photo app.",
+            "url": "https://itunes.apple.com/mx/app/picpix-free-supercharge-your/id548033847",
+            "iconname": "mapss_logo1"
+        },
+        {
+            "name": "Draw'n Pop",
+            "description": "Pinta y Adivina. Diviértete con toda tu familia y amigos con esta aplicación donde tendrás que adivinar lo que dibujan.",
+            "url": "https://itunes.apple.com/mx/app/draw-n-pop-pinta-y-adivina./id585675973",
+            "iconname": "mapss_logo4"
+        }
+
+    ]
+}

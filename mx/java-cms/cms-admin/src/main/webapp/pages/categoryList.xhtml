@@ -1,0 +1,286 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	template="/templates/tmplAdmin.xhtml">
+
+	<ui:define name="workarea">
+		<script>
+			function blockNonNumbers( e ){
+				var key;
+				var isCtrl = false;
+				var keychar;
+				var reg;
+				if(window.event) {
+					key = window.event.keyCode;
+					isCtrl = window.event.ctrlKey
+				}
+				else if(e.which) {
+					key = e.which;
+					isCtrl = e.ctrlKey;
+				}
+				if (isNaN(key)) return true;
+				keychar = String.fromCharCode(key);
+				if (key == 8 || isCtrl)	{
+					return true;
+				}
+				reg = /\d/;
+				return reg.test(keychar);
+			}
+		</script>
+		<f:loadBundle var="label" basename="labels.labels" />
+
+			<h:panelGrid columnClasses="title" width="100%">
+				<h:outputText value="#{label.listCategory}"/>
+			</h:panelGrid>
+			<rich:spacer height="15px"/>
+			
+						
+			
+			<h:panelGrid columns="2" width="100%" columnClasses="categoriesTreeContiner, alignTop" cellpadding="0" cellspacing="0">
+				<rich:panel id="categoryList" style="height: 480px;">
+					<f:facet name="header">
+						<h:outputText value="#{label.categories}"/>
+					</f:facet>
+					<a4j:form>
+						<a4j:keepAlive beanName="categoryForm"/>
+						<rich:tree  adviseNodeOpened="#{categoryCtrl.nodeOpened}" style="width:300px" nodeFace="#{item.type}" treeNodeVar="nodeVar"  
+							switchType="client" value="#{categoryForm.contentTypeTree}" 
+							var="item" ajaxKeys="#{null}" reRender="editNode" 
+							ajaxSubmitSelection="true" nodeSelectListener="#{categoryCtrl.processSelection}" >
+							 <rich:treeNode type="Root" iconLeaf="/web-resources/img/icons/nodeRoot.png" icon="/web-resources/img/icons/nodeRoot.png" onselected="return false;">
+	                			<h:outputText value="" />
+	            			 </rich:treeNode >
+							 <rich:treeNode type="Parent" iconLeaf="/web-resources/img/icons/nodeParent.png" icon="/web-resources/img/icons/nodeParent.png">
+	                			<h:outputText value="#{item.value.contentTypeName}" style="cursor:hand;cursor:pointer"/>
+	            			</rich:treeNode>
+	            			<rich:treeNode type="Child" iconLeaf="/web-resources/img/icons/nodeChild.png" icon="/web-resources/img/icons/nodeChild.png">
+	                			<h:outputText value="#{item.value.contentTypeName}" style="cursor:hand;cursor:pointer"/>
+	            			</rich:treeNode>
+	            			<rich:treeNode type="Inactive" iconLeaf="/web-resources/img/icons/nodeInactive.png" icon="/web-resources/img/icons/nodeInactive.png">
+	                			<h:outputText value="#{item.value.contentTypeName}" style="cursor:hand;cursor:pointer"/>
+	            			</rich:treeNode>
+	            		</rich:tree>
+	            	</a4j:form>
+				</rich:panel>
+					
+				<h:panelGrid id="editNode" style="width: 100%;height: 485px; border: 1pt solid #B6AD84; padding: 20px;" columnClasses="alignTop">
+					<h:panelGrid width="100%" rendered="#{categoryCtrl.messageList != null}" >
+						<h:panelGrid styleClass="bad">
+							<h:panelGroup>
+								<h:graphicImage  value="/web-resources/img/icons/error.png" />
+								<rich:spacer width="15px"/>
+								<h:outputText value="#{categoryCtrl.messageList}"  />
+							</h:panelGroup>
+						</h:panelGrid>
+					</h:panelGrid>
+					<a4j:form>
+						<a4j:keepAlive beanName="categoryForm"/>
+						<rich:modalPanel id="confirmation" width="300" height="165" overlapEmbedObjects="true" >
+			 				<f:facet name="header"><h:outputText value="#{label.deleteConfirmation}"/></f:facet>
+							<h:panelGrid>
+								<h:panelGrid columns="2" width="280">
+			   						<h:graphicImage value="/web-resources/img/icons/alertBig.png" />
+									<h:outputText value="#{label.deleteMessage1} #{label.categories} #{label.deleteMessage2}" />
+								</h:panelGrid>
+								<h:panelGrid columns="1" width="100%" columnClasses="alignCenter">
+									<h:outputText value="#{label.deleteMessage3}" />
+								</h:panelGrid>
+								<table align="center"><tr><td>
+				 					<h:panelGrid columns="3">					
+					 					<a4j:commandButton id="confDeleteCat" value="#{label.ok}" style="background-image: url('#{request.contextPath}/web-resources/img/icons/ok.png')" 
+											action="#{categoryCtrl.deleteCategories}" reRender="categoryList,editNode"
+											styleClass="button" onmouseover="this.className='buttonHover'" onmouseout="this.className='button'">
+											<rich:componentControl for="confirmation" operation="hide" event="onclick" attachTo="confDeleteCat" />	
+										</a4j:commandButton>
+											
+										<rich:spacer width="15px"/>
+										
+										<a4j:commandButton id="canDeleteCat" value="#{label.cancel}" style="background-image: url('#{request.contextPath}/web-resources/img/icons/cancel.png')" 
+											onclick="return false;"
+											styleClass="button" onmouseover="this.className='buttonHover'" onmouseout="this.className='button'">
+											<rich:componentControl for="confirmation" operation="hide" event="onclick" attachTo="canDeleteCat" />
+										</a4j:commandButton>
+				 					</h:panelGrid>
+								</td></tr></table>
+							</h:panelGrid>
+						</rich:modalPanel>
+						<a4j:commandButton id="cancelCategoryButton" action="#{categoryCtrl.cancelEdit}" style="display:none" reRender="editNode,categoryList"/>
+						<table align="right"><tr><td>				
+							<h:panelGrid columns="2" border="0" >
+								<a4j:commandButton value="#{label.add} #{label.category}" style="background-image: url('#{request.contextPath}/web-resources/img/icons/addCategory.png')" 
+									action="#{categoryCtrl.addCategory}" reRender="editNode"
+									styleClass="button" onmouseover="this.className='buttonHover'" onmouseout="this.className='button'"/>
+								
+								<a4j:commandButton id="deleteCatBtn" value="#{label.delete} #{label.category}" style="background-image: url('#{request.contextPath}/web-resources/img/icons/removeCategory.png')" 
+									rendered="#{categoryForm.selectedContentType.idContentType != null}" 
+									onclick="return false;"
+									styleClass="button" onmouseover="this.className='buttonHover'" onmouseout="this.className='button'">
+									
+									<rich:componentControl for="confirmation" operation="show" event="onclick" attachTo="deleteCatBtn" />
+									
+								</a4j:commandButton>
+								
+								<h:panelGrid columns="2" border="0" styleClass="buttonDisabled" rendered="#{categoryForm.selectedContentType.idContentType == null}">
+									<h:graphicImage value="/web-resources/img/icons/removeCategory.png" />
+									<h:outputText value="#{label.delete} #{label.category}" />
+								</h:panelGrid>
+								
+							</h:panelGrid>
+						</td></tr></table>
+					</a4j:form>
+					
+					<a4j:form>
+						<a4j:keepAlive beanName="categoryForm" />
+						<h:panelGroup rendered="#{categoryForm.showEdit}">
+							<h:panelGrid id="message" rendered="#{categoryCtrl.error != null}" width="100%">
+								<h:panelGrid styleClass="bad" width="100%" rendered="#{categoryCtrl.error}">
+									<h:panelGroup >
+										<h:graphicImage  value="/web-resources/img/icons/error.png" />
+										<rich:spacer width="15px"/>
+										<h:outputText value="#{categoryCtrl.message}"  />
+									</h:panelGroup>
+								</h:panelGrid>
+								<h:panelGrid rendered="#{!categoryCtrl.error}" styleClass="good" width="100%">
+									<h:panelGroup>
+										<h:outputText value="#{categoryCtrl.message}"  />
+									</h:panelGroup>
+								</h:panelGrid>
+							</h:panelGrid>
+							<h:inputHidden id="id" value="#{categoryForm.selectedContentType.idContentType}"/>
+							<h:panelGrid columns="3" columnClasses="userFormLabel,userFormField,userFormMessage">
+								<h:outputLabel value="#{label.id}"/>
+								<h:outputLabel value="#{categoryForm.selectedContentType.idContentType}"/>
+								<rich:spacer width="1"/>
+								
+								<h:panelGroup>
+									<h:outputLabel value="#{label.parent}"/>
+								</h:panelGroup>
+								
+								<h:selectOneMenu id="parent" value="#{categoryForm.selectedContentType.idContentTypeParent}" style="width: 300px" >
+									<f:selectItem itemValue="" itemLabel=""/>
+									<f:selectItems value="#{categoryForm.parentCategories}"/>
+								</h:selectOneMenu>
+								
+								<rich:message for="parent" styleClass="error">
+									<f:facet name="errorMarker">
+										<h:panelGroup>
+											<h:graphicImage value="/web-resources/img/icons/error.png" />
+											<rich:spacer width="5px"/>
+										</h:panelGroup>
+									</f:facet>
+								</rich:message>
+								
+								<h:panelGroup>
+									<h:outputLabel value="#{label.name}"/>
+									<h:outputLabel value="*" styleClass="error"/>
+								</h:panelGroup>
+								<h:inputText  label="#{label.name}" id="ctName" value="#{categoryForm.selectedContentType.contentTypeName}" 
+									maxlength="50" style="width: 300px"  >
+									<f:converter converterId="Trim" />
+									<rich:ajaxValidator event="onblur" />
+								</h:inputText>
+								<rich:message for="ctName" styleClass="error">
+									<f:facet name="errorMarker">
+										<h:panelGroup>
+											<h:graphicImage value="/web-resources/img/icons/error.png" />
+											<rich:spacer width="5px"/>
+										</h:panelGroup>
+									</f:facet>
+								</rich:message>
+			
+								<h:panelGroup>
+									<h:outputLabel value="#{label.order}"/>
+									<h:outputLabel value="*" styleClass="error"/>
+								</h:panelGroup>
+								<h:inputText label="#{label.order}" id="order" value="#{categoryForm.selectedContentType.order}" 
+									onkeypress="return blockNonNumbers(event);" maxlength="5" style="width: 300px" >
+									<rich:ajaxValidator event="onblur" />
+								</h:inputText>
+								
+								<rich:message for="order" styleClass="error">
+									<f:facet name="errorMarker">
+										<h:panelGroup>
+											<h:graphicImage value="/web-resources/img/icons/error.png" />
+											<rich:spacer width="5px"/>
+										</h:panelGroup>
+									</f:facet>
+								</rich:message>
+								
+								<h:panelGroup>
+									<h:outputLabel value="#{label.active}"/>
+									<h:outputLabel value="*" styleClass="error"/>
+								</h:panelGroup>
+								<h:selectBooleanCheckbox id="active" value="#{categoryForm.selectedContentType.active}">
+									<rich:ajaxValidator event="onblur" />
+								</h:selectBooleanCheckbox>
+								<rich:message for="active" styleClass="error">
+									<f:facet name="errorMarker">
+										<h:panelGroup>
+											<h:graphicImage value="/web-resources/img/icons/error.png" />
+											<rich:spacer width="5px"/>
+										</h:panelGroup>
+									</f:facet>
+								</rich:message>
+							</h:panelGrid>
+							
+							<h:panelGrid columns="1" columnClasses="userFormLabelNoBG">
+								<h:outputLabel value="#{label.labels}"/>
+							</h:panelGrid>
+							<a4j:repeat value="#{categoryForm.labels}" var="contentTypeLabel">
+								<h:panelGrid columns="3" columnClasses="userFormLabel,userFormField,userFormMessage">
+									<h:panelGroup>
+										<h:outputLabel value="#{contentTypeLabel.id.language}"/>
+										<h:outputLabel value="*" styleClass="error"/>
+									</h:panelGroup>
+									<h:inputText label="#{contentTypeLabel.id.language}" id="labelFor" value="#{contentTypeLabel.label}" 
+										maxlength="60" style="width: 300px" >
+										<rich:ajaxValidator event="onblur" />
+									</h:inputText>
+									
+									<rich:message for="labelFor" styleClass="error">
+										<f:facet name="errorMarker">
+											<h:panelGroup>
+												<h:graphicImage value="/web-resources/img/icons/error.png" />
+												<rich:spacer width="5px"/>
+											</h:panelGroup>
+										</f:facet>
+									</rich:message>
+								</h:panelGrid>	
+							</a4j:repeat>
+							
+							
+							<h:panelGrid columns="3" columnClasses="userFormLabelNoBG,userFormField,userFormMessage" border="0">
+								<rich:spacer width="1"/>
+								<h:panelGroup style="width: 100%">
+									<table align="right" cellpadding="0" cellspacing="0" border="0"><tr><td>
+										<h:panelGrid columns="2" border="0">
+										
+											<a4j:commandButton value="#{label.save} #{label.category}" style="background-image: url('#{request.contextPath}/web-resources/img/icons/save.png')" 
+												action="#{categoryCtrl.saveCategory}" reRender="categoryList,editNode"
+												styleClass="buttonPrefered" onmouseover="this.className='buttonPreferedHover'" onmouseout="this.className='buttonPrefered'"/>
+										
+											<a4j:commandButton value="#{label.cancel}" style="background-image: url('#{request.contextPath}/web-resources/img/icons/cancel.png')" 
+												onclick="#{rich:element('cancelCategoryButton')}.click();return false;"
+												styleClass="button" onmouseover="this.className='buttonHover'" onmouseout="this.className='button'"/>
+											
+										</h:panelGrid>
+									</td></tr></table>
+								</h:panelGroup>
+								<rich:spacer width="1"/>
+							</h:panelGrid>
+						</h:panelGroup>
+					</a4j:form>
+
+				</h:panelGrid>
+				
+			</h:panelGrid>
+				
+	</ui:define>
+
+</ui:composition>
+

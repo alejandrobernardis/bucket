@@ -1,0 +1,79 @@
+{% extends '../master.html' %}
+{% include '../ui_modules/navbar.html' %}
+{% block content_container %}
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default panel-search">
+            <div class="panel-body">
+                <div class="form-auth form-request">
+                    <h3>{{handler.settings.get('site_title').lower()}} / <small>Contacto</small></h3>
+                    <hr>
+                    <div class="row">
+                        <div class="col-lg-6 col-sm-6">
+                            <div class="jumbotron">
+                                <img src="{{ static_url('img/logos/figment.png') }}" alt="Figment" class="img-responsive"/>
+                                <address>
+                                    Homero 1343, interior 502<br>
+                                    Col. Polanco, Del. Miguel Hidalgo<br>
+                                    Distrito Federal, M&eacute;xico. CP: 11550<br>
+                                    <span class="fa fa-phone">&nbsp;</span><a href="tel:+525515796498">(+52) 55 1579 6498</a><br>
+                                    <span class="fa fa-envelope">&nbsp;</span><a href="mailto:info@figment.com.mx">info@figment.com.mx</a>
+                                </address>
+                            </div>
+                            <hr>
+                            <img src="{{ static_url('img/people/ricardo-ellstein.png') }}" class="img-people img-thumbnail img-responsive"/>
+                            <address>
+                                <strong>Ricardo Ellstein</strong><br>
+                                <small>Director General</small><br>
+                                <span class="fa fa-phone">&nbsp;</span><a href="tel:+525515796498">(+52) 55 1579 6498 ext. 102</a><br>
+                                <span class="fa fa-envelope">&nbsp;</span><a href="mailto:ricardo@figment.com.mx">ricardo@figment.com.mx</a>
+                            </address>
+                            <img src="{{ static_url('img/people/rene-flores.jpg') }}" class="img-people img-thumbnail img-responsive"/>
+                            <address>
+                                <strong>René Flores</strong><br>
+                                <small>Director de Operaciones</small><br>
+                                <span class="fa fa-phone">&nbsp;</span><a href="tel:+525515796498">(+52) 55 1579 6498 ext. 114</a><br>
+                                <span class="fa fa-envelope">&nbsp;</span><a href="mailto:rene@figment.com.mx">rene@figment.com.mx</a>
+                            </address>
+                            <img src="{{ static_url('img/people/ossiel-flores.jpg') }}" class="img-people img-thumbnail img-responsive"/>
+                            <address>
+                                <strong>Ossiel Flores</strong><br>
+                                <small>Director de Cuentas</small><br>
+                                <span class="fa fa-phone">&nbsp;</span><a href="tel:+525515796498">(+52) 55 1579 6498 ext. 104</a><br>
+                                <span class="fa fa-envelope">&nbsp;</span><a href="mailto:ossiel@figment.com.mx">ossiel@figment.com.mx</a>
+                            </address>
+                        </div>
+                        <div class="col-lg-6 col-sm-6">
+                            <div class="jumbotron">
+                                <img src="{{ static_url('img/logos/kinetiq.png') }}" alt="Kinetiq" class="img-responsive"/>
+                                <address>
+                                    Homero 1343, interior 502<br>
+                                    Col. Polanco, Del. Miguel Hidalgo<br>
+                                    Distrito Federal, M&eacute;xico. CP: 11550<br>
+                                    <span class="fa fa-phone">&nbsp;</span><a href="tel:+525515796498">(+52) 55 1579 6498 ext. 102</a><br>
+                                    <span class="fa fa-envelope">&nbsp;</span><a href="mailto:info@kinetiq.com.mx">info@kinetiq.com.mx</a>
+                                </address>
+                            </div>
+                            <hr>
+                            <img src="{{ static_url('img/people/rene-flores.jpg') }}" class="img-people img-thumbnail img-responsive"/>
+                            <address>
+                                <strong>René Flores</strong><br>
+                                <small>Director General</small><br>
+                                <span class="fa fa-phone">&nbsp;</span><a href="tel:+525515796498">(+52) 55 1579 6498 ext. 114</a><br>
+                                <span class="fa fa-envelope">&nbsp;</span><a href="mailto:rene@kinetiq.com.mx">rene@kinetiq.com.mx</a>
+                            </address>
+                            <img src="{{ static_url('img/people/ossiel-flores.jpg') }}" class="img-people img-thumbnail img-responsive"/>
+                            <address>
+                                <strong>Ossiel Flores</strong><br>
+                                <small>Director de Cuentas</small><br>
+                                <span class="fa fa-phone">&nbsp;</span><a href="tel:+525515796498">(+52) 55 1579 6498 ext. 104</a><br>
+                                <span class="fa fa-envelope">&nbsp;</span><a href="mailto:ossiel@kinetiq.com.mx">ossiel@kinetiq.com.mx</a>
+                            </address>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% end %}

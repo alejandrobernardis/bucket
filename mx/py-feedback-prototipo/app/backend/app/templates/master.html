@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+{% block html %}
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7"><![endif]-->
+<!--[if IE 7]><html class="no-js lt-ie9 lt-ie8"><![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9"><![endif]-->
+<!--[if gt IE 8]><!--><html class="no-js"><!--<![endif]-->
+{% end %}
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>{% block site_title %}{{ handler.settings.get('site_title') }}{% end %}</title>
+        <meta name="description" content="{% block site_description %}{{ handler.settings.get('site_description') }}{% end %}">
+        <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0">
+        {% if handler.current_user %}
+        <meta http-equiv="refresh" content="{{ handler.settings.get('session').get('expires', 60*10) + 30 }};url=http://{{ handler.settings.get('site_domain', '/') }}">
+        {% end %}
+        <base href="/">
+        {% block head_styles %}
+        <link rel="stylesheet" href="{{ static_url('bootstrap/css/bootstrap.min.css') }}">
+        <link rel="stylesheet" href="{{ static_url('font-awesome/css/font-awesome.min.css') }}">
+        <link rel="stylesheet" href="{{ static_url('css/style.css') }}">
+        {% end %}
+        {% block head_styles_after %}{% end %}
+        {% block head_scripts %}{% end %}
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    {% block body_tag %}<body>{% end %}
+        {% block news %}{% end %}
+        {% block body %}
+            {% block body_container %}
+                {% block header %}
+                <div class="header container">
+                    {% block header_container %}{% end %}
+                </div>
+                {% end %}
+                {% block content %}
+                <div class="content container">
+                    {% block content_container %}{% end %}
+                </div>
+                {% end %}
+                {% block footer %}
+                <div class="footer text-center">
+                    {% block footer_container %}
+                    <p><a href="/contact-us">Contacto</a>&nbsp;&nbsp;<a href="/legal/privacy">Aviso de Privacidad</a></p>
+                    <p>2014 Feedback.com.mx</p>
+                    {% end %}
+                </div>
+                {% end %}
+            {% end %}
+            {% block body_bottom %}{% end %}
+            {% block body_scripts %}
+            <script src="{{ static_url('js/jquery.min.js') }}"></script>
+            <script src="{{ static_url('bootstrap/js/bootstrap.min.js') }}"></script>
+            <script src="{{ static_url('js/script.js') }}"></script>
+            {% end %}
+            {% block body_scripts_init %}{% end %}
+            {% block body_scripts_spy %}{% end %}
+            {% block body_scripts_analytics %}
+            <script>
+                (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+                })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+                ga('create', '{{ handler.settings.get("site_google_analytics") }}', '{{ handler.settings.get("site_domain") }}');
+                ga('send', 'pageview');
+            </script>
+            {% end %}
+        {% end %}
+        <a href="#" class="back-to-top"><span class="fa fa-arrow-circle-up">&nbsp;back to top</span></a>
+    </body>
+</html>

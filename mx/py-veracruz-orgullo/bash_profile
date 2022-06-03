@@ -1,0 +1,61 @@
+# ((ak)) variables
+domain='orgullojarocho.mx'
+vhost_dir=/var/www/vhosts/$domain
+httpdocs_dir=$vhost_dir/httpdocs
+httpdocs_python_dir=$vhost_dir/backoffice
+supervisor_dir=$httpdocs_python_dir/apps-config
+project_dir=$httpdocs_python_dir/apps/administrator
+
+# ((ak)) helpers
+alias py='/usr/local/bin/python2.7'
+alias python='/usr/local/bin/python2.7'
+alias python27='/usr/local/bin/python2.7'
+alias rmpyc='find . -name "*.pyc" -exec rm -rf {} \;'
+alias rmsvn='find . -name ".svn" -exec rm -rf {} \;'
+alias rmdot='find . -name ".*" -exec rm -rf {} \;'
+alias edit_profile='joe ~/.bash_profile'
+alias reload_profile='. ~/.bash_profile'
+alias vhost='cd $vhost_dir;'
+alias rshutdown='shutdown -r now'
+
+# ((ak)) project
+helper_supervisord_stop(){
+ cd $supervisor_dir
+ admin_stop
+ pid=`cat $supervisor_dir/supervisord.pid`
+ kill -9 $pid
+}
+
+helper_mongo_backup(){
+ if[-z '$1']; then
+  return -1
+ else
+  backup_dir=~/backups/db/$(date +%Y%m%d%H%M%S)
+  mkdir -p $backup_dir
+  mongodump --verbose --host 127.0.0.1 --port 27017 --username admin --password 1G#r+jI2s:1 --out $backup_dir --db $1
+  return 0
+ fi
+}
+
+helper_mongo_backup_all(){
+ helper_mongo_backup 'mx-dip-voj-local-users'
+ helper_mongo_backup 'mx-dip-voj-local-events'
+}
+
+alias supervisord_debug='cd $supervisor_dir; rm -f *.sock *.log; supervisord -c $supervisor_dir/supervisord.conf -n -e debug;'
+alias supervisord_stop=helper_supervisord_stop;
+alias supervisord_start='cd $supervisor_dir; rm -f *.sock *.log; supervisord -c $supervisor_dir/supervisord.conf -d $supervisor_dir;'
+alias admin_restart='cd $supervisor_dir; supervisorctl restart administrator:*; admin_status;'
+alias admin_stop='cd $supervisor_dir; supervisorctl stop administrator:*;'
+alias admin_start='cd $supervisor_dir; supervisorctl start administrator:*; admin_status;'
+alias admin_status='cd $supervisor_dir; supervisorctl status;'
+alias admin_tail='tail -f $supervisor_dir/logs/administrator-8001.log;'
+alias mongo_dump_users='helper_mongo_backup "mx-dip-voj-local-users";'
+alias mongo_dump_events='helper_mongo_backup "mx-dip-voj-local-events";'
+alias mongo_dump_all=helper_mongo_backup_all;
+alias backup_http_site='tar cfvz ~/backups/httpdocs_html.$(date +%Y%m%d%H%M%S).tar.gz $httpdocs_dir;'
+alias backup_http_python='tar cfvz ~/backups/httpdocs_python.$(date +%Y%m%d%H%M%S).tar.gz $httpdocs_python_dir;'
+alias backup_all='backup_http_site;backup_http_python;mongo_dump_all;'
+alias crontail='tail -f /var/log/cron'
+alias cronedit='joe /var/www/vhosts/orgullojarocho.mx/backoffice/cron/ratui.py;'
+alias ctemp='/var/www/vhosts/orgullojarocho.mx/backoffice/cron/ratui.py'

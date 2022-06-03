@@ -1,0 +1,36 @@
+<script>
+    $(function(){
+        var _submit = $('#btn-submit'),
+            _comments = $('#comments'),
+            _policy = $("input[name=policy]"),
+            _rate = $("input[name=rate]"),
+            _counter = $('#form-answer-counter');
+        function all_check(){
+            var _chars = _comments.val().length;
+            if(_chars > 0 && (_chars < 10 || _chars > 500)){ return false; }
+            return $("input[name=policy]:checked").val() == 1
+                && $("input[name=rate]:checked").length > 0;
+        }
+        function submit_status() {
+            _submit.attr('disabled', !all_check());
+        }
+        _rate.bind('change', submit_status);
+        _policy.bind('change', submit_status);
+        _comments.bind('keyup', function(){
+            var _txt, _txt_tmpl, _txt_counter, _chars;
+            _chars = this.value.length;
+            _txt_tmpl = '&nbsp; // &nbsp;<span class="fa fa-exclamation-triangle text-warning">&nbsp;{text}</span>'
+            _txt_counter = 'Caracteres disponibles: ' + String(500 - _chars);
+            if (_chars < 10)
+                _txt = 'El mínimo requerido es de 10 caracteres.';
+            else if (_chars > 500)
+                _txt = 'Se ha exedido del límite de 500 caracteres.';
+            else
+                _txt = '';
+            if (_txt.length)
+                _txt = _txt_tmpl.replace('{text}', _txt);
+            _counter.html(_txt_counter + _txt);
+            submit_status();
+        });
+    });
+</script>

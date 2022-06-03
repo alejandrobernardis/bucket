@@ -1,0 +1,15 @@
+{% if thanks %}
+<script src="{{ static_url('js/bootstrap-growl.min.js') }}"></script>
+<script>
+    $(function(){
+        $.growl({
+            message: window.growl_message || 'El proceso finalizó correctamente.',
+            title: ' ',
+            icon: 'fa fa-bell'
+        }, {
+            type: 'success',
+            position: {from: "bottom", align: "right"}
+        });
+    });
+</script>
+{% end %}

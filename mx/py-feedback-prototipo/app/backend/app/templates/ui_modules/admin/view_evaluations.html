@@ -1,0 +1,103 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-lg-4 col-md-4">
+                    </div>
+                    <div class="col-lg-8 col-md-8 text-right">
+                        <ul class="js-paginator pagination pagination-sm"></ul>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center item-list-active" width="5%">Activo</th>
+                                        <th class="js-rate-helper text-center" width="15%" rel="popover">
+                                            Calificaci&oacute;n
+                                            <span class="fa fa-info-circle"></span>
+                                        </th>
+                                        <th width="80%">Comentario</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for evaluation in evaluations %}
+                                    <tr id="{{ evaluation.id }}" data-token="{{ evaluation.id }}" class="items-list-border">
+                                        <td class="text-center item-list-active">
+                                            {% if evaluation.enabled %}
+                                            <button type="button" class="js-button ladda-button btn btn-xs btn-success" data-action="change-status" data-token="{{ evaluation.id }}" data-style="zoom-in">
+                                                <span class="ladda-label fa fa-check"></span>
+                                            </button>
+                                            {% else %}
+                                            <button type="button" class="js-button ladda-button btn btn-xs btn-danger" data-action="change-status" data-token="{{ evaluation.id }}" data-style="zoom-in">
+                                                <span class="ladda-label fa fa-times"></span>
+                                            </button>
+                                            {% end %}
+                                        </td>
+                                        <td class="text-center items-list-resume">
+                                            {% set image = 'img/icons/color/%s.png' % evaluation.rate %}
+                                            {% set rate_str = helpers.normalize_rate(evaluation.rate) %}
+                                            <p><a href="/a/evaluations?q={{rate_str}}"><img src="{% raw static_url(image) %}" alt="{{rate_str}}" class="items-list-icon"/></a></p>
+                                            <p><a href="/a/evaluations?q={{rate_str}}" class="label label-{{helpers.normalize_rate_label(evaluation.rate)}}">{{rate_str}}</a></p>
+                                            <p><strong><a href="/a/evaluations?q={{evaluation.client}}">@{{evaluation.client}}</a></strong>{% if not evaluation.reference.enabled %}&nbsp;<span class="fa fa-exclamation-circle text-danger"></span>{% end %}</p>
+                                            <p class="items-list-date">{{helpers.normalize_created_date(evaluation.created)}}</p>
+                                            {% if not evaluation.answers and evaluation.reference.enabled %}
+                                            <div id="{{ evaluation.id }}-actions" class="btn-group items-list-resume-actions" style="{% raw 'display: none;' if not evaluation.enabled else '' %}">
+                                                <button type="button" class="js-button btn btn-sm btn-default" data-action="send-email" data-token="{{ evaluation.id }}" data-username="{{ evaluation.client }}">
+                                                    <span class="fa fa-envelope"></span>
+                                                </button>
+                                                <button type="button" class="js-button btn btn-sm btn-default" data-action="call" data-token="{{ evaluation.id }}" data-username="{{ evaluation.client }}">
+                                                    <span class="fa fa-phone"></span>
+                                                </button>
+                                            </div>
+                                            {% end %}
+                                        </td>
+                                        <td class="items-list-body">
+                                            {% set provider = helpers.normalize_provider(evaluation.reference.provider) %}
+                                            {% set phone = '%s %s' % (evaluation.reference.phone_lada, evaluation.reference.phone_number) %}
+                                            <small>
+                                                <span class="fa fa-briefcase">&nbsp;<a href="/a/evaluations?q={{provider.lower()}}">{{provider}}</a></span>&nbsp;&gt;&nbsp;
+                                                <span class="fa fa-user">&nbsp;<a href="/a/users?q={{evaluation.client}}">{{evaluation.reference.first_name}} {{evaluation.reference.last_name}}</a></span>&nbsp;
+                                            </small>
+                                            <hr class="items-list-hr">
+                                            {% raw helpers.normalize_description(evaluation.description.encode('utf-8'), 'lead') %}
+                                            <p class="item-list-helper">
+                                                <a href="/a/evaluations?q={{evaluation.activation_key.lower()}}"><small><code><span class="fa fa-ticket"></span>&nbsp;{{ evaluation.activation_key }}</code></small></a>
+                                            </p>
+                                        </td>
+                                    </tr>
+                                    {% for answer in evaluation.answers %}
+                                    <tr data-token="{{ evaluation.id }}-thread" class="warning">
+                                        <td class="text-center">&nbsp;</td>
+                                        <td class="text-center">
+                                            <p><span class="fa fa-2x {{helpers.normalize_mode(answer.mode)}} text-default"></span></p>
+                                            <p><strong><a href="/a/evaluations?q={{answer.username}}" class="answer-username">@{{answer.username}}</a></strong></p>
+                                            <p class="items-list-date answer-date">{{helpers.normalize_created_date(answer.created)}}</p>
+                                        </td>
+                                        <td class="answer-description">
+                                            <small><span class="fa fa-user"></span>&nbsp;<a href="/a/users?q={{answer.username}}">{{answer.reference.first_name}} {{answer.reference.last_name}}</a></small>
+                                            <hr class="items-list-hr">
+                                            {% raw helpers.normalize_description(answer.description.encode('utf-8')) %}
+                                        </td>
+                                    </tr>
+                                    {% end %}
+                                    {% end %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <div class="text-right">
+                    <ul class="js-paginator pagination pagination-sm"></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,17 @@
+{% extends "../master.html" %}
+{% block body_content %}
+<style>
+	body {background: #DCE7EB;} 
+	.container {margin-bottom: 32px;}
+	.hero-unit {margin-top: 32px;}
+	.hero-unit h2 {color: #900;}
+</style>
+<div class="container">
+	<div class="hero-unit">
+		<h2>Ups!:</h2>
+		<p>{{ message }}</p>
+		<br>
+		<p><a href="{{ next }}" class="btn btn-large">Continuar</a></p>
+	</div>
+</div>
+{% end %}

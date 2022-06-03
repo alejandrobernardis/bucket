@@ -1,0 +1,224 @@
+<?xml version="1.0"?>
+<!DOCTYPE faces-config PUBLIC "-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.1//EN"
+                              "http://java.sun.com/dtd/web-facesconfig_1_1.dtd">
+<faces-config>
+	<application>
+		<variable-resolver>
+			org.springframework.web.jsf.DelegatingVariableResolver
+		</variable-resolver>
+		<view-handler>com.sun.facelets.FaceletViewHandler</view-handler>
+		<message-bundle>messages.Messages</message-bundle>
+	</application>
+
+
+	<managed-bean>
+		<managed-bean-name>logedUser</managed-bean-name>
+		<managed-bean-class>com.clarus.cms.vo.model.User</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>loginCtrl</managed-bean-name>
+		<managed-bean-class>com.clarus.web.controller.LoginController</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+
+		<managed-property>
+			<property-name>logedUser</property-name>
+			<value>#{logedUser}</value>
+		</managed-property>
+
+		<managed-property>
+			<property-name>userService</property-name>
+			<value>#{userService}</value>
+		</managed-property>
+		
+		<managed-property>
+			<property-name>contentCtrl</property-name>
+			<value>#{contentCtrl}</value>
+		</managed-property>
+		
+		
+		
+	</managed-bean>
+
+
+	<managed-bean>
+		<managed-bean-name>contentImage</managed-bean-name>
+		<managed-bean-class>com.clarus.cms.vo.Image</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>preferedHeight</property-name>
+			<value>100</value>
+		</managed-property>
+	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>animationFlash</managed-bean-name>
+		<managed-bean-class>com.clarus.cms.vo.FlashAnimation</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>preferedHeight</property-name>
+			<value>100</value>
+		</managed-property>
+		<managed-property>
+			<property-name>preferedWidth</property-name>
+			<value>600</value>
+		</managed-property>
+	</managed-bean>
+	
+	 
+	
+	<managed-bean>
+		<managed-bean-name>animationImages</managed-bean-name>
+		<managed-bean-class>com.clarus.cms.vo.AnimationImages</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>preferedHeight</property-name>
+			<value>80</value>
+		</managed-property>
+	</managed-bean>
+	
+
+	<managed-bean>
+		<managed-bean-name>util</managed-bean-name>
+		<managed-bean-class>com.clarus.web.controller.UtilController</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+
+
+	<managed-bean>
+		<managed-bean-name>contentCtrl</managed-bean-name>
+		<managed-bean-class>com.clarus.web.controller.ContentController</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+		
+		<managed-property>
+			<property-name>contentService</property-name>
+			<value>#{contentService}</value>
+		</managed-property>
+		
+		<managed-property>
+			<property-name>contentForm</property-name>
+			<value>#{contentForm}</value>
+		</managed-property>
+		
+		<managed-property>
+			<property-name>contentImage</property-name>
+			<value>#{contentImage}</value>
+		</managed-property>
+
+		<managed-property>
+			<property-name>animationImages</property-name>
+			<value>#{animationImages}</value>
+		</managed-property>
+		
+		<managed-property>
+			<property-name>animationFlash</property-name>
+			<value>#{animationFlash}</value>
+		</managed-property>
+		
+		
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>categoryCtrl</managed-bean-name>
+		<managed-bean-class>com.clarus.web.controller.CategoryController</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+		
+		<managed-property>
+			<property-name>contentService</property-name>
+			<value>#{contentService}</value>
+		</managed-property>
+		
+		<managed-property>
+			<property-name>categoryForm</property-name>
+			<value>#{categoryForm}</value>
+		</managed-property>
+
+	</managed-bean>
+
+
+	<managed-bean>
+		<managed-bean-name>storeCtrl</managed-bean-name>
+		<managed-bean-class>com.clarus.web.controller.StroreController</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+		
+		<managed-property>
+			<property-name>contentService</property-name>
+			<value>#{contentService}</value>
+		</managed-property>
+		
+		<managed-property>
+			<property-name>storeForm</property-name>
+			<value>#{storeForm}</value>
+		</managed-property>
+
+	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>publicationCtrl</managed-bean-name>
+		<managed-bean-class>com.clarus.web.controller.PublicationController</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+		
+		<managed-property>
+			<property-name>contentService</property-name>
+			<value>#{contentService}</value>
+		</managed-property>
+		
+		<managed-property>
+			<property-name>publicationForm</property-name>
+			<value>#{publicationForm}</value>
+		</managed-property>
+
+	</managed-bean>
+
+
+	<managed-bean>
+		<managed-bean-name>userForm</managed-bean-name>
+		<managed-bean-class>com.clarus.web.form.UserForm</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>categoryForm</managed-bean-name>
+		<managed-bean-class>com.clarus.web.form.CategoryForm</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>contentForm</managed-bean-name>
+		<managed-bean-class>com.clarus.web.form.ContentForm</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>storeForm</managed-bean-name>
+		<managed-bean-class>com.clarus.web.form.StoreForm</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>publicationForm</managed-bean-name>
+		<managed-bean-class>com.clarus.web.form.PublicationForm</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>userCtrl</managed-bean-name>
+		<managed-bean-class>com.clarus.web.controller.UserController</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+		<managed-property>
+			<property-name>logedUser</property-name>
+			<value>#{logedUser}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>userService</property-name>
+			<value>#{userService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>userForm</property-name>
+			<value>#{userForm}</value>
+		</managed-property>
+
+	</managed-bean>
+
+</faces-config>

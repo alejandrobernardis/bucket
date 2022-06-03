@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	version="2.4"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+	<display-name>AXO web</display-name>
+
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>/WEB-INF/spring-config/appContext.xml</param-value>
+	</context-param>
+
+	<context-param>
+		<param-name>org.jboss.jbossfaces.WAR_BUNDLES_JSF_IMPL</param-name>
+		<param-value>true</param-value>
+	</context-param>
+
+	<context-param>
+		<param-name>javax.faces.CONFIG_FILES</param-name>
+		<param-value>/WEB-INF/faces-config/facesConfig.xml</param-value>
+	</context-param>
+
+	<context-param>
+		<param-name>javax.faces.STATE_SAVING_METHOD</param-name>
+		<param-value>server</param-value>
+	</context-param>
+
+	<context-param>
+		<param-name>org.richfaces.SKIN</param-name>
+		<param-value>plain</param-value>
+	</context-param>
+
+	<context-param>
+		<param-name>javax.faces.DEFAULT_SUFFIX</param-name>
+		<param-value>.xhtml</param-value>
+	</context-param>
+
+	<context-param>
+		<param-name>org.ajax4jsf.VIEW_HANDLERS</param-name>
+		<param-value>com.sun.facelets.FaceletViewHandler</param-value>
+	</context-param>
+
+
+
+	<filter>
+		<filter-name>resolutionChanger</filter-name>
+		<filter-class>com.clarus.cms.web.filter.ResolutionFilter</filter-class>
+		<init-param>
+			<param-name>resolutionPage</param-name>
+			<param-value>/pages/resolution.jsp</param-value>
+		</init-param>
+	</filter>
+
+	<filter>
+		<filter-name>ajax4jsf</filter-name>
+		<filter-class>org.ajax4jsf.Filter</filter-class>
+		<init-param>
+			<param-name>createTempFiles</param-name>
+			<param-value>false</param-value>
+		</init-param>
+	</filter>
+	
+	<filter>  
+		<filter-name>extensionsFilter</filter-name>  
+		<filter-class>org.apache.myfaces.webapp.filter.ExtensionsFilter</filter-class> 
+	</filter> 
+	<!-- extension mapping for adding <script/>, <link/>, and other resource tags to JSF-pages -->
+	
+	<filter-mapping>  
+		<filter-name>resolutionChanger</filter-name>  
+		<url-pattern>*.jsf</url-pattern> 
+	</filter-mapping> 
+	 
+	<filter-mapping>
+        <filter-name>extensionsFilter</filter-name>
+        <url-pattern>*.jsf</url-pattern>
+    </filter-mapping>
+    
+    <filter-mapping>
+        <filter-name>extensionsFilter</filter-name>
+        <url-pattern>/faces/*</url-pattern>
+    </filter-mapping> 
+
+	<filter-mapping>
+		<filter-name>ajax4jsf</filter-name>
+		<servlet-name>FacesServlet</servlet-name>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>INCLUDE</dispatcher>
+		<dispatcher>ERROR</dispatcher>
+	</filter-mapping>
+
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+
+	<listener>
+		<listener-class>com.sun.faces.config.ConfigureListener</listener-class>
+	</listener>
+
+	<listener>
+		<listener-class>com.sun.faces.application.WebappLifecycleListener</listener-class>
+	</listener>
+	
+	<servlet>
+		<servlet-name>FacesServlet</servlet-name>
+		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+		<load-on-startup>0</load-on-startup>
+	</servlet>
+
+	<servlet>
+		<servlet-name>MediaServlet</servlet-name>
+		<servlet-class>com.clarus.cms.web.servlet.MediaServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>FacesServlet</servlet-name>
+		<url-pattern>/faces/*</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>FacesServlet</servlet-name>
+		<url-pattern>*.jsf</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>MediaServlet</servlet-name>
+		<url-pattern>/media/*</url-pattern>
+	</servlet-mapping>
+
+	<login-config>
+		<auth-method>BASIC</auth-method>
+	</login-config>
+	
+	<session-config>
+		<session-timeout>60</session-timeout>
+	</session-config>
+	
+	<welcome-file-list>
+		<welcome-file>/pages/resolution.jsp</welcome-file>
+	</welcome-file-list>
+	
+	<error-page> 
+    	<exception-type>java.lang.Throwable</exception-type> 
+    	<location>/pages/error.jsp</location> 
+	</error-page>
+	
+	<error-page> 
+    	<error-code>404</error-code> 
+    	<location>/pages/fnf.jsp</location> 
+	</error-page>
+	
+	<error-page> 
+    	<error-code>500</error-code> 
+    	<location>/pages/error.jsp</location> 
+	</error-page>
+	
+	<error-page> 
+    	<error-code>503</error-code> 
+    	<location>/pages/error.jsp</location> 
+	</error-page>
+	
+
+</web-app>
+

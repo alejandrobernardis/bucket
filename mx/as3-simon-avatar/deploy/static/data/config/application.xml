@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+<recordset>
+	<navigation>
+		<item id="btHome">screen:home</item>
+		<item id="InstructionsButton">popup:instructions</item>
+		<item id="ExitButton">popup:exit</item>
+	</navigation>
+	
+	<config>
+		<simon>
+			<item id="hand" x="112.45" y="275"/>
+		</simon>
+	</config>
+	
+	<steps>
+		<item id="1">
+		</item>
+	</steps>
+	
+	<externalLink>
+		<item id="">http://www.xxx.com</item>
+	</externalLink>
+	
+	<socialNetworks>
+		<facebook>
+			<detail></detail>
+			<url></url>
+		</facebook>
+		<twitter>
+			<detail></detail>
+			<url></url>
+		</twitter>
+	</socialNetworks>
+	
+	<formErrors>		
+		<common>
+			<item id="fatal">Lo sentimos, nuestro servidor esta saturado. Por favor volver más tarde.</item>
+		</common>
+		<XxxScreen>
+			<sending>Enviando...</sending>
+		</XxxScreen>
+	</formErrors>
+	
+</recordset>

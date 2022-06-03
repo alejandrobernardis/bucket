@@ -1,0 +1,375 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	template="/templates/tmplAdmin.xhtml">
+
+	<ui:define name="workarea">
+		<f:loadBundle var="label" basename="labels.labels" />
+		<style>
+			.rich-fileupload-table-td {
+				height: 15px;
+				padding-top: 0px;
+				padding-bottom: 0px;
+				border: 0px;
+			}
+		
+		</style>
+		<a4j:form>
+			<a4j:keepAlive beanName="contentForm"/>
+			<h:panelGrid columnClasses="title" width="100%">
+				<h:outputText value="#{label.add} #{label.content}" rendered="#{contentForm.selectedContent.idContent == null}"/>
+				<h:outputText value="#{label.edit} #{label.content}" rendered="#{contentForm.selectedContent.idContent != null}"/>
+			</h:panelGrid>
+			<rich:spacer height="15px"/>
+			<h:panelGrid width="100%">
+				<table align="right"><tr><td>
+					<a4j:commandButton value="#{label.back}" style="background-image: url('#{request.contextPath}/web-resources/img/icons/back.png')" 
+						immediate="true" action="#{contentCtrl.listContent}"  
+						styleClass="button" onmouseover="this.className='buttonHover'" onmouseout="this.className='button'"/>
+				</td></tr></table>
+			</h:panelGrid>
+			<h:panelGrid width="100%" id="message">
+			<h:panelGrid width="100%" rendered="#{contentCtrl.error != null}" >
+				<h:panelGrid rendered="#{contentCtrl.error}" styleClass="bad">
+					<h:panelGroup>
+						<h:graphicImage  value="/web-resources/img/icons/error.png" />
+						<rich:spacer width="15px"/>
+						<h:outputText value="#{contentCtrl.message}"  />
+					</h:panelGroup>
+				</h:panelGrid>
+				<h:panelGrid rendered="#{!contentCtrl.error}" styleClass="good">
+					<h:panelGroup>
+						<h:outputText value="#{contentCtrl.message}"  />
+					</h:panelGroup>
+				</h:panelGrid>
+			</h:panelGrid>
+			</h:panelGrid>
+			<h:panelGrid style="width: 100%;height: 485px; border: 1pt solid #B6AD84; padding: 20px;" columnClasses="alignTop">
+				<h:panelGrid columns="3" columnClasses="userFormLabel,contentFormField,userFormMessage">
+					<h:outputText value="#{label.category}"/>				
+					<h:outputText value="#{contentForm.selectedContentType.contentTypeName}"/>
+					<h:outputText value=" "/>
+					
+					<h:outputText value="#{label.id}"/>				
+					<h:outputText value="#{contentForm.selectedContent.idContent}"/>
+					<h:outputText value=" "/>
+					
+					<h:panelGroup>
+						<h:outputText value="#{label.language}"/>
+						<h:outputLabel value="*" styleClass="error"/>
+					</h:panelGroup>
+					<h:selectOneMenu id="language" value="#{contentForm.selectedContent.language}" style="width: 600px" required="true" >
+						<f:selectItem itemValue="" itemLabel=""/>
+						<f:selectItems value="#{contentCtrl.languages}"/>
+						<rich:ajaxValidator event="onchange" />
+					</h:selectOneMenu>
+					<rich:message for="language" styleClass="error">
+						<f:facet name="errorMarker">
+							<h:panelGroup>
+								<h:graphicImage value="/web-resources/img/icons/error.png" />
+								<rich:spacer width="5px"/>
+							</h:panelGroup>
+						</f:facet>
+					</rich:message>
+					
+					
+					<h:panelGroup>
+						<h:outputText value="#{label.shortDesc}"/>
+						<h:outputLabel value="*" styleClass="error"/>
+					</h:panelGroup>
+					<h:inputText id="shortDesc" value="#{contentForm.selectedContent.shortDesc}" style="width: 600px">
+						<rich:ajaxValidator event="onblur" />
+					</h:inputText>
+					<rich:message for="shortDesc" styleClass="error">
+						<f:facet name="errorMarker">
+							<h:panelGroup>
+								<h:graphicImage value="/web-resources/img/icons/error.png" />
+								<rich:spacer width="5px"/>
+							</h:panelGroup>
+						</f:facet>
+					</rich:message>
+					
+					<h:panelGroup>
+						<h:outputText value="#{label.pageTitle}"/>
+						<h:outputLabel value="*" styleClass="error"/>
+					</h:panelGroup>
+					<h:inputText id="pageTitle" value="#{contentForm.selectedContent.pageTitle}" style="width: 600px">
+						<rich:ajaxValidator event="onblur" />
+					</h:inputText>
+					<rich:message for="pageTitle" styleClass="error">
+						<f:facet name="errorMarker">
+							<h:panelGroup>
+								<h:graphicImage value="/web-resources/img/icons/error.png" />
+								<rich:spacer width="5px"/>
+							</h:panelGroup>
+						</f:facet>
+					</rich:message>
+					
+					<h:panelGroup>
+						<h:outputText value="#{label.metaDesc}"/>
+						<h:outputLabel value="*" styleClass="error"/>
+					</h:panelGroup>
+					<h:inputText id="metaDesc" value="#{contentForm.selectedContent.metaDescription}" style="width: 600px">
+						<rich:ajaxValidator event="onblur" />
+					</h:inputText>
+					<rich:message for="metaDesc" styleClass="error">
+						<f:facet name="errorMarker">
+							<h:panelGroup>
+								<h:graphicImage value="/web-resources/img/icons/error.png" />
+								<rich:spacer width="5px"/>
+							</h:panelGroup>
+						</f:facet>
+					</rich:message>
+					
+					<h:panelGroup>
+						<h:outputText value="#{label.metaKeywords}"/>
+						<h:outputLabel value="*" styleClass="error"/>
+					</h:panelGroup>
+					<h:inputText id="metaKeywords" value="#{contentForm.selectedContent.metaKewords}" style="width: 600px">
+						<rich:ajaxValidator event="onblur" />
+					</h:inputText>
+					<rich:message for="metaKeywords" styleClass="error">
+						<f:facet name="errorMarker">
+							<h:panelGroup>
+								<h:graphicImage value="/web-resources/img/icons/error.png" />
+								<rich:spacer width="5px"/>
+							</h:panelGroup>
+						</f:facet>
+					</rich:message>
+					
+					<h:panelGrid>
+						<h:panelGroup>
+							<h:outputText value="#{label.image}"/>
+							<h:outputLabel value="*" styleClass="error"/>
+						</h:panelGroup>
+						<rich:fileUpload fileUploadListener="#{contentCtrl.listener}" addControlLabel="#{label.uploadImage}" autoclear="true"
+	                		maxFilesQuantity="20" id="upload" immediateUpload="true"
+	                		acceptedTypes="jpg" allowFlash="false" listHeight="74px" listWidth="200">
+	                			<a4j:support event="onuploadcomplete" reRender="image" />
+	            		</rich:fileUpload>
+					</h:panelGrid>
+					<a4j:mediaOutput id="image" element="img" cacheable="false" session="true" 
+							style="height: 130px;"
+	        				createContent="#{contentCtrl.paint}" value="" mimeType="image/jpeg" >
+	        				 <f:param value="#{contentCtrl.dummy}" name="dummy"/>  	
+        			</a4j:mediaOutput>
+	        				
+            		
+					<rich:message for="image" styleClass="error">
+						<f:facet name="errorMarker">
+							<h:panelGroup>
+								<h:graphicImage value="/web-resources/img/icons/error.png" />
+								<rich:spacer width="5px"/>
+							</h:panelGroup>
+						</f:facet>
+					</rich:message>
+				
+					<h:panelGroup>
+						<h:outputText value="#{label.text}"/>
+						<h:outputLabel value="*" styleClass="error"/>
+					</h:panelGroup>
+					<rich:editor required="true" id="contentText" language="#{util.locale}" width="600" height="300" value="#{contentForm.selectedContent.text}"  theme="advanced" skin="default" viewMode="visual" useSeamText="false" 
+					 	 plugins="searchreplace,spellchecker"  >
+					 	<f:param name="theme_advanced_buttons1" value="cut,copy,paste,undo,redo,separator,bold, italic, underline, strikethrough, sub,sup,separator,justifyleft, justifycenter, justifyright, justifyfull,bullist,numlist,outdent,indent,separator,link,unlink,hr,removeformat,charmap,code "/>
+					 	<f:param name="theme_advanced_buttons2" value="search,replace,spellchecker"/>
+					 	<f:param name="theme_advanced_buttons3" value=""/>
+				        <f:param name="theme_advanced_toolbar_location" value="top"/>                               
+				        <f:param name="theme_advanced_toolbar_align" value="left"/>
+				        <f:param name="spellchecker_languages" value="#{contentCtrl.editorLanguages}" />
+				        <f:param name="spellchecker_rpc_url" value="#{request.contextPath}/spellchecker" />
+				        <rich:ajaxValidator event="onblur" />
+    				</rich:editor>
+    				
+    				<rich:message for="contentText" styleClass="error">
+						<f:facet name="errorMarker">
+							<h:panelGroup>
+								<h:graphicImage value="/web-resources/img/icons/error.png" />
+								<rich:spacer width="5px"/>
+							</h:panelGroup>
+						</f:facet>
+					</rich:message>
+					
+					
+					<h:panelGroup>
+						<h:outputText value="#{label.text} 2"/>
+						<h:outputLabel value="*" styleClass="error"/>
+					</h:panelGroup>
+					<rich:editor required="true" id="contentText2" language="#{util.locale}" width="600" height="300" value="#{contentForm.selectedContent.text2}"  theme="advanced" skin="default" viewMode="visual" useSeamText="false" 
+					 	 plugins="searchreplace,spellchecker"  >
+					 	<f:param name="theme_advanced_buttons1" value="cut,copy,paste,undo,redo,separator,bold, italic, underline, strikethrough, sub,sup,separator,justifyleft, justifycenter, justifyright, justifyfull,bullist,numlist,outdent,indent,separator,link,unlink,hr,removeformat,charmap,code "/>
+					 	<f:param name="theme_advanced_buttons2" value="search,replace,spellchecker"/>
+					 	<f:param name="theme_advanced_buttons3" value=""/>
+				        <f:param name="theme_advanced_toolbar_location" value="top"/>                               
+				        <f:param name="theme_advanced_toolbar_align" value="left"/>
+				        <f:param name="spellchecker_languages" value="#{contentCtrl.editorLanguages}" />
+				        <f:param name="spellchecker_rpc_url" value="#{request.contextPath}/spellchecker" />
+				        <rich:ajaxValidator event="onblur" />
+    				</rich:editor>
+    				
+    				<rich:message for="contentText2" styleClass="error">
+						<f:facet name="errorMarker">
+							<h:panelGroup>
+								<h:graphicImage value="/web-resources/img/icons/error.png" />
+								<rich:spacer width="5px"/>
+							</h:panelGroup>
+						</f:facet>
+					</rich:message>
+					
+					<h:panelGroup>
+						<h:outputLabel value="#{label.active}"/>
+						<h:outputLabel value="*" styleClass="error"/>
+					</h:panelGroup>
+					<h:selectBooleanCheckbox id="active" value="#{contentForm.selectedContent.active}">
+						<rich:ajaxValidator event="onblur" />
+					</h:selectBooleanCheckbox>
+					<rich:message for="active" styleClass="error">
+						<f:facet name="errorMarker">
+							<h:panelGroup>
+								<h:graphicImage value="/web-resources/img/icons/error.png" />
+								<rich:spacer width="5px"/>
+							</h:panelGroup>
+						</f:facet>
+					</rich:message>
+				
+				
+					<h:panelGroup>
+						<h:outputLabel value="#{label.animationtype}"/>
+						<h:outputLabel value="*" styleClass="error"/>
+					</h:panelGroup>
+					<h:panelGrid columns="2" columnClasses="alignTop,alignTop"  cellspacing="0" cellpadding="0">
+						<h:selectOneListbox size="2" id="animationType" value="#{contentForm.selectedContent.animationType}" required="true"  style="width: 200px">
+							<f:selectItems value="#{contentCtrl.animationTypes}"/>
+							<rich:ajaxValidator event="onblur" />
+							<a4j:support event="onchange" reRender="uploadAnimationContiner,animation"/>
+						</h:selectOneListbox>
+					</h:panelGrid>
+					<rich:message for="animationType" styleClass="error">
+						<f:facet name="errorMarker">
+							<h:panelGroup>
+								<h:graphicImage value="/web-resources/img/icons/error.png" />
+								<rich:spacer width="5px"/>
+							</h:panelGroup>
+						</f:facet>
+					</rich:message>
+					
+					<h:panelGrid>
+						<h:panelGroup>
+							<h:outputLabel value="#{label.animation}"/>
+							<h:outputLabel value="*" styleClass="error"/>
+						</h:panelGroup>
+						<h:panelGrid id="uploadAnimationContiner" cellspacing="0" cellpadding="0">
+							<rich:fileUpload fileUploadListener="#{contentCtrl.listenerAnimation}" addControlLabel="#{label.uploadImage}" autoclear="true"
+			                		maxFilesQuantity="50" id="uploadAnimation" immediateUpload="false" rendered="#{contentForm.selectedContent.animationType == 'SLIDESHOW'}"
+			                		acceptedTypes="jpg" allowFlash="false" listHeight="74px" listWidth="200" fileEntryClass="fileEntry">
+			                	<a4j:support event="onuploadcomplete" reRender="animation" />
+			                </rich:fileUpload>
+			                <rich:fileUpload fileUploadListener="#{contentCtrl.listenerAnimationFlash}" addControlLabel="#{label.uploadFlash}" autoclear="true"
+			                		maxFilesQuantity="50" id="uploadAnimationFlash" immediateUpload="true" rendered="#{contentForm.selectedContent.animationType == 'FLASH'}"
+			                		acceptedTypes="swf" allowFlash="false" listHeight="74px" listWidth="200" fileEntryClass="fileEntry">
+			                	<a4j:support event="onuploadcomplete" reRender="animation" />
+			                </rich:fileUpload>
+		                </h:panelGrid>
+					</h:panelGrid>
+					
+					<h:panelGrid id="animation" columns="2" width="100%" columnClasses="userFormLabel">
+						<rich:spacer width="1"/>
+						<h:panelGrid  rowClasses="film,images,film" width="600" cellspacing="0" cellpadding="0" style="border: 1px solid black;" 
+							rendered="#{contentForm.selectedContent.animationType == 'SLIDESHOW'}">
+							<rich:spacer height="15px"/>
+							<rich:dataGrid value="#{animationImages.images}" var="image" rowKeyVar="index" columns="3">
+								<h:panelGrid cellspacing="0" cellpadding="0">
+									<h:panelGrid  cellspacing="0" cellpadding="0">
+										<a4j:mediaOutput id="image" element="img" cacheable="false" session="true" 
+											style="width: #{image.scaledWidth}px; height: #{image.scaledHeight}px;"
+				        					createContent="#{contentCtrl.paintAnimation}" value="#{index}" mimeType="image/jpeg" >
+				        					 <f:param value="#{contentCtrl.dummy}" name="dummy"/>  	
+				        				</a4j:mediaOutput>
+				        			</h:panelGrid>
+				        			<h:panelGrid bgcolor="white" width="100%" cellspacing="0" cellpadding="0">
+				        				<table align="center" cellspacing="2" cellpadding="0"><tr><td>
+											<h:panelGrid columns="3" cellspacing="0" cellpadding="0" columnClasses="controlAnimation,controlAnimation,controlAnimation">
+												<rich:spacer width="16px" rendered="#{index == 0}"/>
+												<a4j:commandButton image="/web-resources/img/icons/arrowLeftChico.png" action="#{contentCtrl.moveLeft}" rendered="#{index != 0}" 
+													immediate="true" reRender="animation" style="height: 16px">
+													<a4j:actionparam name="animationIndex" assignTo="#{contentCtrl.animationIndex}" value="#{index}"/>
+												</a4j:commandButton>
+												<a4j:commandButton image="/web-resources/img/icons/delete.png" action="#{contentCtrl.deleteAnimationImage}" 
+													immediate="true" reRender="animation"  style="height: 16px">
+													<a4j:actionparam name="animationIndex" assignTo="#{contentCtrl.animationIndex}" value="#{index}"/>
+												</a4j:commandButton>
+												<a4j:commandButton image="/web-resources/img/icons/arrowRightChico.png" action="#{contentCtrl.moveRight}" rendered="#{index != animationImages.size - 1}" 
+													immediate="true" reRender="animation"  style="height: 16px">
+													<a4j:actionparam name="animationIndex" assignTo="#{contentCtrl.animationIndex}" value="#{index}"/>
+												</a4j:commandButton>
+												<rich:spacer width="16px" rendered="#{index == animationImages.size - 1}"/>
+											</h:panelGrid>
+										</td></tr></table>
+				        			</h:panelGrid>
+								</h:panelGrid>
+							</rich:dataGrid>
+							<rich:spacer height="15px"/>
+						</h:panelGrid>
+						<h:panelGrid  rowClasses="film,images,film" cellspacing="0" cellpadding="0" style="border: 1px solid black;" 
+							rendered="#{contentForm.selectedContent.animationType == 'FLASH'}">
+							 <a4j:mediaOutput element="a" id="swfLink" style="display: none;" cacheable="false" session="true"
+	            				createContent="#{contentCtrl.paintFlash}" value="" mimeType="application/x-shockwave-flash"/>
+	
+	        					<a4j:outputPanel layout="block" id="myFlashContent" style="width: #{animationFlash.preferedWidth}px; #{animationFlash.preferedHeight}: 200px">
+						            <a href="http://www.adobe.com/go/getflashplayer">
+						                <img src="http://www.adobe.com/images/shared/download_buttons/get_flash_player.gif" alt="Get Adobe Flash player" />
+						            </a>
+						        </a4j:outputPanel>
+	
+						        <script type="text/javascript">
+							        var flashvars = {};
+							        var params = {};
+							        var attributes = {};
+							        swfobject.embedSWF(#{rich:element('swfLink')}.href, "#{rich:clientId('myFlashContent')}", "#{animationFlash.preferedWidth}", "#{animationFlash.preferedHeight}", "9.0.0", false, flashvars, params, attributes); 
+						        </script>
+						</h:panelGrid>
+					</h:panelGrid>
+				</h:panelGrid>
+				
+				
+			</h:panelGrid>
+			<h:panelGrid width="100%" id="message2">
+				<h:panelGrid width="100%"  rendered="#{contentCtrl.error != null}" >
+					<h:panelGrid rendered="#{contentCtrl.error}" styleClass="bad">
+						<h:panelGroup>
+							<h:graphicImage  value="/web-resources/img/icons/error.png" />
+							<rich:spacer width="15px"/>
+							<h:outputText value="#{contentCtrl.message}"  />
+						</h:panelGroup>
+					</h:panelGrid>
+					<h:panelGrid rendered="#{!contentCtrl.error}" styleClass="good">
+						<h:panelGroup>
+							<h:outputText value="#{contentCtrl.message}"  />
+						</h:panelGroup>
+					</h:panelGrid>
+				</h:panelGrid>
+			</h:panelGrid>
+			<h:panelGrid width="100%">
+				<table align="right"><tr><td>
+					<h:panelGrid columns="2">
+						<a4j:commandButton value="#{label.save}" style="background-image: url('#{request.contextPath}/web-resources/img/icons/save.png')" 
+							action="#{contentCtrl.saveContent}" reRender="message,message2"
+							styleClass="buttonPrefered" onmouseover="this.className='buttonPreferedHover'" onmouseout="this.className='buttonPrefered'"/>
+								
+						<a4j:commandButton value="#{label.cancel}" style="background-image: url('#{request.contextPath}/web-resources/img/icons/cancel.png')" 
+							action="#{contentCtrl.listContent}" immediate="true"
+							styleClass="button" onmouseover="this.className='buttonHover'" onmouseout="this.className='button'"/>			
+									
+					</h:panelGrid>
+				</td></tr></table>
+			</h:panelGrid>
+			
+		</a4j:form>
+	</ui:define>
+
+</ui:composition>
+

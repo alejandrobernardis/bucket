@@ -1,0 +1,95 @@
+@font-face {
+  font-family: 'ChaletParis';
+  font-weight: 300;
+  src: url('../fonts/Chalet-ParisSeventy.otf');
+}
+
+body,
+.body-auth {
+    background: url('../img/background.jpg') top left no-repeat fixed;
+}
+
+.panel-profile,
+.panel-auth {
+    width: 350px;
+}
+
+.panel-auth {
+    margin: 60px auto;
+}
+
+.panel-profile,
+.panel-search {
+    margin: 0px auto 32px auto;
+}
+
+.panel-search-result {
+    margin-top: 0px;
+    margin-bottom: 60px;
+}
+
+.panel-profile a,
+.panel-search a,
+.form-auth a {
+    display: block;
+}
+
+.font-title h3,
+.form-auth h3 {
+    font-family: ChaletParis;
+}
+
+.panel .alert,
+.panel-profile .alert,
+.panel-search .alert,
+.form-auth .alert {
+    padding: 8px;
+    margin-bottom: 8px;
+}
+
+.form-request a,
+.form-recovery a {
+    display: inline;
+    text-align: left;
+}
+
+.input-group-filters {
+    margin-top: 8px;
+}
+
+.navbar-default {
+    border: none;
+    background: none;
+    -webkit-box-shadow: none;
+    margin-bottom: 0;
+}
+
+.footer {
+    font-size: 11px;
+    margin: 0 auto 60px auto;
+    width: 350px;
+}
+
+.footer a {
+    font-weight: bold;
+}
+
+.js-paginator {
+    margin: 8px 0;
+}
+
+@media (min-width: 240px) and (max-width: 480px) {
+    .panel-profile,
+    .panel-auth {
+        width: 280px;
+    }
+    .footer {
+        width: 240px;
+    }
+}
+
+@media (min-width: 768px) {
+    .lead {
+        font-size: 18px;
+    }
+}

@@ -1,0 +1,36 @@
+{% extends '../master.html' %}
+{% block body_tag %}<body class="body-auth">{% end %}
+{% block content_container %}
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default panel-auth">
+            <div class="panel-body">
+                <form role="form" class="form-auth form-signin" method="post">
+                    {% module xsrf_form_html() %}
+                    <fieldset>
+                        <h3>addicted / <small>Iniciar sesi&oacute;n</small></h3>
+                        <hr>
+                        {% if form.errors %}
+                            {% module ViewErrors(form.errors) %}
+                        {% end %}
+                        <div class="form-group">
+                            <label for="username">Usuario / Email</label>
+                            <input class="form-control" required="1" autofocus="1" name="username" id="username" value="" type="text"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Contraseña</label>
+                            <input class="form-control" required="1" name="password" id="password" value="" type="password"/>
+                        </div>
+                        <input class="btn btn-success btn-block" value="Acceder" type="submit"/>
+                        <hr>
+                        <div class="text-center">
+                            <a href="/auth/recovery">Recuperar mi contrase&ntilde;a</a>
+                            <a href="/auth/request">Solicitar acceso</a>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% end %}

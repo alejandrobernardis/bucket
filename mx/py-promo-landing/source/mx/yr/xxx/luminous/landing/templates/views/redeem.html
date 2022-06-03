@@ -1,0 +1,61 @@
+{% extends "../master.html" %}
+{% block head_script_extra %}{% end %}
+{% block body_content %}
+<style>
+	body {background: #DCE7EB;}
+	.container {margin-bottom: 32px;}
+	.f-style {background: #fff; padding: 32px 0; -webkit-border-radius: 8px; -moz-border-radius: 8px; border-radius: 8px;} 
+	.form-buttons {padding-right: 78px; margin-top: 24px;}
+	.module {margin-bottom: 0;}
+</style>
+<div class="container">
+	<h3 class="form-title">Registrar Puntos</h3>
+	<form class="module" action="javascript:void();" method="post">
+		<table>
+			<tr>
+				<td width="470px" align="center">
+					<label>
+						<table>
+							<tr align="center">
+								<td>
+									<a href="/redeem/tickets">
+										<img src="{{ static_url('img/template/home-section-3-type-product.jpg') }}" alt="">
+									</a>
+								</td>
+							<tr>
+							<tr align="center"><td><input type="radio" name="redeem-type" id="type1" value="1"></td><tr>
+							<tr align="center"><td>Reg&iacute;stra tus Productos</td><tr>
+						</table>
+					</label>
+				</td>
+				<td width="470px" align="center">
+					<label>
+						<table>
+							<tr align="center">
+								<td>
+									<a href="/redeem/codes">
+										<img src="{{ static_url('img/template/home-section-3-type-accesory.jpg') }}" alt="">
+									</a>
+								</td>
+							<tr>
+							<tr align="center"><td><input type="radio" name="redeem-type" id="type2" value="2"></td><tr>
+							<tr align="center"><td>Accesorios y Flyers</td><tr>
+						</table>
+					</label>
+				</td>
+			</tr>
+		</table>
+	</form>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){
+	$('input[name=redeem-type]:radio').change(function(e){
+		var url;
+		switch($(this).attr('value')){
+			case '1': url = '/redeem/tickets'; break;
+			case '2': url = '/redeem/codes'; break;
+		} if(url) window.location.href = url;
+	});
+});
+</script>
+{% end %}

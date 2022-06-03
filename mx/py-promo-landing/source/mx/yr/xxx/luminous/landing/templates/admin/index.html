@@ -1,0 +1,90 @@
+{% extends "../master.html" %}
+{% block body_content %}
+<style>
+	body {background: #DCE7EB;}
+	.container {margin-bottom: 24px;}
+</style>
+<div class="container container-body">
+	<div class="well">
+		<h2>Generales:</h2>
+		<br>
+		<table class="table table-bordered table-striped table-report">
+			<thead>
+				<tr>
+					<th width="80%">Categor&iacute;a</th>
+					<th width="20%">Total</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for a in totals %}
+				<tr>
+					<td>{{ a.title }}</td>
+					<td>{{ int(a.total) }}</td>
+				</tr>
+				{% end %}
+			</tbody>
+		</table>
+	</div>
+	{% from mx.yr.tornado.models import Location %}
+	{% from mx.yr.tornado.utils import datetime_to_str %}
+	<div class="well">
+		<h2>Top 10 Usuarios:</h2>
+		<br>
+		<table class="table table-bordered table-striped table-report">
+			<thead>
+				<tr>
+					<th width="30%">Usuario</th>
+					<th width="15%">Telefono</th>
+					<th width="15%">Email</th>
+					<th width="10%">Puntos</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for a in top_10_users %}
+				<tr id="{{ a.user_id.id }}">
+					<td>
+						<a href="/_/admin/microreport?u={{a.user_id.id}}" title="MicroReporte"><i class="icon-list-alt"></i></a> -
+						<a href="/_/admin/report?u={{a.user_id.id}}"><strong class="username">{{ a.user_id.last_name }}, {{ a.user_id.first_name }}</strong></a><br>&Uacute;ltimo Acceso: {{ datetime_to_str(a.modified) }}
+						{% if a.user_id.address_state %}{% set state = Location.get_location(int(a.user_id.address_state)) %}<br>Estado: {{ state.name }}{% end %}
+						{% if a.user_id.facebook_uid %}<br><span class="label label-info">facebook</span>{% end %}
+					</td>
+					{% if a.user_id.phone_lada == 0 or a.user_id.phone_number == 0%}<td>-</td>{% else %}<td>({{ a.user_id.phone_lada }}) - {{ a.user_id.phone_number }}</td>{% end %}
+					{% if not a.user_id.email %}<td>-</td>{% else %}<td>{{ a.user_id.email }}</td>{% end %}
+					<td>{{ a.points }}</td>
+				</tr>
+				{% end %}
+			</tbody>
+		</table>
+	</div>
+	<div class="well">
+		<h2>Auditorias: ({{ top_10_audits.count() }})</h2>
+		<br>
+		<table class="table table-bordered table-striped table-report">
+			<thead>
+				<tr>
+					<th width="30%">Usuario</th>
+					<th width="15%">Telefono</th>
+					<th width="15%">Email</th>
+					<th width="10%">Modificado</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for a in top_10_audits %}
+				<tr>
+					<td>
+						<a href="/_/admin/microreport?u={{a.id}}" title="MicroReporte"><i class="icon-list-alt"></i></a>
+						<a href="/_/admin/user/activate?k={{a.id}}" title="Activar"><i class="icon-ok-sign"></i></a> - 
+						<a href="/_/admin/report?u={{a.id}}"><strong class="username">{{ a.last_name }}, {{ a.first_name }}</strong></a>
+						{% if a.address_state %}{% set state = Location.get_location(int(a.address_state)) %}<br>Estado: {{ state.name }}{% end %}
+						{% if a.facebook_uid %}<br><span class="label label-info">facebook</span>{% end %}
+					</td>
+					{% if a.phone_lada == 0 or a.phone_number == 0%}<td>-</td>{% else %}<td>({{ a.phone_lada }}) - {{ a.phone_number }}</td>{% end %}
+					{% if not a.email %}<td>-</td>{% else %}<td>{{ a.email }}</td>{% end %}
+					<td>{{ datetime_to_str(a.modified) }}</td>
+				</tr>
+				{% end %}
+			</tbody>
+		</table>
+	</div>
+</div>
+{% end %}

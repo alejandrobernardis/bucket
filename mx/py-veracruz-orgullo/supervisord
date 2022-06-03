@@ -1,0 +1,127 @@
+#!/bin/sh
+# /etc/rc.d/init.d/supervisord
+#
+# Supervisor is a client/server system that
+# allows its users to monitor and control a
+# number of processes on UNIX-like operating
+# systems.
+#
+# chkconfig:    345 83 04
+#
+# description: supervisor is a process control utility. It has a web based
+#              xmlrpc interface as well as a few other nifty features.
+# processname: supervisord
+# config: /var/www/vhosts/orgullojarocho.mx/backoffice/apps-config/supervisord.conf
+# pidfile: /var/www/vhosts/orgullojarocho.mx/backoffice/apps-config/supervisord.pid
+
+# local cfg
+DOMAIN='orgullojarocho.mx'
+SUPERVISOR_DIR=/var/www/vhosts/orgullojarocho.mx/backoffice/apps-config
+
+# service cfg
+PATH=/sbin:/usr/sbin:/bin:/usr/bin
+NAME=supervisord
+DAEMON=/usr/local/bin/supervisord
+DAEMON_ARGS="-c /var/www/vhosts/orgullojarocho.mx/backoffice/apps-config/supervisord.conf -d /var/www/vhosts/orgullojarocho.mx/backoffice/apps-config"
+DAEMON_CTL=/usr/local/bin/supervisorctl
+CONFIGFILE=/var/www/vhosts/orgullojarocho.mx/backoffice/apps-config/supervisord.conf
+PIDFILE=/var/www/vhosts/orgullojarocho.mx/backoffice/apps-config/supervisord.pid
+SOCKFILE=/var/www/vhosts/orgullojarocho.mx/backoffice/apps-config/supervisord.sock
+LOCKFILE=/var/www/vhosts/orgullojarocho.mx/backoffice/apps-config/supervisord.lock
+RETVAL=0
+
+# functions
+. /etc/rc.d/init.d/functions
+
+# actions
+do_start() {
+    [ ! -e $PIDFILE ] || exit 1
+    [ -x $DAEMON ] || exit 5
+    
+    echo $"$NAME ... Starting "
+    daemon $NAME $DAEMON_ARGS
+    $DAEMON_CTL -c $CONFIGFILE status
+    RETVAL=$?
+    echo
+    
+    [ $RETVAL = 0 ] && touch $LOCKFILE
+    return $RETVAL
+    
+}
+
+do_stop() {
+    [ -e $PIDFILE ] || exit 1
+    [ -x $DAEMON_CTL ] || exit 5
+    
+    echo $"$NAME ... Stopping "
+    $DAEMON_CTL -c $CONFIGFILE stop all
+    killproc -p $PIDFILE $NAME
+    RETVAL=$?
+    echo
+    
+    [ $RETVAL = 0 ] && rm -f $PIDFILE $SOCKFILE $LOCKFILE
+    return $RETVAL
+    
+}
+
+do_status() {
+    [ -e $PIDFILE ] || exit 1
+    [ -x $DAEMON_CTL ] || exit 5
+    
+    echo $"$NAME ... Get status "
+    $DAEMON_CTL -c $CONFIGFILE status
+    echo
+    
+}
+
+do_restart() {
+    [ -e $PIDFILE ] || exit 1
+    [ -x $DAEMON_CTL ] || exit 5
+    
+    echo $"$NAME ... Restarting "
+    $DAEMON_CTL -c $CONFIGFILE restart all
+    echo
+    
+}
+
+rh_status() {
+    status -p $PIDFILE $NAME
+}
+
+rh_status_q() {
+    rh_status >/dev/null 2>&1
+}
+
+case "$1" in
+    start)
+        rh_status_q && exit 0
+        do_start
+        ;;
+        
+    stop)
+        rh_status_q || exit 0
+        do_stop
+        ;;
+        
+    reload)
+        rh_status_q || exit 0
+        do_stop
+        do_start
+        ;;
+    
+    status)
+        rh_status_q || exit 0
+        do_status
+        ;;
+    
+    restart)
+        rh_status_q || exit 0
+        do_restart
+        ;;
+        
+    *)
+        echo $"Usage: $NAME {start|stop|reload|status|restart}"
+        exit 1
+        
+esac
+exit $RETVAL

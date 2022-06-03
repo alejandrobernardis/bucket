@@ -1,0 +1,86 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6"></div>
+                    <div class="col-lg-6 col-md-6 text-right">
+                        <ul class="js-paginator pagination pagination-sm"></ul>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th class="js-rate-helper text-center item-list-active" width="20%" rel="popover">
+                                            Calificaci&oacute;n
+                                            <span class="fa fa-info-circle"></span>
+                                        </th>
+                                        <th>Comentario</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for evaluation in evaluations %}
+                                    <tr data-token="{{ evaluation.id }}" class="items-list-border">
+                                        <td class="text-center items-list-resume item-list-active">
+                                            {% set image = 'img/icons/color/%s.png' % evaluation.rate %}
+                                            {% set rate_str = helpers.normalize_rate(evaluation.rate) %}
+                                            <p><img src="{% raw static_url(image) %}" alt="{{rate_str}}" class="items-list-icon"/></p>
+                                            <p><span class="label label-{{helpers.normalize_rate_label(evaluation.rate)}}">{{rate_str}}</span></p>
+                                            <p><strong>@{{evaluation.client}}</strong>{% if not evaluation.reference.enabled %}&nbsp;<span class="fa fa-exclamation-circle text-danger"></span>{% end %}</p>
+                                            <p class="items-list-date">{{helpers.normalize_created_date(evaluation.created)}}</p>
+                                        </td>
+                                        <td class="items-list-body">
+                                            {% raw helpers.normalize_description(evaluation.description.encode('utf-8'), 'lead') %}
+                                            <p class="item-list-helper">
+                                                <small><code><span class="fa fa-ticket"></span>&nbsp;{{ evaluation.activation_key }}</code></small>
+                                            </p>
+                                        </td>
+                                    </tr>
+                                    {% for answer in evaluation.answers %}
+                                    <tr data-token="{{ evaluation.id }}-thread" class="warning">
+                                        <td class="text-center">
+                                            <p><span class="fa fa-2x {{helpers.normalize_mode(answer.mode)}} text-default"></span></p>
+                                            <p><strong>@{{ answer.username }}</strong></p>
+                                            <p class="items-list-date answer-date">{{ helpers.normalize_created_date(answer.created) }}</p>
+                                        </td>
+                                        <td class="answer-description">
+                                            <p>
+                                                <small>
+                                                    {% set provider = helpers.normalize_provider(evaluation.reference.provider) %}
+                                                    <span class="fa fa-briefcase">&nbsp;{{ provider }}</span>&nbsp;&gt;&nbsp;
+                                                    <span class="fa fa-user">&nbsp;{{ answer.reference.first_name }} {{ answer.reference.last_name }}</span>
+                                                </small>
+                                            </p>
+                                            <hr class="items-list-hr">
+                                            {% raw helpers.normalize_description(answer.description.encode('utf-8')) %}
+                                            <p class="item-list-contact-links">
+                                                <small>
+                                                    <strong>Vias de contacto:</strong>&nbsp;&nbsp;
+                                                    <span class="fa fa-envelope text-muted"></span>&nbsp;<a href="mailto:{{ answer.reference.email }}">{{ answer.reference.email }}</a>&nbsp;&nbsp;
+                                                    {% set phone = '%s %s' % (answer.reference.phone_lada, answer.reference.phone_number) %}
+                                                    <span class="fa fa-phone text-muted"></span>&nbsp;<a href="tel:{{ phone }}">{{ phone }}</a>
+                                                </small>
+                                            </p>
+                                        </td>
+                                    </tr>
+                                    {% end %}
+                                    {% end %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <div class="text-right">
+                    <ul class="js-paginator pagination pagination-sm"></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

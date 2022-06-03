@@ -1,0 +1,103 @@
+#!/bin/bash
+
+# Get the aliases and functions
+if [ -f ~/.bashrc ]; then
+    . ~/.bashrc
+fi
+
+# User specific environment and startup programs
+export PATH=$PATH:$HOME/bin
+export LD_LIBRARY_PATH=/usr/lib:/usr/local/lib:$LD_LIBRARY_PATH
+
+# (a) config
+export HISTCONTROL=ignoredups:ignorespace
+export HISTSIZE=5000
+export HISTFILESIZE=1000
+export HISTIGNORE="ls:cd:[bf]g:exit:..:...:l:l.:ll:la:h:history"
+
+# (a) helpers
+alias l='ls -l';
+alias l.='ls -d .*'
+alias ll='ls -Al';
+alias la='ls -A';
+alias rshutdown='shutdown -r now'
+alias pshutdown='shutdown -P now'
+alias py='/usr/local/bin/python2.7'
+alias python='/usr/local/bin/python2.7'
+alias python27='/usr/local/bin/python2.7'
+alias pypackage='cd /usr/local/lib/python2.7/site-packages'
+alias pybuild='python setup.py build'
+alias pyinstall='python setup.py install'
+alias edit-profile='vim ~/.bash_profile'
+alias ep=edit-profile
+alias reload-profile='. ~/.bash_profile'
+alias rp=reload-profile
+alias rmpyc='find . -name "*.pyc" -exec rm -rf {} \;'
+alias rmpyo='find . -name "*.pyc" -exec rm -rf {} \;'
+alias rmdot='find . -name ".*" -exec rm -rf {} \;'
+alias rmdotu='find . -name "._*" -exec rm -rf {} \;'
+alias h='history'
+
+# (a) system
+alias meminfo='free -m -l -t'
+alias psmem='ps auxf | sort -nr -k 4'
+alias psmem10='ps auxf | sort -nr -k 4 | head -10'
+alias pscpu='ps auxf | sort -nr -k 3'
+alias pscpu10='ps auxf | sort -nr -k 3 | head -10'
+alias psall="ps -A x | grep -i -e mongod -e memcached -e supervisord -e python*"
+alias pspython="ps -A x | grep -i -e python*"
+alias cpuinfo='lscpu'
+alias cpumodel='grep "model\ name" /proc/cpuinfo'
+alias df='df -H'
+alias du='du -ch'
+
+# (a) admin
+alias up-super="service supervisord start"
+alias down-super="service supervisord stop"
+alias up-celery="service celeryd start"
+alias down-celery="service celeryd stop"
+alias app-start="supervisorctl start a1:*"
+alias app-stop="supervisorctl stop a1:*"
+alias app-restart="supervisorctl restart a1:*"
+alias app-status="supervisorctl status"
+alias mc-display="memcached-tool localhost:11211 display"
+alias mc-dump="memcached-tool localhost:11211 dump"
+alias mc-reset="echo 'flush_all' | nc localhost 11211"
+alias mc-stats="memcached-tool localhost:11211 stats"
+alias tail-app="tail -f /var/log/supervisord/*.log"
+alias tail-celery="tail -f /var/log/celery/*.log"
+alias tail-nginx="tail -f /var/log/nginx/*"
+alias vhost='cd /var/www/html/mx_com_addicted'
+alias me='echo "server: mx_com_addicted"'
+alias httpdr='service httpd restart'
+alias iptr='service httpd restart'
+
+function wps(){
+  chown -R root:www /var/www
+  chown -R sysadmin:www /var/www/html/mx_com_addicted
+  chmod 2775 /var/www/html
+  find /var/www/html -type d -exec chmod 2775 {} +
+  find /var/www/html -type f -exec chmod 0664 {} +
+}
+
+function aps(){
+  root_path=/data/src/kinetiq-mx-com-addicted-verify-system/app/public
+  chown -R sysadmin:www ${root_path}
+  chmod 2775 ${root_path}
+  find ${root_path} -type d -exec chmod 2775 {} +
+  find ${root_path} -type f -exec chmod 0664 {} +
+}
+
+function appport(){
+  iptables -A INPUT -p tcp --dport 8000 -m state --state NEW,ESTABLISHED,RELATED -j ACCEPT
+  iptables -A OUTPUT -p tcp --sport 8000 -m state --state ESTABLISHED,RELATED -j ACCEPT
+}
+
+function app-update() {
+  cd /data/src/kinetiq-mx-com-addicted-verify-system/app/verify
+  pwd
+  git checkout ./app/settings.py
+  git pull
+  cp -fv ./app/settings.prd.py ./app/settings.py
+  app-restart
+}

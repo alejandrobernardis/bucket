@@ -1,0 +1,24 @@
+/* TEAM */
+    Developer: Alejandro M. Bernardis
+    Contact: alejandro.bernardis [at] figment [dot] com [dot] mx
+    Site: http://www.figment.com.mx
+    Twitter: @alejandromb
+    Location: Distrito Federal, Mexico
+
+    Developer: Alfonso Reyes
+    Contact: poncho [at] figment [dot] com [dot] mx
+    Site: http://www.figment.com.mx
+    Location: Distrito Federal, Mexico
+
+    Designer: Alberto Montoya
+    Contact: beto [at] figment [dot] com [dot] mx
+    Site: http://www.figment.com.mx
+    Location: Distrito Federal, Mexico
+
+/* SITE */
+    Last update: 2013
+    Doctype: Mobile (native)
+    Language: Spanish
+    IDE: Pycharm, WebStorm, Flash Builder
+    Technologies: Nginx, Python, MongoDB, ArangoDB, Flash
+    Frameworks: Tornado, Starling

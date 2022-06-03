@@ -1,0 +1,15 @@
+<div class="panel panel-warning">
+    <div class="panel-heading">
+        <h4 class="panel-title"><span class="fa fa-star-o"></span>&nbsp;&nbsp;Evaluaciones pendientes</h4>
+    </div>
+    <div class="panel-body">
+        {% for evaluation in pending %}
+            <div>
+                <p>
+                    <a href="/evaluations/new/{{ evaluation.activation_key }}">{{ evaluation.activation_key }}</a>
+                    <br><small class="text-muted"><span class="fa fa-exclamation-triangle"></span>&nbsp;Expira el {{ helpers.normalize_created_date(evaluation.public_key_expires) }}</small>
+                </p>
+            </div>
+        {% end %}
+    </div>
+</div>

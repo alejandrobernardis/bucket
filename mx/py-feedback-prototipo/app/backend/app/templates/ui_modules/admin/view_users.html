@@ -1,0 +1,116 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="text-right">
+                    <ul class="js-paginator pagination pagination-sm"></ul>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12">
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">Activo</th>
+                                        <th>Nombre(s) y Apellido(s)</th>
+                                        <th>Contacto</th>
+                                        <th>Empresa</th>
+                                        <th>&Uacute;ltimo Accesso</th>
+                                        <th>Nivel</th>
+                                        <th>Evaluaci&oacute;n</th>
+                                        <th class="text-center">Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for user in users %}
+                                    {% set user = helpers.normalize_user(user) %}
+                                    <tr data-token="{{ user.id }}">
+                                        <td class="text-center">
+                                            {% if user.enabled %}
+                                            <button type="button" class="js-button ladda-button btn btn-xs btn-success" data-action="change-status" data-token="{{ user.id }}" data-style="zoom-in">
+                                                <span class="ladda-label fa fa-check"></span>
+                                            </button>
+                                            {% else %}
+                                            <button type="button" class="js-button ladda-button btn btn-xs btn-danger" data-action="change-status" data-token="{{ user.id }}" data-style="zoom-in">
+                                                <span class="ladda-label fa fa-times"></span>
+                                            </button>
+                                            {% end %}
+                                        </td>
+                                        <td>
+                                            <strong>{{ user.first_name }} {{ user.last_name }}</strong>
+                                            <br><small><span class="fa fa-user"></span> <a href="/a/evaluations?q={{ user.username }}">@{{ user.username }}</a></small>
+                                        </td>
+                                        <td>
+                                            <strong>{{ user.phone_lada }} {{ user.phone_number }}</strong>
+                                            <br><small><span class="fa fa-envelope"></span> <a href="mailto:{{ user.email }}">{{ user.email }}</a></small>
+                                        </td>
+                                        <td>
+                                            <strong>{{ user.company.title() }}</strong>
+                                            {% set provider = helpers.normalize_provider(user.provider) %}
+                                            <br><small><span class="fa fa-briefcase"></span> <a href="/a/evaluations?q={{ provider.lower() }}">{{ provider }}</a></small>
+                                        </td>
+                                        <td>
+                                            <strong>{{ helpers.normalize_last_login(user.last_login) }}</strong>
+                                            <br><small class="text-{{ 'success' if helpers.check_session(user.sid) else 'muted' }}"><span class="fa fa-globe"></span> {{ user.remote_ip or '-' }}</small>
+                                        </td>
+                                        <td>
+                                            <div class="btn-group">
+                                                {% set role = helpers.normalize_level(user.permissions) %}
+                                                <button type="button" class="js-button-drop ladda-button btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" data-style="slide-down" data-spinner-color="#000">
+                                                    <span class="ladda-label" data-bind="label">{{ role }}</span>&nbsp;<span class="caret"></span>
+                                                </button>
+                                                <ul class="dropdown-menu" role="menu">
+                                                    {% raw helpers.get_level_list(user.permissions, user.id) %}
+                                                </ul>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <button type="button" class="js-button btn btn-xs btn-default" data-action="send-evaluation" data-token="{{ user.id }}">
+                                                    <span class="fa fa-envelope"></span>
+                                                </button>
+                                                <div class="btn-group">
+                                                    {% set dispatch = helpers.normalize_dispatch(user.dispatch) %}
+                                                    <button type="button" class="js-button-drop ladda-button btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" data-style="slide-down" data-spinner-color="#000">
+                                                        <span class="ladda-label" data-bind="label">{{ dispatch }}</span>&nbsp;<span class="caret"></span>
+                                                    </button>
+                                                    <ul class="dropdown-menu" role="menu">
+                                                        {% raw helpers.get_dispatch_list(user.dispatch, user.id) %}
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="text-center">
+                                            <div class="btn-group">
+                                                <button type="button" class="js-button btn btn-xs btn-default" data-action="view-activity" data-token="{{ user.id }}" data-username="{{ user.username }}">
+                                                    <span class="fa fa-eye"></span>
+                                                </button>
+                                                <button type="button" class="js-button btn btn-xs btn-default" data-action="list-executives" data-token="{{ user.id }}">
+                                                    <span class="fa fa-bullhorn"></span>
+                                                </button>
+                                                <button type="button" class="js-button btn btn-xs btn-default" data-action="change-password" data-token="{{ user.id }}">
+                                                    <span class="fa fa-lock"></span>
+                                                </button>
+                                                <button type="button" class="js-button btn btn-xs btn-default" data-action="delete" data-token="{{ user.id }}">
+                                                    <span class="fa fa-trash-o"></span>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {% end %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <div class="text-right">
+                    <ul class="js-paginator pagination pagination-sm"></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

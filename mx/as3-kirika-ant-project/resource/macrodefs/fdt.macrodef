@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+	
+	<!-- fdt.create (version 4) -->
+	
+	<macrodef name="fdt.create">
+		<sequential>
+			<fdt.create.dot_project/>
+			<mkdir dir="${fdt.dot_settings}"/>
+			<fdt.create.setting.classpath/>
+			<fdt.create.setting.core/>
+			<fdt.create.setting.resources/>
+		</sequential>
+	</macrodef>
+	
+	<!-- fdt.create.dot_project -->
+	
+	<macrodef name="fdt.create.dot_project">
+		<sequential>
+			<echoxml file="${fdt.dot_project}">
+				<projectDescription>
+					<name>${project.name}</name>
+					<comment>${project.description}</comment>
+					<projects></projects>
+					<buildSpec>
+						<buildCommand>
+							<name>com.powerflasher.fdt.core.FlashBuilder</name>
+							<arguments></arguments>
+						</buildCommand>
+					</buildSpec>
+					<natures>
+						<nature>com.powerflasher.fdt.core.FlashNature</nature>
+					</natures>
+				</projectDescription>
+			</echoxml>
+		</sequential>
+	</macrodef>
+	
+	<!-- fdt.create.setting.classpath -->
+		
+	<macrodef name="fdt.create.setting.classpath">
+		<sequential>
+			<echoxml file="${fdt.setting.classpath}">
+				<AS3Classpath>
+				    <AS3Classpath generateProblems="false" sdkBased="true" type="lib" useAsSharedCode="false">frameworks/libs/player/{playerVersion}/playerglobal.swc</AS3Classpath>
+				    <AS3Classpath generateProblems="false" sdkBased="true" type="lib" useAsSharedCode="false">frameworks/libs/flex.swc</AS3Classpath>
+				    <AS3Classpath generateProblems="true" sdkBased="false" type="source" useAsSharedCode="false">${dir.lib}</AS3Classpath>
+				    <AS3Classpath generateProblems="true" sdkBased="false" type="source" useAsSharedCode="false">${dir.src}</AS3Classpath>
+				    <AS3Classpath generateProblems="true" sdkBased="false" type="source" useAsSharedCode="false">${dir.src.test}</AS3Classpath>
+				</AS3Classpath>
+			</echoxml>
+		</sequential>
+	</macrodef>
+	
+	<!-- fdt.create.setting.core -->
+			
+	<macrodef name="fdt.create.setting.core">
+		<sequential>
+			<propertyfile file="${fdt.setting.core}">
+				<entry key="com.powerflasher.fdt.core.CompatiblePlayers" value="External_SWF_Viewer&#58;Browser&#58;Standalone_Flash_Player"/>
+				<entry key="com.powerflasher.fdt.core.CompilerArguments" value="-static-link-runtime-shared-libraries&#61;true&#10;-target-player&#61;{playerVersion}&#10;-library-path {flexSDK}/frameworks/locale/en_US"/>
+				<entry key="com.powerflasher.fdt.core.DefaultOutputFolder" value="${dir.deploy}"/>
+				<entry key="com.powerflasher.fdt.core.DefaultPlayer" value="External_SWF_Viewer"/>
+				<entry key="com.powerflasher.fdt.core.Language" value="AS3"/>
+				<entry key="com.powerflasher.fdt.core.PassClasspath" value="true"/>
+				<entry key="com.powerflasher.fdt.core.PassMainclass" value="true"/>
+				<entry key="com.powerflasher.fdt.core.PassRsls" value="false"/>
+				<entry key="com.powerflasher.fdt.core.PassSwcs" value="true"/>
+				<entry key="com.powerflasher.fdt.core.PlayerVersion" value="10.0"/>
+				<entry key="com.powerflasher.fdt.core.ProjectTypeHint" value="AS 3"/>
+				<entry key="com.powerflasher.fdt.core.Runtime" value="Flash_Player"/>
+				<entry key="com.powerflasher.fdt.core.SdkName" value="Flex 4.0"/>
+				<entry key="eclipse.preferences.version" value="1"/>
+		  	</propertyfile>
+		</sequential>
+	</macrodef>
+	
+	<!-- fdt.create.setting.resources -->
+				
+	<macrodef name="fdt.create.setting.resources">
+		<sequential>
+			<propertyfile file="${fdt.setting.resources}">
+		    	<entry key="eclipse.preferences.version" value="1"/>
+				<entry key="encoding/&lt;project&gt;" value="UTF-8"/>
+		  	</propertyfile>
+		</sequential>
+	</macrodef>
+
+</project>
