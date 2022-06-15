@@ -1,0 +1,6 @@
+# Author: Alejandro M. BERNARDIS
+# Email alejandro.bernardis at gmail dot com
+# Created: 2021-04-20
+include README.md
+include requirements.txt
+global-exclude *.pyc

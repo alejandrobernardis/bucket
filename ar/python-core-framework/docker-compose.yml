@@ -1,0 +1,108 @@
+# Author: Alejandro M. BERNARDIS
+# Email alejandro.bernardis at gmail dot com
+# Created: 2021-04-20
+version: '3.9'
+x-common: &common
+  restart: always
+  tty: true
+services:
+  etcd0:
+    <<: *common
+    image: quay.io/coreos/etcd:v3.5.1
+    command:
+      - /usr/local/bin/etcd
+      - --name
+      - etcd0
+      - --initial-advertise-peer-urls
+      - http://172.199.199.101:2380
+      - --listen-peer-urls
+      - http://0.0.0.0:2380
+      - --advertise-client-urls
+      - http://172.199.199.101:2379
+      - --listen-client-urls
+      - http://0.0.0.0:2379
+      - --initial-cluster
+      - "etcd0=http://172.199.199.101:2380"
+      - --initial-cluster-state
+      - new
+      - --initial-cluster-token
+      - etcd-docker-cluster
+    ports:
+      - "14100:2379"
+      - "14101:2380"
+    networks:
+      service_network:
+        aliases:
+          - etcd0
+        ipv4_address: 172.199.199.101
+    volumes:
+      - /usr/share/ca-certificates/:/etc/ssl/certs
+      - /tmp/pcf/data/etcd0:/etcd-data
+  maria:
+    <<: *common
+    image: mariadb:10.6-focal
+    environment:
+      MYSQL_DATABASE: frank
+      MYSQL_USER: frank
+      MYSQL_PASSWORD: frank
+      MYSQL_ROOT_PASSWORD: frank
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'no'
+    ports:
+      - "14200:3306"
+    networks:
+      service_network:
+        aliases:
+          - maria
+        ipv4_address: 172.199.199.102
+    volumes:
+      - /tmp/pcf/data/mariadb:/var/lib/mysql:delegated
+  mongo:
+    <<: *common
+    image: mongo:5.0-focal
+    environment:
+      MONGO_INITDB_DATABASE: frank
+      MONGO_INITDB_ROOT_USERNAME: frank
+      MONGO_INITDB_ROOT_PASSWORD: frank
+    ports:
+      - "14300:27017"
+    networks:
+      service_network:
+        aliases:
+          - mongo
+        ipv4_address: 172.199.199.103
+    volumes:
+      - /tmp/pcf/data/mongodb:/data/db:delegated
+  rabbitmq:
+    <<: *common
+    image: rabbitmq:3.9-management
+    ports:
+      - "14500:5672"
+      - "14580:15672"
+    networks:
+      service_network:
+        aliases:
+          - rabbitmq
+        ipv4_address: 172.199.199.105
+    volumes:
+      - /tmp/pcf/data/rabbitmq/conf:/etc/rabbitmq:delegated
+      - /tmp/pcf/data/rabbitmq/data:/var/lib/rabbitmq:delegated
+  redis:
+    <<: *common
+    image: redis:6.2-bullseye
+    command: "redis-server --appendonly yes --loglevel warning --requirepass frank"
+    ports:
+      - "14600:6379"
+    networks:
+      service_network:
+        aliases:
+          - redis
+        ipv4_address: 172.199.199.106
+    volumes:
+      - /tmp/pcf/data/redis:/data:delegated
+networks:
+  service_network:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.199.199.0/24
