@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+set -e
+
+cmd=${BASH_SOURCE[0]}
+[ ! -h "${cmd}" ] || cmd=$(readlink ${cmd})
+
+pth=$(dirname -- ${cmd}})
+for x in '00/00_environ.sh' '00/49_common.sh'; do
+  source "${pth}/../script/${x}"
+done
+
+echo -en "\r\033[K${YELLOW} * Downloading repos...${RESET}"
+
+p='visibility=private'
+p+='&archived=false'
+p+='&simple=true'
+p+='&include_subgroups=true'
+
+x=$(\
+  curl --silent \
+       --header "PRIVATE-TOKEN: ${GL_ACCESS_TOKEN}" \
+    "${GL_API}/groups/${GL_GROUP_ID}/projects?${p}" \
+);
+
+[ -d "${DY_CACHE}" ] || error_and_exit 'Cache folder not found'
+[ -z "${x}"        ] || echo ${x} >"${DY_CACHE}/repos.list"
+
+echo -e "\r\033[K${GREEN} Done.${RESET}"

@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+set -e
+
+cmd=${BASH_SOURCE[0]}
+[ ! -h "${cmd}" ] || cmd=$(readlink ${cmd})
+
+pth=$(dirname -- ${cmd}})
+for x in '00/00_environ.sh' '00/49_common.sh' 'help.sh'; do
+  source "${pth}/../script/${x}"
+done
+
+for x in service config secret; do
+  printf "\n${BLUE}${x^^}${RESET}\n"
+  dkr ${x} ls
+  printf '\n\n'
+done

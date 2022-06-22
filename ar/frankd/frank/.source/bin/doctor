@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+set -e
+
+cmd=${BASH_SOURCE[0]}
+[ ! -h "${cmd}" ] || cmd=$(readlink ${cmd})
+
+pth=$(dirname -- ${cmd}})
+for x in '00/00_environ.sh' '00/49_common.sh' '00/99_boot.sh'; do
+  source "${pth}/../script/${x}"
+done
+
+required && boot

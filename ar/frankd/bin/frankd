@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+
+set -e
+UPDATE=${UPDATE:-0}
+
+shx='sh -c'
+usr=ec2-user
+cgf='.frankdrc'
+shd=${HOME}/.ssh
+
+function err() {
+  echo -e "\033[31m${1}\033[m"
+  exit 1
+}
+
+cfg=${HOME}/${cgf}
+
+[ -s "${cfg}" ] || err "Config '${cfg}' file not found."
+
+for x in id_ed25519 is_rsa; do
+  idr="${shd}/${x}"
+  [ -s "${idr}" ] && break
+done
+
+[ -s "${idr}" ] || err "ID '${cfg}' file not found."
+
+if [ "$(id -u)" -ne '0' ]; then
+  if command -v sudo >/dev/null; then
+    shx="sudo -E -u ${usr} sh -c"
+  elif command -v su >/dev/null; then
+    shx="su ${usr} -c"
+  else
+    err "Command sudo and su not found"
+  fi
+fi
+
+imd="registry:5000/public/frank-deployment-tool:latest"
+img=${FRANKD_IMAGE:-${imd}}
+
+[ "${UPDATE}" -eq '0' ] || docker pull --quiet ${img}
+
+cmd=$(cat <<EOF
+docker run --rm --privileged --user frank -ti\
+ -v ${cfg}:/home/frank/${cgf}:ro\
+ -v ${shd}:/home/frank/.ssh:rw\
+ -v /var/data:/var/data:rw\
+ -v /var/run/docker.sock:/var/run/docker.sock\
+ ${img};
+EOF
+)
+
+$shx "$cmd";

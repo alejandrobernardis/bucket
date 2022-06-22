@@ -1,0 +1,42 @@
+{
+
+  "autosu": true,
+  "backup": true,
+  "backupdir": "~/.config/micro/backups",
+  "colorcolumn": 80,
+  "colorscheme": "gotham",
+  "cursorline": true,
+  "encoding": "utf-8",
+  "eofnewline": true,
+  "fileformat": "unix",
+  "indentchar": " ",
+  "ruler": true,
+  "savecursor": true,
+  "savehistory": true,
+  "saveundo": true,
+  "savecursor": true,
+  "tabsize": 4,
+  "tabstospaces": true,
+
+  "*.sh": {
+    "tabsize": 2
+  },
+
+  "*.zsh": {
+    "tabsize": 2
+  },
+
+  "*.py": {
+    "tabsize": 4
+  },
+
+  "*.go": {
+    "tabsize": 4
+  },
+
+  "Makefile": {
+    "tabsize": 4,
+    "tabstospaces": false,
+  }
+
+}

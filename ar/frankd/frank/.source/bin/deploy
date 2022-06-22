@@ -1,0 +1,53 @@
+#!/usr/bin/env bash
+
+set -e
+
+cmd=${BASH_SOURCE[0]}
+[ ! -h "${cmd}" ] || cmd=$(readlink ${cmd})
+
+pth=$(dirname -- ${cmd}})
+for x in '00/00_environ.sh' '00/49_common.sh' '00/99_boot.sh' 'help.sh'; do
+  source "${pth}/../script/${x}"
+done
+
+boot
+
+a=(${@})
+
+for x in ${!a[@]}; do [[ "${a[${x}]}" =~ ^[-]{1,2}h(elp)? ]] && help; done
+
+spt="${pth}/../script/run.sh"
+[ -s "${spt}" ] || error_and_exit 'Deploy script not found'
+
+d=${DY_CACHE}
+[ -d "${d}" ] || error_and_exit 'Cache folder not found'
+
+i=${DY_REPOS_LIST}
+[[ -r "${i}" && "${UPDATE_REPOS}" -eq '0' ]] || ${DY_CMD_REPOS}
+[ -s "${i}" ] || error_and_exit 'Empty repositories'
+
+a="${@}"
+set --
+
+k='path'
+grep -qoP "${k}" "${i}" >/dev/null || k='name'
+
+y=$(cat "${i}" \
+  | jq -r ".[] | select(.${k}|test(\".*(ms|gw|jb|sr)_platform-.+\")) | .${k}" \
+  | sort -n \
+  | fzf \
+    --multi \
+    --exact \
+    --reverse \
+    --info=inline \
+    --header="Repositories" \
+)
+
+[ -n "${y}" ] || error_and_exit 'Unselected repositories'
+
+y=("${y}")
+z=''
+
+for x in ${!y[@]}; do z+="${y[${x}]} "; done
+
+[ -z "${z}" ] || bash ${spt} ${a} ${z}

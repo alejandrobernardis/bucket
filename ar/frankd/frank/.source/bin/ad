@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+
+set -e
+
+PRUNE=0
+
+while [ "$#" -gt '0' ]; do
+  case "${1}" in
+    prune|-p|--prune) PRUNE=1;;
+    *) ;;
+  esac
+  shift
+done
+
+cmd=${BASH_SOURCE[0]}
+[ ! -h "${cmd}" ] || cmd=$(readlink ${cmd})
+
+pth=$(dirname -- ${cmd}})
+for x in '00/00_environ.sh' '00/49_common.sh'; do
+  source "${pth}/../script/${x}"
+done
+
+d=${DY_ARTIFACTS}
+[ -d "${d}" ] || error_and_exit 'Artifacts folder not found'
+[ -n "$(ls ${d})" ] || error_and_exit 'Artifacts not found'
+
+if [ "${PRUNE}" -eq '1' ]; then
+  rm -fr ${d}/*
+
+else
+  if command -v lf >/dev/null 2>&1; then
+    cfg="${pth}/../../.config/lf/lfrc"
+    [ -s "${cfg}" ] || error_and_exit 'Config file not found'
+    lf -config "${cfg}" "${d}"
+
+  else
+    echo >&2 "${YELLOW} > Hit [Ctrl+D] to exit this child shell.${RESET}"
+    sh -c "cd ${y} && bash"
+
+  fi
+fi
