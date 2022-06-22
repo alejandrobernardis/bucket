@@ -8,11 +8,11 @@ ARG GO_PATCH
 ARG COMMIT=0
 
 LABEL \
-  app.aysa.prmgt.lang=go \
-  app.aysa.prmgt.lang.version=${GO_VERSION} \
-  app.aysa.prmgt.lang.patch=${GO_PATCH} \
-  app.aysa.prmgt.commit=${COMMIT} \
-  app.aysa.prmgt.os=debian
+  metadata.lang=go \
+  metadata.lang.version=${GO_VERSION} \
+  metadata.lang.patch=${GO_PATCH} \
+  metadata.commit=${COMMIT} \
+  metadata.os=debian
 
 RUN rm -f /etc/apt/apt.conf.d/docker-clean
 RUN --mount=type=cache,target=/var/cache/apt \

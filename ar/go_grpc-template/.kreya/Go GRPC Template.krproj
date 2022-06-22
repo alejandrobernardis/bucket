@@ -1,0 +1,17 @@
+{
+  "id": "ca0834d9-ca6e-46fb-abc9-b7b7894fceb1",
+  "importStreams": [
+    {
+      "id": "3b0bdd6d-5328-422c-8937-cbc86b415d32",
+      "name": "Reflection",
+      "importerName": "GrpcServerReflection",
+      "createMissingOperations": true,
+      "options": {
+        "endpoint": "{{endpoint}}",
+        "disableServerCertificateValidation": true
+      }
+    }
+  ],
+  "authConfigs": [],
+  "certificates": []
+}
