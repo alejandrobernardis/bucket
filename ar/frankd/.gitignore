@@ -1,5 +1,0 @@
-var/
-.env
-frank/.ssh
-!frank/.config
-.frankdrc

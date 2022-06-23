@@ -1,7 +1,0 @@
-tornado
-pymongo
-redis
-tornadoredis
-pymongo
-toro
-motor
