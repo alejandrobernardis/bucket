@@ -1,0 +1,71 @@
+{% extends '../master.html' %}
+{% include '../ui_modules/navbar.html' %}
+{% block content_container %}
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default panel-search">
+            <div class="panel-body">
+                <form role="form" class="form-auth form-request" method="get">
+                    <fieldset>
+                        <h3>{{handler.settings.get('site_title').lower()}} / <small>Evaluaciones</small></h3>
+                        <hr>
+                        {% if form.errors %}
+                            {% module ViewErrors(form.errors) %}
+                        {% end %}
+                    </fieldset>
+                    <fieldset>
+                        <div id="search-input" class="input-group">
+                            <input type="text" class="typeahead form-control" id="q" name="q" value="{{ form.q.data or '' }}" autofocus="1" required="0"/>
+                            <div class="input-group-btn">
+                                <input type="submit" value="Buscar" class="btn btn-primary" tabindex="-1"/>
+                            </div>
+                        </div>
+                        <small class="text-muted">
+                            B&uacute;squeda por
+                            <strong>Username</strong>,
+                            <strong>ID</strong>
+                            o los siguientes keywords:
+                            <a href="/a/evaluations?q=todos">Todos</a>,
+                            <a href="/a/evaluations?q=figment">Figment</a>,
+                            <a href="/a/evaluations?q=kinetiq">Kinetiq</a>,
+                            <a href="/a/evaluations?q=muy%20mala">Muy Mala</a>,
+                            <a href="/a/evaluations?q=mala">Mala</a>,
+                            <a href="/a/evaluations?q=regular">Regular</a>,
+                            <a href="/a/evaluations?q=bien">Bien</a>,
+                            <a href="/a/evaluations?q=muy%20bien">Muy Bien</a>,
+                            <a href="/a/evaluations?q=email">Email</a>,
+                            <a href="/a/evaluations?q=telefono">Tel&eacute;fono</a>,
+                            <a href="/a/evaluations?q=pendientes">Pendientes</a>,
+                            <a href="/a/evaluations?q=activo">Activo</a> o
+                            <a href="/a/evaluations?q=inactivo">Inactivo</a>.
+                            Tambi&eacute;n puedes ver <a href="/a/evaluations"><strong><span class="fa fa-star-half-o"></span>&nbsp;todos</strong></a> los comentarios.
+                        </small>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% if evaluations %}
+    {% module ViewEvaluations(form, evaluations) %}
+{% end %}
+{% end %}
+{% block head_styles_after %}
+<link rel="stylesheet" href="{{ static_url('ladda/css/ladda-themeless.min.css') }}">
+<link rel="stylesheet" href="{{ static_url('bootstrap-dialog/css/bootstrap-dialog.min.css') }}">
+{% end %}
+{% block body_scripts_init %}
+{% if evaluations %}
+<script>var evaluations = {% raw evaluations.to_json().replace("</", "<\\/") %};</script>
+{% end %}
+<script>var paginator = {% raw paginator.to_json().replace("</", "<\\/") %};</script>
+<script src="{{ static_url('ladda/js/spin.min.js') }}"></script>
+<script src="{{ static_url('ladda/js/ladda.min.js') }}"></script>
+<script src="{{ static_url('bootstrap-dialog/js/bootstrap-dialog.min.js') }}"></script>
+<script src="{{ static_url('js/bootstrap-growl.min.js') }}"></script>
+<script src="{{ static_url('js/jquery.twbsPagination.min.js') }}"></script>
+<script src="{{ static_url('js/handlebars.js') }}"></script>
+<script src="{{ static_url('js/typeahead.bundle.js') }}"></script>
+<script src="{{ static_url('js/rate-helper.js') }}"></script>
+<script src="{{ static_url('js/evaluations.js') }}"></script>
+{% end %}

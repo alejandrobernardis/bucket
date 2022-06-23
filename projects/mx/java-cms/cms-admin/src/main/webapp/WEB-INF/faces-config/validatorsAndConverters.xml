@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!DOCTYPE faces-config PUBLIC "-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.1//EN"
+                              "http://java.sun.com/dtd/web-facesconfig_1_1.dtd">
+<faces-config>
+	<application>
+		<view-handler>com.sun.facelets.FaceletViewHandler</view-handler>
+		<variable-resolver>org.springframework.web.jsf.DelegatingVariableResolver</variable-resolver>
+		<message-bundle>messages.Messages</message-bundle>
+	</application>
+
+	<converter>
+		<converter-id>UpperCase</converter-id>
+		<converter-class>com.clarus.web.converter.UpperCaseConverter</converter-class>
+	</converter>
+	
+	<converter>
+		<converter-id>Role</converter-id>
+		<converter-class>com.clarus.web.converter.RoleConverter</converter-class>
+	</converter>
+	
+	<converter>
+		<converter-id>Trim</converter-id>
+		<converter-class>com.clarus.web.converter.TrimConverter</converter-class>
+	</converter>
+
+</faces-config>

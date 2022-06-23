@@ -1,0 +1,113 @@
+{% extends "../master.html" %}
+{% block body_content %}
+<script type="text/javascript">
+	window.form = {}
+	window.form.errors = {% raw errors %};
+</script>
+<style>
+	body {background: #DCE7EB;}
+	.f-style {background: #fff; padding: 32px 0; -webkit-border-radius: 8px; -moz-border-radius: 8px; border-radius: 8px;}
+	.f-style h3 {color: #900; font-weight: normal;} 
+	.container {margin-bottom: 24px;}
+	.alert {margin: 0;}
+	fieldset{text-align: center;}
+	.form-buttons {padding-right: 78px; margin-top: 24px;}
+	.module {margin-bottom: 0;}
+</style>
+<div class="container">
+	<h3 class="form-title">Registrar Puntos</h3>
+	<form class="module" action="javascript:void();" method="post">
+		<table>
+			<tr>
+				<td width="470px" align="center">
+					<label>
+						<table>
+							<tr align="center">
+								<td>
+									<a href="/redeem/tickets">
+										<img src="{{ static_url('img/template/home-section-3-type-product.jpg') }}" alt="">
+									</a>
+								</td>
+							<tr>
+							<tr align="center"><td><input type="radio" name="redeem-type" id="type2" value="1"></td><tr>
+							<tr align="center"><td>Reg&iacute;stra tus Productos</td><tr>
+						</table>
+					</label>
+				</td>
+				<td width="470px" align="center">
+					<label>
+						<table>
+							<tr align="center"><td><img src="{{ static_url('img/template/home-section-3-type-accesory.jpg') }}" alt=""></td><tr>
+							<tr align="center"><td><input type="radio" name="redeem-type" id="type2" value="2" checked></td><tr>
+							<tr align="center"><td>Accesorios y Flyers</td><tr>
+						</table>
+					</label>
+				</td>
+			</tr>	
+		</table>
+	</form>
+</div>
+{% if errors or (form and form.errors) %}
+<div class="container">
+	<div class="js-form-head">
+		{% if form and form.errors %}
+		<div class="js-alert alert alert-error">
+			<a class="close" data-dismiss="alert">×</a>
+ 			<h4 class="alert-heading">Errores!</h4>
+ 			<br>
+			<p>{% set _list = sorted(form.errors.iteritems()) %}
+			{% for a, b in _list %}
+				<strong>{{ unicode(form[a].label.text) }}</strong> : {{ unicode(",".join(form[a].errors)) }}-
+			{% end %}</p>
+		</div>
+		{% end %}
+	</div>
+</div>
+{% end %}
+<div class="container">
+	<form class="form-inline f-style" action="/redeem/codes" method="POST">
+		{% raw xsrf_form_html() %}
+		<fieldset>
+			<h3>S&oacute;lo ingresa el c&oacute;digo de tu accesorio o flyer.</h3>
+			<br>
+		</fieldset>
+		<fieldset>
+			<div class="js_accessory_code control-group">
+				<div class="controls">
+					<input class="" id="accessory_code" name="accessory_code" 
+						   type="text" value="{{ form.accessory_code.data }}" maxlength="8">
+				</div>
+			</div>
+			<br>
+		</fieldset>
+		<fieldset>
+			<button type="submit" class="btn btn-large">Redimir</button>
+		</fieldset>
+	</form>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){
+	var tmpl = '<div class="js-alert alert alert-error">'
+		 +'<a class="close" data-dismiss="alert">×</a>'
+		 +'<h4 class="alert-heading">Errores!</h4><br>'
+		 +'<p>{message}</p></div>';
+	var errors = window.form.errors;
+	if(errors.hasOwnProperty("error")) {
+		if(errors.error.id != 0){
+			var messages = errors.error.message;
+			for(var a in messages){
+				$(".js_"+a).addClass("error")
+			} if(errors.error.id > 1){
+				$(".js-form-head").append(tmpl.replace("{message}", errors.error.message));
+			}
+		}
+	}; $('input[name=redeem-type]:radio').change(function(e){
+		var url;
+		switch($(this).attr('value')){
+			case '1': url = '/redeem/tickets'; break;
+			case '2': url = '/redeem/codes'; break;
+		} if(url) window.location.href = url;
+	});
+});
+</script>
+{% end %}

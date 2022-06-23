@@ -1,0 +1,57 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+	template="/templates/tmplLogin.xhtml">
+	<ui:define name="workarea">
+		<f:loadBundle var="label" basename="labels.labels" />
+			<h:form id="login">
+				<h:panelGrid columns="1" cellpadding="0" width="100%" columnClasses="alignCenter" style="height: 26px">
+					<h:outputText value=" " rendered="#{!loginCtrl.error}"  styleClass="error" />
+					<h:panelGroup rendered="#{loginCtrl.error}">
+						<h:graphicImage  value="/web-resources/img/icons/error.png" />
+						<rich:spacer width="5px"/>
+						<h:outputText value="#{label.invalidUser}"   styleClass="error" />
+					</h:panelGroup>
+				</h:panelGrid>
+				<h:panelGrid columns="3" cellpadding="10" width="100%" columnClasses="login_labels,login_fields,login_messages">
+					<h:outputText value="#{label.username}"  />
+					<h:inputText id="uname" value="#{loginCtrl.username}"  required="true" size="40" />
+					<rich:message for="uname" styleClass="error">
+						<f:facet name="errorMarker">
+							<h:panelGroup>
+								<h:graphicImage  value="/web-resources/img/icons/error.png" />
+								<rich:spacer width="5px"/>
+							</h:panelGroup>
+                        </f:facet>
+					</rich:message>
+					
+					<h:outputText value="#{label.password}"  />
+					<h:inputSecret id="pwd" value="#{loginCtrl.password}"  required="true" size="40"/>
+					<rich:message for="pwd" styleClass="error">
+						<f:facet name="errorMarker">
+							<h:panelGroup>
+								<h:graphicImage  value="/web-resources/img/icons/error.png" />
+								<rich:spacer width="5px"/>
+							</h:panelGroup>
+                        </f:facet>
+					</rich:message>
+					
+					<h:outputText value=" "  />
+					<h:panelGroup style="width:100%">
+						<table align="right"><tr><td>
+							<a4j:commandButton value="#{label.login}" style="background-image: url('#{request.contextPath}/web-resources/img/icons/key.png')" 
+								action="#{loginCtrl.login}"  
+								styleClass="button" onmouseover="this.className='buttonHover'" onmouseout="this.className='button'"/>
+						</td></tr></table>
+					</h:panelGroup>
+					<h:outputText value=" "  />
+				</h:panelGrid>
+			</h:form>
+	</ui:define>
+
+</ui:composition>
+

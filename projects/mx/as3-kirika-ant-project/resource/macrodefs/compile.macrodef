@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+	
+	<!-- compile.config -->
+			
+	<macrodef name="compile.config">
+		<element name="compile-tasks" optional="no"/>
+		<attribute name="debug" default="true"/>
+		<attribute name="verbose" default="true"/>
+		<attribute name="file" default="${file.build.sdk}"/>
+		<sequential>
+			<copy file="@{file}" tofile="${sdk.config}">
+				<filterset>
+					<filter token="target.player" value="${swf.player}"/>
+					<filter token="compiler.locale" value="${project.language}"/>
+					<filter token="compiler.debug" value="@{debug}"/>
+					<filter token="compiler.libs" value="${framework.classes}"/>
+					<filter token="compiler.libs.player" value="${framework.player}"/>
+					<filter token="compiler.libs.locale" value="${framework.locale}"/>
+					<filter token="compiler.libs.rsls" value="${framework.rsls}"/>
+					<filter token="compiler.libs.external" value="${dir.lib}"/>
+					<filter token="compiler.libs.external.bin" value="${dir.lib.bin}"/>
+					<filter token="compiler.verboseStacktraces" value="@{verbose}"/>
+					<filter token="metadata.title" value="${project.fullname}"/>
+					<filter token="metadata.description" value="${project.description}"/>
+					<filter token="metadata.publisher" value="${project.owner}"/>
+					<filter token="metadata.creator" value="${project.author}"/>
+					<filter token="metadata.language" value="${project.language}"/>
+				</filterset>
+			</copy>
+			<compile-tasks/>
+			<delete file="${sdk.config}"/>
+		</sequential>
+	</macrodef>
+	
+	<!-- compile.asdoc -->
+		
+	<macrodef name="compile.asdoc">
+		<sequential>
+		</sequential>
+	</macrodef>
+	
+	<!-- compile.fcsh -->
+	
+	<macrodef name="compile.fcsh">
+		<sequential>
+		</sequential>
+	</macrodef>
+	
+	<!-- compile.swc -->
+	
+	<macrodef name="compile.swc">
+		<sequential>
+		</sequential>
+	</macrodef>	
+
+	<!-- compile.swf -->
+	
+	<macrodef name="compile.swf">
+		<sequential>
+		</sequential>
+	</macrodef>
+	
+</project>

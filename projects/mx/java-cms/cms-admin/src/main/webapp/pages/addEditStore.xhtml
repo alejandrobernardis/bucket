@@ -1,0 +1,233 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	template="/templates/tmplAdmin.xhtml">
+
+	<ui:define name="workarea">
+		<script>
+		function blockNonNumbers( e ){
+			var key;
+			var isCtrl = false;
+			var keychar;
+			var reg;
+			if(window.event) {
+				key = window.event.keyCode;
+				isCtrl = window.event.ctrlKey
+			}
+			else if(e.which) {
+				key = e.which;
+				isCtrl = e.ctrlKey;
+			}
+			if (isNaN(key)) return true;
+			keychar = String.fromCharCode(key);
+			if (key == 8 || isCtrl)	{
+				return true;
+			}
+			reg = /\d/;
+			return reg.test(keychar);
+		}
+		</script>
+	
+		<f:loadBundle var="label" basename="labels.labels" />
+		<a4j:form id="storeForm">
+			<a4j:keepAlive beanName="storeForm" />
+			
+			<h:inputHidden value="#{storeForm.selectedStore.idContentType}" id="idStore" />
+			<h:panelGrid columnClasses="title" width="100%">
+				<h:outputText value="#{label.add} #{label.store}"
+					rendered="#{storeForm.selectedStore.idStore == null}" />
+				<h:outputText value="#{label.edit} #{label.store}"
+					rendered="#{storeForm.selectedStore.idStore != null}" />
+			</h:panelGrid>
+			<rich:spacer height="15px"/>		
+			<h:panelGrid style="width: 100%;height: 485px; border: 1pt solid #B6AD84; padding: 20px;" columnClasses="alignTop">
+			<table align="center"><tr><td>
+			<h:panelGrid>	
+				
+					
+					<h:panelGrid width="100%" id="message" rendered="#{storeCtrl.error != null}" >
+						<h:panelGrid rendered="#{storeCtrl.error}" styleClass="bad">
+							<h:panelGroup>
+								<h:graphicImage  value="/web-resources/img/icons/error.png" />
+								<rich:spacer width="15px"/>
+								<h:outputText value="#{storeCtrl.message}"  />
+							</h:panelGroup>
+						</h:panelGrid>
+						<h:panelGrid rendered="#{!storeCtrl.error}" styleClass="good">
+							<h:panelGroup>
+								<h:outputText value="#{storeCtrl.message}"  />
+							</h:panelGroup>
+						</h:panelGrid>
+					</h:panelGrid>
+					
+					<h:panelGrid style="width:1000px;" columns="3" columnClasses="userFormLabelNoBG,userFormField,userFormMessage">
+						<rich:spacer width="1"/>
+						<h:panelGroup styleClass="right">
+							<a4j:commandButton value="#{label.back}" style="background-image: url('#{request.contextPath}/web-resources/img/icons/back.png')" 
+								action="#{storeCtrl.listStores}" immediate="true"
+								styleClass="button" onmouseover="this.className='buttonHover'" onmouseout="this.className='button'"/>
+						</h:panelGroup>
+						<rich:spacer width="1"/>
+					</h:panelGrid>
+					<h:panelGrid style="width:1000px;" columns="3" columnClasses="userFormLabel,userFormField,userFormMessage">
+						<h:outputLabel value="#{label.id}"/>
+						<h:outputLabel value="#{storeForm.selectedStore.idStore}"/>
+						<rich:spacer width="1"/>
+						
+						<h:panelGroup>
+							<h:outputText value="#{label.category}"/>
+							<h:outputText value="*" styleClass="error"/>
+						</h:panelGroup>
+						<h:outputText value="#{storeForm.selectedContentType.contentTypeName}"/>
+						<h:outputText ></h:outputText>
+						
+						<h:panelGroup>
+							<h:outputText value="#{label.address1}"/>
+							<h:outputText value="*" styleClass="error"/>
+						</h:panelGroup>
+						<h:inputText label="#{label.address1}" id="address1" value="#{storeForm.selectedStore.address1}" 
+							maxlength="100" style="width: 300px">
+							<rich:ajaxValidator event="onblur" />
+						</h:inputText>
+						<rich:message for="address1" styleClass="error">
+							<f:facet name="errorMarker">
+								<h:panelGroup>
+									<h:graphicImage value="/web-resources/img/icons/error.png" />
+									<rich:spacer width="5px"/>
+								</h:panelGroup>
+							</f:facet>
+						</rich:message>
+	
+						<h:panelGroup>
+							<h:outputText value="#{label.address2}"/>
+							<h:outputText value="*" styleClass="error"/>
+						</h:panelGroup>
+						<h:inputText label="#{label.address2}" id="address2" value="#{storeForm.selectedStore.address2}" 
+							maxlength="100" style="width: 300px">
+							<rich:ajaxValidator event="onblur" />
+						</h:inputText>
+						<rich:message for="address2" styleClass="error">
+							<f:facet name="errorMarker">
+								<h:panelGroup>
+									<h:graphicImage value="/web-resources/img/icons/error.png" />
+									<rich:spacer width="5px"/>
+								</h:panelGroup>
+							</f:facet>
+						</rich:message>
+						
+						<h:panelGroup>
+							<h:outputText value="#{label.storeName}"/>
+							<h:outputText value="*" styleClass="error"/>
+						</h:panelGroup>
+						<h:inputText label="#{label.storeName}" id="name" value="#{storeForm.selectedStore.name}" 
+							maxlength="45" style="width: 300px">
+							<rich:ajaxValidator event="onblur" />
+						</h:inputText>
+						<rich:message for="name" styleClass="error">
+							<f:facet name="errorMarker">
+								<h:panelGroup>
+									<h:graphicImage value="/web-resources/img/icons/error.png" />
+									<rich:spacer width="5px"/>
+								</h:panelGroup>
+							</f:facet>
+						</rich:message>
+	
+						<h:panelGroup>
+							<h:outputText value="#{label.mall}"/>
+							<h:outputText value="*" styleClass="error"/>
+						</h:panelGroup>
+						<h:inputText label="#{label.mall}" id="mall" value="#{storeForm.selectedStore.mall}" 
+							maxlength="100" style="width: 300px">
+							<rich:ajaxValidator event="onblur" />
+						</h:inputText>
+						<rich:message for="mall" styleClass="error">
+							<f:facet name="errorMarker">
+								<h:panelGroup>
+									<h:graphicImage value="/web-resources/img/icons/error.png" />
+									<rich:spacer width="5px"/>
+								</h:panelGroup>
+							</f:facet>
+						</rich:message>
+						
+						<h:panelGroup>
+							<h:outputText value="#{label.tels}"/>
+							<h:outputText value="*" styleClass="error"/>
+						</h:panelGroup>
+						<h:inputText label="#{label.tels}" id="tels" value="#{storeForm.selectedStore.tels}" 
+							maxlength="60" style="width: 300px">
+							<rich:ajaxValidator event="onblur" />
+						</h:inputText>
+						<rich:message for="tels" styleClass="error">
+							<f:facet name="errorMarker">
+								<h:panelGroup>
+									<h:graphicImage value="/web-resources/img/icons/error.png" />
+									<rich:spacer width="5px"/>
+								</h:panelGroup>
+							</f:facet>
+						</rich:message>
+	
+						<h:panelGroup>
+							<h:outputLabel value="#{label.active}"/>
+							<h:outputLabel value="*" styleClass="error"/>
+						</h:panelGroup>
+						<h:selectBooleanCheckbox id="active" value="#{storeForm.selectedStore.active}">
+							<rich:ajaxValidator event="onblur" />
+						</h:selectBooleanCheckbox>
+						<rich:message for="active" styleClass="error">
+							<f:facet name="errorMarker">
+								<h:panelGroup>
+									<h:graphicImage value="/web-resources/img/icons/error.png" />
+									<rich:spacer width="5px"/>
+								</h:panelGroup>
+							</f:facet>
+						</rich:message>
+						
+						<h:panelGroup>
+							<h:outputLabel value="#{label.order}"/>
+							<h:outputLabel value="*" styleClass="error"/>
+						</h:panelGroup>
+						<h:inputText label="#{label.order}" id="order" value="#{storeForm.selectedStore.order}" 
+							onkeypress="return blockNonNumbers(event);" maxlength="5" style="width: 300px" >
+							<rich:ajaxValidator event="onblur" />
+						</h:inputText>
+						
+						<rich:message for="order" styleClass="error">
+							<f:facet name="errorMarker">
+								<h:panelGroup>
+									<h:graphicImage value="/web-resources/img/icons/error.png" />
+									<rich:spacer width="5px"/>
+								</h:panelGroup>
+							</f:facet>
+						</rich:message>
+	
+	
+					</h:panelGrid>
+					<h:panelGrid style="width:1000px;" columns="3" columnClasses="userFormLabelNoBG,userFormField,userFormMessage">
+						<rich:spacer width="1"/>
+						<h:panelGroup styleClass="right">
+							<h:panelGrid columns="2" border="0">
+								<a4j:commandButton value="#{label.save}" style="background-image: url('#{request.contextPath}/web-resources/img/icons/save.png')" 
+									action="#{storeCtrl.saveStore}" reRender="storeForm,message"
+									styleClass="buttonPrefered" onmouseover="this.className='buttonPreferedHover'" onmouseout="this.className='buttonPrefered'"/>
+								
+								
+								<a4j:commandButton value="#{label.cancel}" style="background-image: url('#{request.contextPath}/web-resources/img/icons/cancel.png')" 
+									action="#{storeCtrl.listStores}" immediate="true"
+									styleClass="button" onmouseover="this.className='buttonHover'" onmouseout="this.className='button'"/>
+
+							</h:panelGrid>
+						</h:panelGroup>
+						<rich:spacer width="1"/>
+					</h:panelGrid>
+			</h:panelGrid>
+			</td></tr></table>
+			</h:panelGrid>
+		</a4j:form>
+	</ui:define>
+</ui:composition>
+

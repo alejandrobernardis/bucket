@@ -1,0 +1,50 @@
+{% extends '../master.html' %}
+{% include '../common/navbar.html' %}
+
+{% block content_container %}
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default panel-search">
+            <div class="panel-body">
+                <form role="form" class="form-auth form-recovery" method="post">
+                    {% module xsrf_form_html() %}
+                    <fieldset>
+                        <h3>addicted / <small>Usuarios</small></h3>
+                        <hr>
+                        {% if form.errors %}
+                            {% module ViewErrors(form.errors) %}
+                        {% end %}
+                    </fieldset>
+                    <fieldset>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="q" name="q" value="{{ form.q.data or '' }}" autofocus="1" required="1"/>
+                            <div class="input-group-btn">
+                                <input type="submit" value="Buscar" class="btn btn-primary" tabindex="-1"/>
+                            </div>
+                        </div>
+                        <small class="text-muted">Búsqueda avazada por Nombre(s), Apellido(s), Username o Email.  Tambi&eacute;n, puedes ver a <a href="/a/users"><strong>&nbsp;<span class="fa fa-users"></span> todos</strong></a> los usuarios.</small>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% if users %}
+    {% module ViewUsers(form, users) %}
+{% end %}
+{% end %}
+
+{% block head_styles_after %}
+<link rel="stylesheet" href="{{ static_url('ladda/css/ladda-themeless.min.css') }}">
+<link rel="stylesheet" href="{{ static_url('bootstrap-dialog/css/bootstrap-dialog.min.css') }}">
+{% end %}
+
+{% block body_scripts_init %}
+<script>var paginator = {% raw paginator.to_json() %};</script>
+<script src="{{ static_url('ladda/js/spin.min.js') }}"></script>
+<script src="{{ static_url('ladda/js/ladda.min.js') }}"></script>
+<script src="{{ static_url('bootstrap-dialog/js/bootstrap-dialog.min.js') }}"></script>
+<script src="{{ static_url('js/bootstrap-growl.min.js') }}"></script>
+<script src="{{ static_url('js/jquery.twbsPagination.min.js') }}"></script>
+<script src="{{ static_url('js/admin.js') }}"></script>
+{% end %}

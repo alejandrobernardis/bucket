@@ -1,0 +1,960 @@
+{% extends "../master.html" %}
+{% block head_style_extra %}
+<link rel="stylesheet" type="text/css" media="screen" href="{{ static_url('css/resistol_pasos.css') }}">
+<link rel="stylesheet" type="text/css" media="screen" href="{{ static_url('css/bootstrap.css') }}">
+<style type="text/css">
+	input.span25,
+	textarea.span25 {width: 170px;}
+	.placeholder    {color:#ccc;}
+</style>
+{% end %}{% block body_wrap_container %}
+<div id="content1" style="display:block;">
+	<div class="closeButton">
+		<a href="javascript:;" class="button-step" data-action="close">Cerrar</a>
+	</div>
+	<!-- step #1 -->
+	<div id="Step1" class="pasosContent" style="display: none;">
+		<form>
+			<div class="paso1">
+				<img src="{{ static_url('img/paso1.jpg') }}" alt="Paso 1" width="69" height="42">
+			</div>
+			<div id="myName" class="white14px">
+				<p>T&uacute;:</p>
+			</div>
+			<div id="me">
+				<img id="my_photo" src="{{ static_url('img/profile.jpg') }}" alt="" width="176" height="176">
+			</div>
+			<div id="myAdress" class="white">
+				<p>Tu ubicaci&oacute;n:</p>
+			</div>
+			<div id="myLocation">
+				<div class="inputzone">
+					<input type="text" id="my_location" name="my_location" class="span25" value="{% raw history_data['my_location'] %}" placeholder="&iquest;D&oacute;nde vives ahora?">
+				</div>
+			</div>
+			<div id="myFriend" class="white14px">
+				<p>Tu amigo(a): </p>
+			</div>
+			<div id="other">
+				<img id="friend_photo" src="{{ static_url('img/profile.jpg') }}" alt="" width="176" height="176">
+			</div>
+			<div id="friendSearch" class="white12px;">
+				<input type="text" id="friend_name" name="friend_name" class="span25 typeahead" data-provide="typeahead" data-items="4" data-source="" value="{% raw history_data['friend_name'] %}" placeholder="Busca a tu amigo en Facebook">
+			</div>
+			<div id="friendLocation">
+				<div class="inputzone">
+					<input type="text" id="friend_location" name="friend_location" class="span25" value="{% raw history_data['friend_location'] %}" placeholder="&iquest;D&oacute;nde vive tu amigo(a)?">
+				</div>
+			</div>
+			<div class="cambiarIzq">
+				<a href="javascript:;" class="photo-change" data-action="my">Cambiar Foto</a>
+			</div>
+			<div class="cambiarDer">
+				<a href="javascript:;" class="photo-change" data-action="friend">Cambiar Foto</a></div>
+			<div class="nextButton">
+				<a href="javascript:;" class="button-step" data-action="next">Siguiente</a>
+			</div>
+		</form>
+	</div>
+	<!-- step #2 -->
+	<div id="Step2" class="pasosContent" style="display: none;">
+		<div class="paso1">
+			<img src="{{ static_url('img/paso2.jpg') }}" alt="Paso 2" width="69" height="42" />
+		</div>
+		<div id="ask1" class="white">&iquest;Qu&eacute; relaci&oacute;n los une?</div>
+		<div id="ask2" class="white">&iquest;D&oacute;nde se conocieron?</div>
+		<div id="ask3" class="white">&iquest;Qu&eacute; es lo que m&aacute;s los une?</div>
+		<div id="ask1Field">
+			<div class="inputzone2">
+				<select id="relation_category" name="relation_category">
+					<option value="0">-- selecciona una relaci&oacute;n --</option>
+					<option value="1">Amistad</option>
+					<option value="2">Familia</option>
+					<option value="3">Romance</option>
+				</select>
+			</div>
+		</div>
+		<div id="ask2Field">
+			<div class="inputzone2">
+				<input type="text" id="relation_location" name="relation_location" class="" value="{% raw history_data['history_location'] %}" placeholder="">
+			</div>
+		</div>
+		<div id="picPaso1">
+			<img id="step_2_photo_my" src="{{ static_url('img/profile.jpg') }}" alt="" width="110" height="110" />
+		</div>
+		<div id="picPaso2">
+			<img id="step_2_photo_friend" src="{{ static_url('img/profile.jpg') }}" alt="" width="110" height="110" />
+		</div>
+		<div id="ask3Field">
+			<div class="inputzone3">
+				<label for="searchField"></label>
+				<textarea id="relation_details" name="" class="relation_details" cols="400" rows="10">
+					{% raw history_data['history_detail'].replace("<br/>", "\n") %}
+				</textarea>
+			</div>
+		</div>
+		<div class="backButton">
+			<a href="javascript:;" class="button-step" data-action="back">Atr&aacute;s</a>
+		</div>
+		<div class="uploadButton">
+			<a href="javascript:;" class="button-step" data-action="upload">Subir fotos</a>
+		</div>
+		<div class="publishButton">
+			<a href="javascript:;" class="button-step" data-action="send">Publicar</a>
+		</div>
+	</div>
+	<!-- step #3 -->
+	<div id="Step3" class="pasosContent" style="display:none;">
+		<div class="paso1">
+			<img src="{{ static_url('img/paso3.jpg') }}" alt="Paso 3" width="69" height="42" />
+		</div>
+		<div id="morePics"></div>
+		<div id="instruccion1" class="white">Desde mi computadora:</div>
+		<form id="uploadimages" action="/facebook/app_new_pegando_historias/history/create/image/upload" method="post" enctype="multipart/form-data">
+			{% module xsrf_form_html() %}
+			<input type="hidden" name="action_token" value="{% raw action_token %}"/>
+			<div id="number1">
+				<input type="file" name="image1" accept="image/gif,image/png,image/jpg,image/jpge">
+			</div>
+			<div id="number2">
+				<input type="file" name="image2" accept="image/gif,image/png,image/jpg,image/jpge">
+			</div>
+			<div id="number3">
+				<input type="file" name="image3" accept="image/gif,image/png,image/jpg,image/jpge">
+			</div>
+			<div id="number4">
+				<button type="submit" class="btn btn-danger">Subir Im&aacute;genes</button>
+				<span class="label label-percent" style="display: none;">0%</span>
+			</div>
+		</form>
+		<div id="instruccion2" class="white">Desde mi cuenta de Facebook</div>
+		<div class="browseFacebook">
+			<a href="javascript:;" id="fbimages" class="button-step" data-action="Facebook">Subir fotos de Facebook</a>
+		</div>
+		<div class="backButton cancelButton">
+			<a href="javascript:;" class="button-step" data-action="back">Cancelar</a>
+		</div>
+		<div class="previewButton">
+			<a href="javascript:;" class="button-step" data-action="preview">Previsualizar</a>
+		</div>
+		<div class="publishButton">
+			<a href="javascript:;" class="button-step" data-action="send">Publicar</a>
+		</div>
+	</div>
+</div>
+
+<div id="content2" style="display:none;">
+	<div id="header"></div>
+	<div id="previewContenido"></div>
+	<div class="previewInfo">
+		<div class="previewEditButton">
+			<a href="javascript:;" class="button-step" data-action="edit">Editar</a>
+		</div>
+		<div class="previewPublishButton">
+			<a href="javascript:;" class="button-step" data-action="send">Publicar</a>
+		</div>
+	</div>
+</div>
+
+<!-- modal images -->
+<div class="modal hide" id="fbimageslist">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal">×</button>
+		<h3 class="modal-title">Im&aacute;genes de Facebook</h3>
+	</div>
+	<div class="modal-body">
+		<div class="row-fluid">
+			<div class="span4">
+				<ul class="nav nav-pills nav-stacked modal-nav"></ul>
+			</div>
+			<div class="span7 fb-container-photo">
+				<form action="javascript:;" class="form-inline">
+					<ul class="modal-content"></ul>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<a href="#" class="btn" data-dismiss="modal">Cancelar</a>
+		<a href="#" class="btn btn-primary" data-action="save">Guardar</a>
+	</div>
+</div>
+
+<!-- modal images -->
+<div class="modal hide" id="imageslist">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal">×</button>
+		<h3 class="modal-title">Cambiar imagen</h3>
+	</div>
+	<div class="modal-body">
+		<form id="uploadimage" action="/facebook/app_new_pegando_historias/history/create/image/upload" method="post" enctype="multipart/form-data">
+			{% module xsrf_form_html() %}
+			<input type="hidden" name="action_token" value="{% raw action_token %}"/>
+			<input type="hidden" id="profile_photo" name="aid" value="">
+			<label>Desde mi computadoras</label>
+			<input type="file" name="image" accept="image/gif,image/png,image/jpg,image/jpge"><br>
+			<button type="submit" class="btn btn-danger">Subir Imagen</button>
+			<span class="label label-percent-profile" style="display:none;">0%</span>
+			<br/>
+		</form>
+	</div>
+	<div class="modal-footer">
+		<a href="#" class="btn" data-dismiss="modal">Cancelar</a>
+		<a href="#" class="btn btn-primary" data-action="save">Guardar</a>
+	</div>
+</div>
+
+{% end %}{% block body_script_ready %}
+
+<!-- lib's -->
+<script type="text/javascript" src="{{ static_url('js/jquery.form.js') }}"></script>
+
+<!-- facebook -->
+<div id="fb-root"></div>
+<script src="https://connect.facebook.net/es_LA/all.js"></script>
+
+<script type="text/javascript">
+	var _ie_version = 100;
+</script>
+<!--[if lt IE 7]><script type="text/javascript">_ie_version = 6;</script><![endif]-->
+<!--[if IE 7]><script type="text/javascript">_ie_version = 7;</script><![endif]-->
+<!--[if IE 8]><script type="text/javascript">_ie_version = 8;</script><![endif]-->
+
+
+<!-- resistol -->
+<script type="text/javascript">
+(function($self){
+	'use strict';
+
+	var base_url = '/facebook/app_new_pegando_historias';
+	var access_id = '{% raw facebook_user_id %}';
+	var access_token = '{% raw facebook_access_token %}';
+	var access_action_token = '{% raw action_token %}';
+
+	/* ---------------------------------------------------------------------- */
+
+	var data_send = {
+		my_name:"{% raw history_data['my_name'] %}",
+		my_location:"{% raw history_data['my_location'] %}",
+		my_photo:"{% raw history_data['my_photo'] %}",
+		friend_name:"{% raw history_data['friend_name'] %}",
+		friend_location:"{% raw history_data['friend_location'] %}",
+		friend_photo:"{% raw history_data['friend_photo'] %}",
+		friend_fbuid:"{% raw history_data['friend_fbuid'] %}",
+		history_category:{% raw history_data['history_category'] %},
+		history_location:"{% raw history_data['history_location'] %}",
+		history_detail:"{% raw history_data['history_detail'] %}",
+		image_01:{% if history_data['image_01'] %}"{% raw history_data['image_01'] %}"{% else %}""{% end %},
+		image_02:{% if history_data['image_02'] %}"{% raw history_data['image_02'] %}"{% else %}""{% end %},
+		image_03:{% if history_data['image_03'] %}"{% raw history_data['image_03'] %}"{% else %}""{% end %}
+	};
+
+	/* ---------------------------------------------------------------------- */
+
+	function reset_images(){
+		data_send.image_01 = '';
+		data_send.image_02 = '';
+		data_send.image_03 = '';
+	}
+
+	function load_image_profile(url, to, w, h){
+		if(!url || !to) return;
+		var img = new Image();
+		img.onload = function(){
+			var scope = $(to);
+			var max_h = h || 176, max_w = w || 176, ratio = this.height/this.width;
+			if(this.width > max_w) {
+				this.width = max_w;
+				this.height = Math.round(this.width*ratio);
+				if(this.height < max_h){
+					this.height = max_h;
+				    this.width = Math.round(this.height/ratio);
+				}
+			} else if(this.height > max_h) {
+			    this.height = max_h;
+			    this.width = Math.round(this.height/ratio);
+			    if(this.width < max_w){
+			    	this.width = max_w;
+					this.height = Math.round(this.width*ratio);
+				}
+			} if(scope.children().length>1){
+				scope.children(':first').remove();
+			} scope.prepend(this);
+		}; img.src = url;
+	}
+
+	/* steps */
+	/* ---------------------------------------------------------------------- */
+
+	var step_pos=0, step_min=1, step_max=3, step_old=null, step_new=null;
+
+	function step_has_next(){
+		return step_pos < step_max;
+	}
+
+	function step_has_prev(){
+		return step_pos > step_min;
+	}
+
+	function step_next(){
+		if(step_has_next()) {
+			step_pos++;
+			step_change_view();
+		}
+	}
+
+	function step_prev(){
+		if(step_has_prev()) {
+			step_pos--;
+			step_change_view();
+		}
+	}
+
+	function step_goto(id){
+		if( id < step_min || id > step_max ) return;
+		step_change_view(id);
+	}
+
+	function step_change_view(id){
+		step_pos = id || step_pos;
+		var scope = $('#Step'+step_pos);
+		if(step_new){
+			step_old = step_new;
+			step_old.hide();
+		} step_new = scope;
+		step_new.show();
+	}
+
+	$('.button-pag').bind('click', function(e){
+		var scope = $(this).attr('data-action');
+		if(scope.toLowerCase() == 'next'){
+			step_next();
+		}else{
+			step_prev();
+		}
+	});
+
+	/* ---------------------------------------------------------------------- */
+
+	var friend_data = {};
+	var friends_list = {% raw facebook_friends_list %};
+	var friends_list_objects = {% raw facebook_friends_list_objects %};
+
+	$('.typeahead').typeahead({source:friends_list});
+
+	$('.typeahead').on('change', function(e){
+		var ref, id, ref_input, scope = $(e.target), value = scope.val();
+		for (var a=0; a<friends_list_objects.length; a++){
+			ref = friends_list_objects[a];
+			if(ref.name.toLowerCase() == value.toLowerCase()){
+				friend_data = ref;
+				id = ref.id;
+				break;
+			}
+		}
+		if(!id) return;
+		data_send.friend_fbuid = id;
+		data_send.friend_name = value;
+		if ($.browser.msie){
+			FB.api("https://graph.facebook.com/"+id+"/",{}, function(response){
+				if(response){
+					var json = response;
+					ref_input = $('#friend_location');
+					if(json.hasOwnProperty('location')){
+						ref_input.removeClass('placeholder');
+						ref_input.val(json.location.name);
+						data_send.friend_location = json.location.name;
+					} else{
+						ref_input.val('¬øD√≥nde vive tu amigo(a)?');
+						ref_input.addClass('placeholder');
+						data_send.friend_location = '';
+					} if(json.hasOwnProperty('id')){
+						var p_url = 'https://graph.facebook.com/'+json.id+'/picture?type=large';
+						load_image_profile(p_url, '#other');
+						data_send.friend_photo = p_url;
+					}else{
+						$('#friend_photo').attr('src', '/static/img/profile.jpg');
+						data_send.friend_photo = '';
+					}
+				}else{
+					alert('No se pudo realizar la carga de los datos de tu amigo.');
+				}
+			});
+		}else{
+			$.ajax({
+				url: "https://graph.facebook.com/"+id+"/",
+				data: $.param({access_token: access_token}),
+				dataType: 'text',
+				type: 'GET',
+				success: function(response){
+					if(response){
+						var json = eval('('+response+')');
+						if(json.hasOwnProperty('location')){
+							$('#friend_location').val(json.location.name);
+							data_send.friend_location = json.location.name;
+						} else{
+							$('#friend_location').val('');
+							data_send.friend_location = '';
+						} if(json.hasOwnProperty('id')){
+							var p_url = 'https://graph.facebook.com/'+json.id+'/picture?type=large';
+							load_image_profile(p_url, '#other');
+							data_send.friend_photo = p_url;
+						}else{
+							$('#friend_photo').attr('src', '/static/img/profile.jpg');
+							data_send.friend_photo = '';
+						}
+					}else{
+						alert('No se pudo realizar la carga de los datos de tu amigo.');
+					}
+				},
+				error: function(response){
+					alert('No se pudo realizar la carga de los datos de tu amigo.');
+				}
+			});
+		}
+	});
+
+	/* images */
+	/* ---------------------------------------------------------------------- */
+
+	var upload_percent = $('.label-percent');
+
+	$('#uploadimages').ajaxForm({
+		beforeSubmit: function() {
+			var ref_ie, file, size, message, errors=[], count=false, size_max=300;
+			upload_percent.hide();
+			if ($.browser.msie){
+				$('#uploadimages input:file').each(function(){
+					ref_ie = $(this);
+					if(ref_ie.val().replace(/\s+/gi, '').length){count++;}
+				});
+			}else{
+				$('#uploadimages input:file').each(function(){
+					if(this.files.length){
+						file = this.files[0];
+						size = Math.round(file.size/1024);
+						if(size > size_max || size == 0){
+							count = -1;
+							errors.push(file.name);
+						}else{count++;}
+					}
+				});
+			}if(count == -1) {
+				message = 'El peso de las im\xE1genes no puede ser mayor a {1}KB';
+				alert(message.replace('{1}', size_max));
+				return false;
+			}else if(!count){
+				alert('Debes seleccionar de 1 a 3 im\xE1genes y luego hacer click en el bot\xF3n "Subir Im\xE1genes".');
+				return false;
+			}if($.browser.msie){
+				upload_percent.html('subiendo im&aacute;genes, aguarde por favor...');
+			}upload_percent.show();
+		},
+
+		uploadProgress: function(event, position, total, percentComplete) {
+			upload_percent.html('cargando: '+percentComplete+' %');
+		},
+
+		complete: function(xhr) {
+			var response = xhr.responseText.replace(/^json;/gi,'');
+			var json = eval('('+response+')');
+			if(json.error.id == 0){
+				upload_percent.html('ok!');
+				var images = json.response;
+				reset_images();
+				for(var a=0; a<images.length; a++){
+					data_send["image_0"+(a+1)] = images[a];
+				};
+			}else{
+				upload_percent.hide();
+				alert(json.error.message);
+			}
+		}
+	});
+
+
+	/* facebook */
+	/* ---------------------------------------------------------------------- */
+
+	var facebook_modal = $('#fbimageslist .modal-content');
+	var facebook_modal_nav = $('#fbimageslist .modal-nav');
+	var facebook_modal_title = $('#fbimageslist .modal-title');
+	var facebook_tmpl = '<li class="{cl}"><label><input type="checkbox" data-picture="{1}" data-picture-url="{2}"{d}{c}>&nbsp;&nbsp;<img src="{3}" alt="imagen"/></label></li>';
+	var facebook_tmpl_nav = '<li><a data-toggle="pill" href="#id_{1}">{2}</a></li>';
+	var facebook_data_store, facebook_data_store_tmp;
+
+	/* ---------------------------------------------------------------------- */
+
+	function modal_empty_nav(){
+		$('#fbimageslist .modal-nav a').unbind('click', modal_get_images_handler);
+		facebook_modal_nav.empty();
+	}
+
+	function modal_empty_content(){
+		facebook_data_store = [];
+		facebook_data_store_tmp = {};
+		modal_change_title();
+		$('#fbimageslist .modal-content input:checkbox').unbind('change', modal_select_images_handler);
+		facebook_modal.empty();
+	}
+
+	function modal_change_title(value){
+		facebook_modal_title.html('Im&aacute;genes de Facebook ('+(value||facebook_data_store.length)+')');
+	}
+
+	function modal_empty(){
+		modal_empty_content();
+		modal_empty_nav();
+	}
+
+	/* ---------------------------------------------------------------------- */
+
+	function modal_get_images_handler(e){
+		var id = $(this).attr('href').replace('#id_','');
+		modal_get_images(id);
+	}
+
+	function modal_select_images_status(status){
+		var scope;
+		$('.modal-content li').each(function(){
+			scope = $(this).find('input:checkbox');
+			if(!scope.attr('checked')){scope.attr('disabled',(status)?'disabled':null);}
+		});
+	}
+
+	function modal_select_images_handler(e){
+		var id = $(this).attr('data-picture');
+		var url = $(this).attr('data-picture-url');
+		var node, not_push = (facebook_data_store.length >= 3);
+		if(facebook_data_store.length > 0){
+			$.each(facebook_data_store, function(k, v){
+				node = v;
+				if(node && node.id == id){
+					facebook_data_store.splice(k, 1);
+					not_push = true;
+					if(facebook_data_store.length == 2){
+						modal_select_images_status(false);
+					}
+				}
+			});
+		}
+		if(!not_push){facebook_data_store.push({id: id, url: url});}
+		if(facebook_data_store.length == 3){modal_select_images_status(true);}
+		modal_change_title();
+	}
+
+	function modal_get_images(id){
+		if(!id) {return alert('No tienes fotos disponibles.');}
+		modal_empty_content();
+		if ($.browser.msie){
+			FB.api("https://graph.facebook.com/"+id+"/photos",{}, function(response){
+				if(response){
+					var json = response;
+					if(json.hasOwnProperty('data') && json.data.length){
+						var data = facebook_data_store_tmp = json.data;
+						var node, id_load, disabled, checked, compare = [];
+						$.each(facebook_data_store,function(k,v){if(v&&v.id){compare.push(v.id);}});
+						for(var a=0; a<data.length; a++){
+							node = data[a];
+							checked = (compare.indexOf(node.id) != -1)?' checked':'';
+							disabled = (!checked && facebook_data_store.length == 3)?' disabled="disabled"':'';
+							facebook_modal.append(facebook_tmpl.replace('{1}', node.id).replace('{2}', node.picture).replace('{3}', node.picture).replace('{d}', disabled).replace('{c}', checked).replace('{cl}', (a%2==0)?'fb-cell-photo-one' : 'fb-cell-photo-two'));
+						} $('#fbimageslist .modal-content input:checkbox').bind('change', modal_select_images_handler);
+					}else{return alert('No tienes fotos disponibles.');}
+				}else{return alert('No tienes fotos disponibles.');}
+			});
+		}else{
+			$.ajax({
+				url: "https://graph.facebook.com/"+id+"/photos/",
+				data: $.param({access_token: access_token}),
+				dataType: 'text',
+				type: 'GET',
+				success: function(response){
+					if(response){
+						var json = eval('('+response+')');
+						if(json.hasOwnProperty('data') && json.data.length){
+							var data = facebook_data_store_tmp = json.data;
+							var node, id_load, disabled, checked, compare = [];
+							$.each(facebook_data_store,function(k,v){if(v&&v.id){compare.push(v.id);}});
+							for(var a=0; a<data.length; a++){
+								node = data[a];
+								checked = (compare.indexOf(node.id) != -1)?' checked':'';
+								disabled = (!checked && facebook_data_store.length == 3)?' disabled="disabled"':'';
+								facebook_modal.append(facebook_tmpl.replace('{1}', node.id).replace('{2}', node.picture).replace('{3}', node.picture).replace('{d}', disabled).replace('{c}', checked).replace('{cl}', (a%2==0)?'fb-cell-photo-one' : 'fb-cell-photo-two'));
+							} $('#fbimageslist .modal-content input:checkbox').bind('change', modal_select_images_handler);
+						}else{return alert('No tienes fotos disponibles.');}
+					}else{return alert('No tienes fotos disponibles.');}
+				},error: function(response){return alert('No tienes fotos disponibles.');}
+			});
+		}
+	}
+
+	/* ---------------------------------------------------------------------- */
+
+	$('#fbimages').bind('click', function(e){
+		if ($.browser.msie){
+			FB.api("https://graph.facebook.com/"+access_id+"/albums",{}, function(response){
+				if(response){
+					var json = response;
+					if(json.hasOwnProperty('data') && json.data.length){
+						var node, id_load, data = json.data;
+						modal_empty();
+						for(var a=0; a<data.length; a++){
+							node = data[a];
+							if(node.hasOwnProperty('count') && node.count>0){
+								if(!id_load) id_load = node.id;
+								facebook_modal_nav.append(facebook_tmpl_nav.replace('{1}', node.id).replace('{2}', node.name));
+							}
+						}
+						modal_get_images(id_load);
+						facebook_modal_nav.find('li:first').addClass('active');
+						$('#fbimageslist .modal-nav a').bind('click', modal_get_images_handler);
+						$('#fbimageslist').modal();
+					}else{return alert('No tienes galerias disponibles.');}
+				}else{return alert('No tienes galerias disponibles.');}
+			});
+		}else{
+			$.ajax({
+				url: "https://graph.facebook.com/"+access_id+"/albums/",
+				data: $.param({access_token: access_token}),
+				dataType: 'text',
+				type: 'GET',
+				success: function(response){
+					if(response){
+						var json = eval('('+response+')');
+						if(json.hasOwnProperty('data') && json.data.length){
+							var node, id_load, data = json.data;
+							modal_empty();
+							for(var a=0; a<data.length; a++){
+								node = data[a];
+								if(node.hasOwnProperty('count') && node.count>0){
+									if(!id_load) id_load = node.id;
+									facebook_modal_nav.append(facebook_tmpl_nav.replace('{1}', node.id).replace('{2}', node.name));
+								}
+							}
+							modal_get_images(id_load);
+							facebook_modal_nav.find('li:first').addClass('active');
+							$('#fbimageslist .modal-nav a').bind('click', modal_get_images_handler);
+							$('#fbimageslist').modal();
+						}else{return alert('No tienes galerias disponibles.');}
+					}else{return alert('No tienes galerias disponibles.');}
+				}, error: function(response){return alert('No tienes galerias disponibles.');}
+			});
+		}
+	});
+
+	$('#fbimageslist a[data-action="save"]').bind('click', function(e){
+		if(!facebook_data_store.length)
+			return alert('Debes seleccionar por lo menos una imagen para luego guardar.');
+		reset_images();
+		for(var a=0; a<facebook_data_store.length; a++){
+			data_send['image_0'+(a+1)] = facebook_data_store[a].url;
+		}; $('#fbimageslist').modal('hide');
+	});
+
+	/* ---------------------------------------------------------------------- */
+
+	var label_percent_profile = $('.label-percent-profile');
+
+	function modal_reset_image_user(){
+		label_percent_profile.hide();
+		$('#profile_photo').attr('value', null);
+		var button = $('#imageslist a[data-action="save"]');
+		button.attr('data-type', null);
+		button.attr('data-photo', null);
+		$('#uploadimage').resetForm();
+	}
+
+	$('#uploadimage').ajaxForm({
+		dataType: 'text',
+		beforeSubmit: function() {
+			var ref_ie, file, size, message, errors=[], count=false, size_max=300;
+			label_percent_profile.hide();
+			if ($.browser.msie){
+				$('#uploadimage input:file').each(function(){
+					ref_ie = $(this);
+					if(ref_ie.val().replace(/\s+/gi, '').length){count++;}
+				});
+			}else{
+				$('#uploadimage input:file').each(function(){
+					if(this.files.length){
+						file = this.files[0];
+						size = Math.round(file.size/1024);
+						if(size > size_max || size == 0){
+							count = -1;
+							errors.push(file.name);
+						}else{count++;}
+					}
+				});
+			}if(count == -1) {
+				message = 'El peso de las im\xE1genes no puede ser mayor a {1}KB.';
+				alert(message.replace("{1}", size_max));
+				return false;
+			}else if(!count){
+				alert('Debes seleccionar de una imagen y luego hacer click en el bot\xF3n "Subir Imagen".');
+				return false;
+			}if($.browser.msie){
+				label_percent_profile.html('subiendo imagen, aguarde por favor...');
+			} label_percent_profile.show();
+		},
+
+		uploadProgress: function(event, position, total, percentComplete) {
+			label_percent_profile.html('cargando: '+percentComplete+' %');
+		},
+
+		complete: function(xhr) {
+			var response = xhr.responseText.replace(/^json;/gi,'');
+			var json = eval('('+response+')');
+			if(json.error.id == 0){
+				label_percent_profile.html('ok!');
+				var image = json.response;
+				var button = $('#imageslist a[data-action="save"]');
+				button.attr('data-type', image.type);
+				button.attr('data-photo', image.id);
+			}else{
+				label_percent_profile.hide();
+				alert(json.error.message);
+			}
+		}
+	});
+
+	$('#imageslist a[data-action="save"]').bind('click', function(e){
+		var scope = $(this),
+			data_type = scope.attr('data-type'),
+			data_photo = scope.attr('data-photo');
+		if(data_photo){
+			data_send[data_type+'_photo'] = data_photo;
+			load_image_profile(data_photo, (data_type=='my')?'#me':'#other');
+			$('#imageslist').modal('hide');
+			modal_reset_image_user();
+		}
+	});
+
+	/* ---------------------------------------------------------------------- */
+
+	var container_one = $("#content1");
+	var container_two = $("#content2");
+	var container_two_preview = $('#previewContenido');
+	var hisotry_title = "{my} y {friend}";
+	var hisotry_category_name = ["Amistad","Familia","Romance"];
+	var tmpl_preview = '<div class=\"previewFotografias2\"><div class=\"previewPic1\"><img src=\"{1}\" alt=\"Foto1\" width=\"104\" height=\"104\" /></div><div class=\"previewPic2\"><img src=\"{2}\" alt=\"Foto1\" width=\"93\" height=\"93\" /></div><div class=\"previewIcon\"><img src=\"/static/img/relation_{3}.png\" alt=\"Love\" width=\"26\" height=\"24\" /></div></div><div class=\"previewMyStory\"><p style=\"font-weight:800;\" class=\"title\">{4}</p><p class=\"white\">Relaci&oacute;n: {5}<br/>Nos conocimos en: {6}<br/></p><p class=\"white\" style=\"text-align:justify;\">Lo que m&aacute;s nos une es: {7}</p><p><ul class="view-images-list">{8}</ul></p></div>';
+	var tmpl_preview_images = '<li id="{1}"><img src="{2}" alt=""/></li>';
+
+	function history_preview_show(){
+		container_two_preview.empty();
+		var h_title = hisotry_title.replace("{my}", data_send.my_name).replace("{friend}", data_send.friend_name);
+		var h_img_ref, h_img_q=0, h_img_list='', h_img_baseid='img_view_0';
+		for(var a=0; a<3; a++){
+			h_img_ref = data_send["image_0"+(a+1)];
+			if(h_img_ref && h_img_ref.length){
+				h_img_list += tmpl_preview_images.replace('{1}', h_img_baseid+(a+1)).replace('{2}', h_img_ref);
+				h_img_q++;
+			}
+		} container_two_preview.append(
+			tmpl_preview.replace('{1}', '/static/img/profile.jpg')
+				.replace('{2}', '/static/img/profile.jpg')
+				.replace('{3}', data_send.history_category || 1)
+				.replace('{4}', h_title)
+				.replace('{5}', hisotry_category_name[data_send.history_category-1])
+				.replace('{6}', data_send.history_location)
+				.replace('{7}', data_send.history_detail)
+				.replace('{8}', h_img_list));
+
+		for(var a=0; a<h_img_q; a++){
+			h_img_ref = data_send["image_0"+(a+1)];
+			load_image_profile(h_img_ref, ('#'+h_img_baseid+(a+1)), 93, 93);
+		}
+
+		load_image_profile(data_send.my_photo, '.previewPic2', 93, 93);
+		load_image_profile(data_send.friend_photo, '.previewPic1', 104, 104);
+
+		container_one.hide();
+		container_two.show();
+	}
+
+	function history_preview_hide(){
+		container_two_preview.empty();
+		container_two.hide();
+		container_one.show();
+	}
+
+	/* ---------------------------------------------------------------------- */
+
+	$('.photo-change').bind('click', function(e){
+		modal_reset_image_user();
+		var scope = $(this);
+		$('#profile_photo').attr('value', scope.attr('data-action'));
+		$('#imageslist').modal();
+	});
+
+	function validate_step(){
+		var status = false;
+		switch(step_pos){
+			case 1:
+				var f_name=$('#friend_name'),f_location=$('#friend_location'),f_photo=$('#other');
+				var m_name=data_send.my_name,m_location=$('#my_location'),m_photo=$('#me');
+				if(!f_name.val().replace(/\s+/gi,'').length){
+					alert('Por favor, elige a un amigo!');
+				}else if(!f_location.val().replace(/\s+/gi,'').length){
+					alert('Cuál es la ubicaicón de tu amigo?');
+				}else if(!m_location.val().replace(/\s+/gi,'').length){
+					alert('Cuál es tu ubicaicón?');
+				} else if(f_photo.children().length < 2){
+					alert('Por favor, elige una foto para tu amigo!');
+				} else if(m_photo.children().length < 2){
+					alert('Por favor, elige una foto para t!');
+				}else{
+					data_send.my_location = m_location.val();
+					data_send.my_photo = m_photo.children(':first').attr('src');
+					data_send.friend_name = f_name.val();
+					data_send.friend_location = f_location.val();
+					data_send.friend_photo = f_photo.children(':first').attr('src');
+					load_image_profile(data_send.my_photo, '#picPaso1', 110, 110);
+					load_image_profile(data_send.friend_photo, '#picPaso2', 110, 110);
+					/* console.log('step_1', data_send); */
+					status = true;
+				}return status;
+			break;
+			case 2:
+				var h_category=$('#relation_category'),h_location=$('#relation_location'),h_details=$('#relation_details');
+				if(h_category.val() < 1){
+					alert('¿Qué relación los une?');
+				}else if(!h_location.val().replace(/\s+/gi,'').length){
+					alert('¿Dónde se conocieron?');
+				}else if(!h_details.val().replace(/\s+/gi,'').length){
+					alert('¿Qué es lo que más los une?');
+				}else{
+					data_send.history_category = h_category.val();
+					data_send.history_location = h_location.val();
+					data_send.history_detail = h_details.val().replace(/\n/gi,'<br/>');
+					/* console.log('step_2', data_send); */
+					status = true;
+				}return status;
+			break;
+			case 3:
+				var ref, i = 0;
+				for(var a=0; a<3; a++){
+					ref = data_send["image_0"+(a+1)];
+					if(ref && ref.length){i++;}
+				} if(i == 0){
+					alert('Debes seleccionar al menos una, dos o tres imágenes.');
+				}else{ /* console.log('step_3', data_send); */ status = true; }
+				return status;
+			break;
+		}
+
+	}
+
+	/*  */
+
+	function get_cookie(value){
+		var result = document.cookie.match('\\b' + value + '=([^;]*)\\b');
+		return result ? result[1] : undefined;
+	}
+
+	function history_save(){
+		var data = data_send || {};
+		data['action_token'] = access_action_token;
+		data['_xsrf'] = get_cookie('_xsrf');
+		$.ajax({
+			url: base_url+'/history/edit/save',
+			data: $.param(data),
+			dataType: 'text',
+			type: 'POST',
+			success: function(response){
+				if(response){
+					var json = eval('('+response+')');
+					if(json.error.id == 0){
+						location.href = base_url+'/history/publish/'+json.response.token;
+					}else{
+						alert(json.error.message);
+					}
+				}else{
+					alert('No se pudo guardar tu historia.');
+				}
+			},
+			error: function(response){
+				alert('No se pudo guardar tu historia.');
+			}
+		});
+	}
+
+	/*  */
+
+	$('.button-step').bind('click', function(e){
+		var scope = $(this);
+		var action = scope.attr("data-action");
+		switch(action.toLowerCase()){
+			case 'close':
+				return location.href = base_url;
+			case 'back':
+				return step_prev();
+			case 'next':
+				if(validate_step())
+					return step_next();
+				break;
+			case 'upload':
+				if(validate_step())
+					return step_goto(3);
+				break;
+			case 'preview':
+				return history_preview_show();
+			case 'edit':
+				return history_preview_hide();
+			case 'send':
+				if(validate_step())
+					return history_save();
+				break;
+			default:
+				return;
+		}
+	});
+
+	/* ---------------------------------------------------------------------- */
+
+	var facebook_picture = "{% raw history_data['my_photo'] %}";
+	load_image_profile("{% raw history_data['my_photo'] %}", '#me');
+	load_image_profile("{% raw history_data['friend_photo'] %}", '#other');
+	$('#relation_category').val({% raw history_data['history_category'] %});
+
+	if($.browser.msie==true){
+		FB.init({appId:"478746198811594", status:true, cookie:true, xfbml:true, oauth:true});
+
+		$('[placeholder]').focus(function () {
+		    var input = $(this);
+		    if (input.val() == input.attr('placeholder')) {
+		        input.val('');
+		        input.removeClass('placeholder');
+		    }
+		}).blur(function () {
+		    var input = $(this);
+		    if (input.val() == '' || input.val() == input.attr('placeholder')) {
+		        input.addClass('placeholder');
+		        input.val(input.attr('placeholder'));
+		    }
+		}).blur().parents('form').submit(function () {
+		    $(this).find('[placeholder]').each(function () {
+		        var input = $(this);
+		        if (input.val() == input.attr('placeholder')) {
+		            input.val('');
+		        }
+		    })
+		});
+
+		if(_ie_version && _ie_version < 9){
+			$('#me').prepend('<img src="'+facebook_picture+'" alt=""/>');
+		}
+
+	}
+
+	if ($.browser.mozilla==true || $.browser.msie==true){
+		document.write('<style type="text/css">');
+		document.write('#number1 input,#number2 input,#number3 input{color:#333;}');
+		document.write('</style>');
+	}
+
+	step_next();
+
+}).call(this);
+</script>
+{% end %}

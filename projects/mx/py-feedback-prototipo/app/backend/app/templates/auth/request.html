@@ -1,0 +1,86 @@
+{% extends '../master.html' %}
+{% block body_tag %}<body class="body-auth">{% end %}
+{% block content_container %}
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default panel-auth">
+            <div class="panel-body">
+                {% if not thanks %}
+                <form role="form" class="form-auth form-request" method="post">
+                    {% module xsrf_form_html() %}
+                    <fieldset>
+                        <h3>{{handler.settings.get('site_title').lower()}} / <small>Solicitar acceso</small></h3>
+                        <hr>
+                        {% if form.errors %}
+                            {% module ViewErrors(form.errors) %}
+                        {% end %}
+                        <p>Por favor, complete el formulario con sus datos para obtener su acceso.</p>
+                        <div class="form-group">
+                            <label>Es cliente de</label>
+                            <div>
+                                <label class="radio-inline"><input type="radio" name="provider" id="provider_all" value="1">Todos</label>
+                                <label class="radio-inline"><input type="radio" name="provider" id="provider_figment" value="2">Figment</label>
+                                <label class="radio-inline"><input type="radio" name="provider" id="provider_kinetiq" value="3">Kinetiq</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="first_name">Nombre(s)</label>
+                            <input class="form-control" required="1" name="first_name" id="first_name" value="{{ form.first_name.data }}" type="text" />
+                        </div>
+                        <div class="form-group">
+                            <label for="last_name">Apellido(s)</label>
+                            <input class="form-control" required="1" name="last_name" id="last_name" value="{{ form.last_name.data }}" type="text" />
+                        </div>
+                        <div class="form-group">
+                            <label for="company">Empresa</label>
+                            <input class="form-control" required="1" name="company" id="company" value="{{ form.company.data }}" type="text" />
+                        </div>
+                        <div class="form-group">
+                            <label for="position">Cargo</label>
+                            <input class="form-control" required="1" name="position" id="position" value="{{ form.position.data }}" type="text" />
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input class="form-control" required="1" name="email" id="email" value="{{ form.email.data }}" type="email" />
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-xs-4">
+                                <label for="phone_lada">Lada</label>
+                                <input class="form-control" required="1" name="phone_lada" id="phone_lada" value="{{ form.phone_lada.data }}" type="text" />
+                                <small class="help-block">Ej: +52 044</small>
+                            </div>
+                            <div class="col-xs-8">
+                                <label for="phone_number">N&uacute;mero de tel&eacute;fono</label>
+                                <input class="form-control" required="1" name="phone_number" id="phone_number" value="{{ form.phone_number.data }}" type="text" />
+                                <small class="help-block">Ej: 9874 5895 ext. 444</small>
+                            </div>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <input name="policy" id="policy" value="1" type="checkbox" /> Acepto el <a href="/legal/privacy">Aviso de Privacidad</a>.
+                            </label>
+                        </div>
+                        <hr>
+                        <a href="/auth/signin" class="btn btn-default pull-left">Cancelar</a>
+                        <button type="submit" class="btn btn-success pull-right">Solicitar</button>
+                    </fieldset>
+                </form>
+                {% else %}
+                <div class="form-auth">
+                    <h3>{{handler.settings.get('site_title').lower()}} / <small>Verificaci&oacute;n</small></h3>
+                    <hr>
+                    <div class="text-center">
+                        <p>Se le ha enviado un email a:</p>
+                        <p class="lead text-info">{{ form.email.data[0:30] + '...' }}</p>
+                        <p class="text-muted"><small>Por favor, siga las instrucciones del mismo<br>para finalizar el proceso de registro.</small></p>
+                        <p class="text-muted"><small>Una vez verificados sus datos, en un lapso <br>de 48 horas recibirá otro correo para obtener <br>los datos de acceso al sistema.</small></p>
+                    </div>
+                    <hr>
+                </div>
+                <a href="/auth/signin" class="btn btn-block btn-primary">Aceptar</a>
+                {% end %}
+            </div>
+        </div>
+    </div>
+</div>
+{% end %}

@@ -1,0 +1,86 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.clarus.cms</groupId>
+		<artifactId>cms-parent</artifactId>
+		<version>1.0.0</version>
+	</parent>
+	
+	<groupId>com.clarus.cms</groupId>
+	<artifactId>cms-ear</artifactId>
+	<version>${project.parent.version}</version>
+	<packaging>ear</packaging>
+	
+	<name>CMS EAR</name>
+	
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.5</source>
+					<target>1.5</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-ear-plugin</artifactId>
+				<version>2.4.2</version>
+				<configuration>
+					<modules>
+						<webModule>
+							<groupId>com.clarus.cms</groupId>
+							<artifactId>cms-website</artifactId>
+							<contextRoot>/web</contextRoot>
+						</webModule>
+						<webModule>
+							<groupId>com.clarus.cms</groupId>
+							<artifactId>cms-admin</artifactId>
+							<contextRoot>/cmsAdmin</contextRoot>
+						</webModule>
+						<webModule>
+							<groupId>com.clarus.cms</groupId>
+							<artifactId>cms-webservices</artifactId>
+							<contextRoot>/cmsWebservices</contextRoot>
+						</webModule>
+					</modules>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>jboss-maven-plugin</artifactId>
+				<version>1.4.1</version>
+				<configuration>
+					<stopWait>60000</stopWait>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>deploy</phase>
+						<goals>
+							<goal>hard-deploy</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			
+		</plugins>
+	</build>
+	
+	<dependencies>
+		<dependency>
+			<groupId>com.clarus.cms</groupId>
+			<artifactId>cms-admin</artifactId>
+			<type>war</type>
+		</dependency>
+		<dependency>
+			<groupId>com.clarus.cms</groupId>
+			<artifactId>cms-website</artifactId>
+			<type>war</type>
+		</dependency>
+		<dependency>
+			<groupId>com.clarus.cms</groupId>
+			<artifactId>cms-webservices</artifactId>
+			<type>war</type>
+		</dependency>
+	</dependencies>
+</project>

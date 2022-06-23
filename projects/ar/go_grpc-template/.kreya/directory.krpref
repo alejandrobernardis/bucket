@@ -1,0 +1,13 @@
+{
+  "settings": [
+    {
+      "options": {
+        "grpc": {
+          "endpoint": "{{endpoint}}",
+          "mode": "grpc",
+          "disableServerCertificateValidation": true
+        }
+      }
+    }
+  ]
+}

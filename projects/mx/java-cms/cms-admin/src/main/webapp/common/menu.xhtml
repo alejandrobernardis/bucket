@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+
+		<f:loadBundle var="label" basename="labels.labels" />
+		<h:form id="menuForm">
+			<rich:toolBar >
+
+				<rich:dropDownMenu style="width: 130px">
+					<f:facet name="label">
+						<h:panelGrid columns="2">
+							<h:graphicImage value="/web-resources/img/icons/docs.png"/>
+							<h:outputText value="#{label.contents}" />
+						</h:panelGrid>
+					</f:facet>
+
+					<rich:menuItem value="#{label.adminContent}" action="#{contentCtrl.listContent}" icon="/web-resources/img/icons/adminDoc.png" 
+						styleClass="menuItem" selectClass="menuItemOver"/>
+						
+					<rich:menuItem value="#{label.adminStores}" action="#{storeCtrl.listStores}" icon="/web-resources/img/icons/adminDoc.png" 
+						styleClass="menuItem" selectClass="menuItemOver"/>
+						
+					<rich:menuItem value="#{label.adminPublications}" action="#{publicationCtrl.listPublications}" icon="/web-resources/img/icons/adminDoc.png" 
+						styleClass="menuItem" selectClass="menuItemOver"/>
+						
+				</rich:dropDownMenu>
+				
+				<rich:dropDownMenu style="width: 130px">
+					<f:facet name="label">
+						<h:panelGrid columns="2">
+							<h:graphicImage value="/web-resources/img/icons/category.png"/>
+							<h:outputText value="#{label.categories}" />
+						</h:panelGrid>
+					</f:facet>
+
+					<rich:menuItem value="#{label.adminCategory}" action="#{categoryCtrl.listCategory}" icon="/web-resources/img/icons/adminCategory.png" 
+						styleClass="menuItem" selectClass="menuItemOver"/>
+				</rich:dropDownMenu>
+				
+				<rich:dropDownMenu style="width: 130px" rendered="#{logedUser.role == 'ADMIN'}">
+					<f:facet name="label">
+						<h:panelGrid columns="2">
+							<h:graphicImage value="/web-resources/img/icons/users.png"/>
+							<h:outputText value="#{label.users}" />
+						</h:panelGrid>
+					</f:facet>
+					<rich:menuItem value="#{label.adminUser}" action="#{userCtrl.listUser}" icon="/web-resources/img/icons/adminUser.png" 
+						styleClass="menuItem" selectClass="menuItemOver"/>
+				</rich:dropDownMenu>
+				<rich:toolBarGroup location="right">
+					<h:outputText id="dates" styleClass="greetings" value="#{util.today}">
+						<f:convertDateTime dateStyle="full" timeStyle="long" type="date" />
+					</h:outputText>
+				</rich:toolBarGroup>
+			</rich:toolBar>
+		</h:form>
+
+</ui:composition>
+

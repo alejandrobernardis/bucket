@@ -1,0 +1,44 @@
+{% extends '../master.html' %}
+{% block body %}
+<div class="container">
+    <div class="login clearfix">
+        <div class="module white span4">
+            <div class="module-header">
+                <h2 class="module-title">Sign in to Admin</h2>
+            </div>
+            <div class="module-alert js-alert"></div>
+            <form class="js-form" action="/auth/login" method="post">
+                <div class="module-content">
+                    <fieldset>
+                        {% raw xsrf_form_html() %}
+                        {% raw handler.next_form_html() %}
+                        <input class="input-block-level" id="username" name="username" value="{{ form.username.data }}" type="text" placeholder="username/email">
+                        <input class="input-block-level" id="password" name="password" value="{{ form.password.data }}" type="password" placeholder="password">
+                    </fieldset>
+                </div>
+                <div class="module-footer clearfix">
+                    <label class="pull-left checkbox"><input type="checkbox" id="remember_me" name="remember_me" value="1" {% if form.remember_me.data %}checked{% end %}>Remember me</label>
+                    <button class="pull-right btn btn-success" type="submit">Sign In</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% end %}
+{% block body_script_init %}
+<script src="{{ static_url('js/jquery.validate.min.js') }}"></script>
+<script type="text/javascript">
+    $(function(){
+        $('.js-form').validate({
+            rules: {
+                username: {required:true, minlength:8},
+                password: {required:true, minlength:8}
+            }
+        });
+        {% if errors %}
+        var _alert = new AKAlert();
+        _alert.add('{% raw errors %}');
+        {% end %}
+    });
+</script>
+{% end %}

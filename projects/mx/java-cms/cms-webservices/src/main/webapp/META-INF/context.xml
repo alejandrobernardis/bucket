@@ -1,0 +1,8 @@
+<Context path="/cmsWebservices" docBase="" debug="0" reloadable="true" >
+    <Resource name="DS/CMS" scope="Shareable"  
+    	type="javax.sql.DataSource" username="root" password="toor" 
+    	driverClassName="com.mysql.jdbc.Driver" 
+    	maxIdle="2" maxWait="5000" 
+    	url="jdbc:mysql://localhost:3306/axo" 
+    	maxActive="3" auth="Container" />
+</Context>

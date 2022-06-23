@@ -1,0 +1,127 @@
+{% extends "../master.html" %}
+{% block body_content %}
+<script type="text/javascript">
+	window.form = {}
+	window.form.errors = {% raw errors %};
+</script>
+<style>
+	body {background: #DCE7EB;}
+	.form-horizontal {background: #fff; padding: 32px 0; -webkit-border-radius: 8px; -moz-border-radius: 8px; border-radius: 8px;} 
+	.container {margin-bottom: 32px;} 
+	.form-buttons {padding-right: 78px; margin-top: 24px;}
+</style>
+<div class="container">
+	<h3 class="form-title">Acceso</h3>
+	<div class="js-form-head">
+		{% if form.errors %}
+		<div class="js-alert alert alert-error">
+			<a class="close" data-dismiss="alert">×</a>
+			<h4 class="alert-heading">Errores!</h4>
+			<br>
+			<p>{% set _list = sorted(form.errors.iteritems()) %}
+			{% for a, b in _list %}
+				<strong>{{ unicode(form[a].label.text) }}</strong> : {{ unicode(",".join(form[a].errors)) }}-
+			{% end %}</p>
+		</div>
+		{% end %}
+	</div>
+	<form class="form-horizontal" action="/auth/login" method="POST">
+		{% raw xsrf_form_html() %}
+		{% raw handler.next_form_html() %}
+		<fieldset>
+			<div class="row">
+				<div class="span6">
+					<div style="padding-left: 24px;">
+						<h3>Usuario Registrado</h3>
+						<p>Solo usuarios registrado para la promoci&oacute;n.</p>
+						<br>
+					</div>
+					<div class="js_username control-group">
+						<label class="control-label" for="username">Nombre de Usuario</label>
+						<div class="controls">
+							<input class="" id="username" name="username" type="text" value="{{ form.username.data }}">
+						</div>
+					</div>
+					<div class="js_password control-group">
+						<label class="control-label" for="password">Contrase&ntilde;a</label>
+						<div class="controls">
+							<input class="" id="password" name="password" type="password" value="{{ form.password.data }}">
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for=""></label>
+						<div class="controls">
+							<button type="submit" class="btn btn-large">Ingresar</button>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for=""></label>
+						<div class="controls">
+							<a href="/auth/forgot-password">Olvide mi usuario o contrase&ntilde;a</a><br>
+							<a href="/register">No poseeo una cuenta y deseo registrarme</a>
+						</div>
+					</div>
+				</div>
+				<div class="span6">
+					<h3>Facebook</h3>
+					<p>Puedes ingresar desde tu cuenta de Facebook.</p>
+					<br>
+					<!--a href="#" class="js_facebook_connect btn btn-primary btn-large">Facebook Connect</a-->
+					<button class="js_facebook_connect btn btn-primary btn-large" type="button">Facebook Connect</button>
+					<br><br>
+					<label class="checkbox">
+						<input type="checkbox" id="terms" name="terms" value="1" checked>Acepto los T&eacute;rminos y Condiciones
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="policy" name="policy" value="1" checked> Acepto las Pol&iacute;ticas de Privacidad
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="news" name="news" value="1"> Deseo recibir noticias.
+					</label>
+				</div>
+			</div>
+		</fieldset>
+	</form>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){
+	var tmpl = '<div class="js-alert alert alert-error"><a class="close" data-dismiss="alert">×</a><h4 class="alert-heading">Errores!</h4><p>{message}</p></div>';
+	var errors = window.form.errors;
+	
+	if(errors.hasOwnProperty("error")) {
+		if(errors.error.id != 0){
+			var messages = errors.error.message;
+			for(var a in messages){
+				$(".js_"+a).addClass("error")
+			} if(errors.error.id > 1){
+				$(".js-form-head").append(tmpl.replace("{message}", errors.error.message));
+			}
+		}
+	};
+	
+	function fb_connect(e){
+		var t = $('#terms').attr("checked") ? 1 : 0;
+		var p = $('#policy').attr("checked") ? 1 : 0;
+		var n = $('#news').attr("checked") ? 1 : 0;
+		if(t && p){
+			window.location.href = '/auth/facebook?terms='+t+'&policy='+p+'&news='+n;
+		}
+	};
+	
+	$("#terms, #policy").bind('change', function(e){
+		var t = $('#terms').attr("checked") ? 1 : 0;
+		var p = $('#policy').attr("checked") ? 1 : 0;
+		var ref = $(".js_facebook_connect");
+		if(t && p){
+			ref.bind('click', fb_connect);
+			ref.attr('disabled', false);
+		}else{
+			ref.unbind('click', fb_connect);
+			ref.attr('disabled', true);
+		}
+	}); 
+	
+	$(".js_facebook_connect").bind('click', fb_connect);
+});
+</script>
+{% end %}

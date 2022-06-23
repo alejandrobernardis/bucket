@@ -1,0 +1,31 @@
+<div class="col-lg-12">
+    <div class="panel panel-primary panel-search-result">
+        <div class="panel-heading">
+            <h3 class="panel-title text-left">Resultados de: <code>{{ form.q.data }}</code></h3>
+        </div>
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Nivel</th>
+                            <th>Nombre(s)</th>
+                            <th>Apellido(s)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in recordset %}
+                        <tr>
+                            <td>{{ helpers.normalize_card(item[0]) }}</td>
+                            <td>{{ helpers.normalize_card_level(item[0]) }}</td>
+                            <td>{{ item[1].title() }}</td>
+                            <td>{{ item[2].title() }}</td>
+                        </tr>
+                        {% end %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

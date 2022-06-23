@@ -1,0 +1,25 @@
+<label class="radio-inline text-center btn btn-default rate-item {{ 'active' if rate == '5' else '' }}">
+    <input type="radio" name="rate" id="rate_5" value="5" {{ 'checked' if rate == '5' else '' }}/>
+    <img src="{{ static_url('img/icons/color/5.png') }}" alt="Muy Bien"/>
+    <span class="label label-success">Muy Bien</span>
+</label>
+<label class="radio-inline text-center btn btn-default rate-item {{ 'active' if rate == '4' else '' }}">
+    <input type="radio" name="rate" id="rate_4" value="4" {{ 'checked' if rate == '4' else '' }}/>
+    <img src="{{ static_url('img/icons/color/4.png') }}" alt="Bien"/>
+    <span class="label label-primary">Bien</span>
+</label>
+<label class="radio-inline text-center btn btn-default rate-item {{ 'active' if rate == '3' else '' }}">
+    <input type="radio" name="rate" id="rate_3" value="3" {{ 'checked' if rate == '3' else '' }}/>
+    <img src="{{ static_url('img/icons/color/3.png') }}" alt="Regular"/>
+    <span class="label label-default">Regular</span>
+</label>
+<label class="radio-inline text-center btn btn-default rate-item {{ 'active' if rate == '2' else '' }}">
+    <input type="radio" name="rate" id="rate_2" value="2" {{ 'checked' if rate == '2' else '' }}/>
+    <img src="{{ static_url('img/icons/color/2.png') }}" alt="Mala"/>
+    <span class="label label-warning">Mala</span>
+</label>
+<label class="radio-inline text-center btn btn-default rate-item {{ 'active' if rate == '1' else '' }}">
+    <input type="radio" name="rate" id="rate_1" value="1" {{ 'checked' if rate == '1' else '' }}/>
+    <img src="{{ static_url('img/icons/color/1.png') }}" alt="Muy Mala"/>
+    <span class="label label-danger">Muy Mala</span>
+</label>

@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="as3-kirika-ant-project" default="-use" basedir=".">
+
+	<!-- properties -->
+
+	<property file="${basedir}/resource/properties/build.properties"/>
+	<property file="${file.build.messages}"/>
+	<property file="${file.build.version}"/>
+
+	<!-- imports -->
+
+	<import file="${file.macrodef.common}"/>
+	<import file="${file.macrodef.project}"/>
+	<import file="${file.macrodef.fdt}"/>
+	<import file="${file.macrodef.compile}"/>
+	
+	<common.init/>
+
+	<!-- use -->
+	
+	<target name="-use" depends="-use-copyright">
+		<echo message="Use: ant -p"/>
+	</target>
+	
+	<target name="-use-copyright">
+		<tstamp/>
+		<echo message="============================================="/>
+		<echo message="${project.name}-${project.version} [${TODAY}]"/>
+		<echo message="Copyright (c) ${project.year} ${project.owner}"/>
+		<echo message="Author: ${project.author}"/>
+		<echo message="---------------------------------------------"/>
+		<echo message="OS: ${os.name}"/>
+		<echo message="Flex SDK: ${sdk.version}"/>
+		<echo message="Flash Player: ${sdk.player}"/>
+		<echo message="=============================================="/>
+	</target>
+	
+	<!-- project -->
+	
+	<target name="startup" depends="-use-copyright" 
+		unless="kc.common.init.startup" 
+		description="--> Startup the empty project.">
+		<project.startup/>
+		<echo message="${message.satrtup}"/>
+	</target>
+	
+	<target name="startup-fdt" depends="-use-copyright" 
+		unless="kc.common.init.startup" 
+		description="--> Startup the empty project for FDT.">
+		<project.startup/>
+		<fdt.create/>
+		<echo message="${message.satrtup.fdt}"/>
+	</target>
+	
+	<target name="startup-full" depends="-use-copyright" 
+		unless="kc.common.init.startup" 
+		description="--> Startup the full project.">
+		<project.startup.full/>
+		<echo message="${message.satrtup.full}"/>
+	</target>
+	
+	<target name="startup-full-fdt" depends="-use-copyright" 
+		unless="kc.common.init.startup" 
+		description="--> Startup the full project for FDT.">
+		<project.startup.full/>
+		<fdt.create/>
+		<echo message="${message.satrtup.full.fdt}"/>
+	</target>
+	
+	<target name="shutdown" depends="-use-copyright"
+		unless="kc.common.init.shutdown" 
+		description="--> Shutdown the project.">
+		<project.shutdown/>
+		<echo message="${message.shutdown}"/>
+	</target>
+
+	<target name="reopen" depends="-use-copyright"
+		if="kc.common.init.shutdown" description="--> Reopen the project.">
+		<project.reopen/>
+		<echo message="${message.reopen}"/>
+	</target>
+	
+	<!-- fdt -->
+	
+	<target name="fdt" depends="-use-copyright" 
+		description="--> Create FDT configuration.">
+		<fdt.create/>
+		<echo message="${message.fdt}"/>
+	</target>
+	
+	<!-- version -->
+
+	<target name="version-increase" depends="-use-copyright" 
+		description="--> Increase the project version.">
+		<common.version.increase/>
+		<echo message="${message.version.increase}"/>
+	</target>
+	
+	<target name="version-increase-major" depends="-use-copyright" 
+		description="--> Increase the project version (major).">
+		<common.version.increase.major/>
+		<echo message="${message.version.increase.major}"/>
+	</target>
+	
+	<target name="version-increase-minor" depends="-use-copyright" 
+		description="--> Increase the project version (minor).">
+		<common.version.increase.minor/>
+		<echo message="${message.version.increase.minor}"/>
+	</target>
+	
+	<target name="version-increase-build" depends="-use-copyright" 
+		description="--> Increase the project version (build).">
+		<common.version.increase.build/>
+		<echo message="${message.version.increase.build}"/>
+	</target>
+	
+	<target name="version-increase-test" depends="-use-copyright" 
+		description="--> Increase the project version (test).">
+		<common.version.increase.test/>
+		<echo message="${message.version.increase.test}"/>
+	</target>
+	
+	<target name="version-reset" depends="-use-copyright" 
+		description="--> Reset the project version.">
+		<common.version.reset/>
+		<echo message="${message.version.reset}"/>
+	</target>
+	
+	<target name="version-reset-major" depends="-use-copyright" 
+		description="--> Reset the project version (major).">
+		<common.version.reset.major/>
+		<echo message="${message.version.reset.major}"/>
+	</target>
+	
+	<target name="version-reset-minor" depends="-use-copyright" 
+		description="--> Reset the project version (minor).">
+		<common.version.reset.minor/>
+		<echo message="${message.version.reset.minor}"/>
+	</target>
+	
+	<target name="version-reset-build" depends="-use-copyright" 
+		description="--> Reset the project version (build).">
+		<common.version.reset.build/>
+		<echo message="${message.version.reset.build}"/>
+	</target>
+	
+	<target name="version-reset-test" depends="-use-copyright" 
+		description="--> Reset the project version (test).">
+		<common.version.reset.test/>
+		<echo message="${message.version.reset.test}"/>
+	</target>
+	
+	<!-- test:remove -->
+	
+	<target name="test-build" depends="-use-copyright" 
+		description="--> Create one testing copy.">
+		<common.version.data variable="tmp_version"/>
+		<copy todir="/Volumes/Development/Projects/__test__/${DSTAMP}${TSTAMP}_ant_project_${tmp_version}" verbose="true">
+			<fileset dir="${basedir}">
+			    <include name="**/*"/>
+				<include name="**/**"/>
+			  </fileset>
+		</copy>
+	</target>
+	
+</project>

@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+ 
+	<!-- common.init -->
+	
+	<macrodef name="common.init">
+        <sequential>
+        	<available file="${file.manifest.startup}" property="kc.common.init.startup"/>
+			<available file="${file.manifest.shutdown}" property="kc.common.init.shutdown"/>
+    		<condition property="kc.common.init.status">
+    			<and>
+    				<isset property="kc.common.init.startup"/>
+    				<isset property="kc.common.init.shutdown"/>
+    			</and>
+    		</condition>
+        	<common.version.data/>
+        </sequential>
+    </macrodef>
+		
+	<!-- common.date.build -->
+	
+	<macrodef name="common.date.build">
+		<attribute name="variable" default="kc.common.date.build"/>
+		<sequential>
+			<tstamp>
+				<format property="@{variable}"
+					pattern="yyyyMMddHHmmss" unit="minute" locale="en"/>
+			</tstamp>
+		</sequential>
+	</macrodef>
+	
+	<!-- common.version -->
+	
+	<macrodef name="common.version">
+		<attribute name="action"/>
+		<attribute name="file" default="${file.build.version}"/>
+		<attribute name="format" default="${project.version.format}"/>
+		<attribute name="variable" default="${project.version}"/>
+        <sequential>
+        	<java classpath="${dir.build.helpers}"
+        		outputproperty="@{variable}"
+        		classname="${helper.KCVersion}">
+					<arg value="@{action}"/>
+					<arg value="@{file}"/>
+					<arg value="@{format}"/>
+			</java>
+        </sequential>
+	</macrodef>
+	
+	<!-- common.version.data -->
+		
+	<macrodef name="common.version.data">
+		<attribute name="file" default="${file.build.version}"/>
+		<attribute name="format" default="${project.version.format}"/>
+		<attribute name="variable" default="${project.version}"/>
+        <sequential>
+        	<common.version action="-version" file="@{file}" variable="@{variable}"/>
+        </sequential>
+	</macrodef>
+	
+	<!-- common.version.increase -->
+		
+	<macrodef name="common.version.increase">
+		<attribute name="file" default="${file.build.version}"/>
+		<attribute name="variable" default="${project.version}"/>
+        <sequential>
+        	<common.version action="-increase" file="@{file}" variable="@{variable}"/>
+        </sequential>
+	</macrodef>
+	
+	<!-- common.version.increase.major -->
+			
+	<macrodef name="common.version.increase.major">
+		<attribute name="file" default="${file.build.version}"/>
+		<attribute name="variable" default="${project.version}"/>
+        <sequential>
+        	<common.version action="-mai" file="@{file}" variable="@{variable}"/>
+        </sequential>
+	</macrodef>
+	
+	<!-- common.version.increase.minor -->
+			
+	<macrodef name="common.version.increase.minor">
+		<attribute name="file" default="${file.build.version}"/>
+		<attribute name="variable" default="${project.version}"/>
+        <sequential>
+        	<common.version action="-mii" file="@{file}" variable="@{variable}"/>
+        </sequential>
+	</macrodef>
+		
+	<!-- common.version.increase.build -->
+			
+	<macrodef name="common.version.increase.build">
+		<attribute name="file" default="${file.build.version}"/>
+		<attribute name="variable" default="${project.version}"/>
+        <sequential>
+        	<common.version action="-bui" file="@{file}" variable="@{variable}"/>
+        </sequential>
+	</macrodef>
+	
+	<!-- common.version.increase.test -->
+				
+	<macrodef name="common.version.increase.test">
+		<attribute name="file" default="${file.build.version}"/>
+		<attribute name="variable" default="${project.version}"/>
+        <sequential>
+        	<common.version action="-tei" file="@{file}" variable="@{variable}"/>
+        </sequential>
+	</macrodef>
+	
+	<!-- common.version.reset -->
+			
+	<macrodef name="common.version.reset">
+		<attribute name="file" default="${file.build.version}"/>
+		<attribute name="variable" default="${project.version}"/>
+        <sequential>
+        	<common.version action="-reset" file="@{file}" variable="@{variable}"/>
+        </sequential>
+	</macrodef>
+	
+	<!-- common.version.reset.major -->
+				
+	<macrodef name="common.version.reset.major">
+		<attribute name="file" default="${file.build.version}"/>
+		<attribute name="variable" default="${project.version}"/>
+        <sequential>
+        	<common.version action="-mar" file="@{file}" variable="@{variable}"/>
+        </sequential>
+	</macrodef>
+	
+	<!-- common.version.reset.minor -->
+					
+	<macrodef name="common.version.reset.minor">
+		<attribute name="file" default="${file.build.version}"/>
+		<attribute name="variable" default="${project.version}"/>
+        <sequential>
+        	<common.version action="-mir" file="@{file}" variable="@{variable}"/>
+        </sequential>
+	</macrodef>
+	
+	<!-- common.version.reset.build -->
+						
+	<macrodef name="common.version.reset.build">
+		<attribute name="file" default="${file.build.version}"/>
+		<attribute name="variable" default="${project.version}"/>
+        <sequential>
+        	<common.version action="-bur" file="@{file}" variable="@{variable}"/>
+        </sequential>
+	</macrodef>
+	
+	<!-- common.version.reset.test -->
+							
+	<macrodef name="common.version.reset.test">
+		<attribute name="file" default="${file.build.version}"/>
+		<attribute name="variable" default="${project.version}"/>
+        <sequential>
+        	<common.version action="-ter" file="@{file}" variable="@{variable}"/>
+        </sequential>
+	</macrodef>
+	
+	<!-- common.compress -->
+	
+	<macrodef name="common.compress">
+		<attribute name="file"/>
+		<attribute name="input"/>
+		<attribute name="output"/>
+		<attribute name="excludes" default=""/>
+		<sequential>
+			<mkdir dir="@{output}"/>
+			<zip destfile="@{output}/@{file}">
+				<fileset dir="@{input}" excludes="@{excludes}"/>
+			</zip>
+			<echo message="Compress: @{file}"/>
+		</sequential>
+	</macrodef>
+	
+	<!-- common.uncompress -->
+	
+	<macrodef name="common.uncompress">
+		<attribute name="file"/>
+		<attribute name="output" default="${basedir}"/>
+		<sequential>
+			<mkdir dir="@{output}"/>
+			<unzip src="@{file}" dest="@{output}"/>
+			<echo message="Uncompress: @{file}"/>
+		</sequential>
+	</macrodef>
+	
+	<!-- common.backup -->
+	
+	<macrodef name="common.backup">
+		<attribute name="prefix" default="${file.backup.prefix}"/>
+		<attribute name="file" default="${file.backup.file}"/>
+		<attribute name="input" default="${basedir}"/>
+		<attribute name="output" default="${dir.backup}"/>
+		<attribute name="excludes" default="${file.excludes.build}"/>
+		<sequential>
+			<tstamp/>
+			<mkdir dir="@{output}"/>
+			<common.compress
+				excludes="@{excludes}"
+				file="${DSTAMP}${TSTAMP}_@{prefix}_@{file}"
+				input="@{input}"
+				output="@{output}"/>
+			<echo message="Backup: ${DSTAMP}${TSTAMP}_@{prefix}_@{file}"/>
+		</sequential>
+	</macrodef>
+	
+	<!-- common.execute -->
+
+	<macrodef name="common.execute">
+		<attribute name="file"/>
+		<attribute name="program"/>
+		<sequential>
+			<exec executable="open">
+				<arg value="-a"/>
+				<arg value="@{program}"/>
+				<arg value="@{file}"/>
+			</exec>
+			<echo message="Execute: @{file}"/>
+		</sequential>
+	</macrodef>
+
+	<!-- common.manifest -->
+
+	<macrodef name="common.manifest">
+		<attribute name="file"/>
+		<sequential>
+			<tstamp/>
+			<common.version.data variable="kc.common.manifest.version"/>
+			<manifest file="@{file}">
+				<attribute name="Created-By" value="${project.copyright} of ${project.author}"/>
+				<attribute name="Project-Name" value="${project.name}"/>
+				<attribute name="Project-FullName" value="${project.fullname}"/>
+				<attribute name="Project-Version" value="${kc.common.manifest.version}"/>
+				<attribute name="Built-By" value="${project.author}"/>
+				<attribute name="Built-Date" value="${TODAY}"/>
+		  	</manifest>
+			<echo message="Manifest: @{file}"/>
+		</sequential>
+	</macrodef>	
+	
+	<!-- common.license -->
+
+	<macrodef name="common.license">
+		<attribute name="file" default="${file.license}"/>
+		<attribute name="license" default="${file.build.license}"/>
+		<sequential>
+			<delete file="@{file}"/>
+			<copy file="@{license}" tofile="@{file}">
+				<filterset>
+					<filter token="project.license" value="${project.license}"/>
+					<filter token="project.copyright" value="${project.copyright}"/>
+					<filter token="project.author" value="${project.author}"/>
+					<filter token="project.author.email" value="${project.author.email}"/>
+					<filter token="project.owner.url" value="${project.owner.url}"/>
+				</filterset>
+			</copy>
+			<echo message="License Created: @{file}"/>
+		</sequential>
+	</macrodef>	
+
+	<!-- common.license.application -->
+
+	<macrodef name="common.license.application">
+		<attribute name="file" default="${file.license}"/>
+		<attribute name="output" default="${dir.src},${dir.src-test}"/>
+		<sequential>
+			<common.license file="@{file}"/>
+			
+			<loadfile 
+				property="kc.common.license" 
+				srcfile="@{file}" 
+				encoding="utf-8"/>			
+			
+			<replaceregexp 
+				match="^.*?(package)" 
+				replace="${license}package" 
+				flags="is" 
+				byline="false">
+					<fileset dir="@{output}" includes="">
+						<include name="**/*.as"/>
+					</fileset>
+			</replaceregexp>		
+			
+			<echo message="License: @{output}"/>
+		</sequential>
+	</macrodef>	
+	
+	
+</project>

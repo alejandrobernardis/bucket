@@ -1,0 +1,25 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+
+		<f:loadBundle var="label" basename="labels.labels" />
+		
+		<h:panelGrid id="logout" styleClass="logout" width="60">
+			<h:form id="logoutForm">
+				<h:commandLink action="#{loginCtrl.logout}">
+					<h:panelGrid cellspacing="0" cellpadding="0" width="60">
+						<h:graphicImage value="/web-resources/img/logout2.png" style="border: 0" />
+						<h:outputText value="#{label.logout}" />
+					</h:panelGrid>
+				</h:commandLink>
+			</h:form>
+		</h:panelGrid>
+		
+
+</ui:composition>
+

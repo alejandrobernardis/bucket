@@ -1,0 +1,59 @@
+{% extends '../../master.html' %}
+{% include '../../ui_modules/navbar.html' %}
+{% block content_container %}
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default panel-search">
+            <div class="panel-body">
+                <form role="form" class="form-auth form-request" method="post">
+                    {% module xsrf_form_html() %}
+                    <fieldset>
+                        <h3>{{handler.settings.get('site_title').lower()}} / <small>Evaluar</small></h3>
+                        <hr>
+                        {% if form.errors %}
+                            {% module ViewErrors(form.errors) %}
+                        {% end %}
+                    </fieldset>
+                    <fieldset>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label for="comments">Calificaci&oacute;n</label><br>
+                                    {% set rate = str(form.rate.data) %}
+                                    <div class="btn-group hidden-xs" data-toggle="buttons">
+                                        {% include '../../ui_modules/default-rate.html' %}
+                                    </div>
+                                    <div class="btn-group-vertical btn-block visible-xs" data-toggle="buttons">
+                                        {% include '../../ui_modules/default-rate-mobile.html' %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12 input-comments">
+                                <div class="form-group">
+                                    <label for="comments">Comentarios</label>
+                                    <textarea class="form-control" required="1" name="comments" id="comments" rows="6" value="{{ form.comments.data }}" ></textarea>
+                                    <small id="form-answer-counter" class="help-block"></small>
+                                </div>
+                                <div class="checkbox">
+                                    <label><input required="1" name="policy" value="1" type="checkbox" {{ 'checked' if form.policy.data else '' }}/> Acepto el <a href="/legal/privacy">Aviso de Privacidad</a>.</label>
+                                </div>
+                                <hr>
+                                <div class="form-group">
+                                    <a href="/" class="btn btn-default">Cancelar</a>
+                                    <button type="submit" id="btn-submit" class="btn btn-success pull-right" disabled>Enviar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% end %}
+{% block body_scripts_init %}
+{% include '../../ui_modules/default-growl.html' %}
+{% include '../../ui_modules/default-counter.html' %}
+{% end %}

@@ -1,0 +1,94 @@
+{
+    "version": 1.0,
+    "sales": false,
+    "snow": false,
+    "machines": [{
+        "id": 110,
+        "name": "Mariachis",
+        "version": 1,
+        "enabled": false,
+        "lines": 30,
+        "required_level": 1,
+        "assets": "http://dev.casino-8.net/static/{}/machines/{}/110.zip"
+    }, {
+        "id": 100,
+        "name": "Banda Ancha",
+        "version": 1,
+        "enabled": false,
+        "lines": 10,
+        "required_level": 1,
+        "assets": "http://dev.casino-8.net/static/{}/machines/{}/100.zip"
+    }, {
+        "id": 101,
+        "name": "Fiesta Animal",
+        "version": 1,
+        "enabled": false,
+        "lines": 15,
+        "required_level": 2,
+        "assets": "http://dev.casino-8.net/static/{}/machines/{}/101.zip"
+    }, {
+        "id": 102,
+        "name": "La Taberna del Monstruo",
+        "version": 1,
+        "enabled": false,
+        "lines": 20,
+        "required_level": 4,
+        "assets": "http://dev.casino-8.net/static/{}/machines/{}/102.zip"
+    }, {
+        "id": 103,
+        "name": "Rockeros",
+        "version": 1,
+        "enabled": false,
+        "lines": 20,
+        "required_level": 6,
+        "assets": "http://dev.casino-8.net/static/{}/machines/{}/103.zip"
+    }, {
+        "id": 104,
+        "name": "Ataque Alienígena",
+        "version": 1,
+        "enabled": false,
+        "lines": 25,
+        "required_level": 8,
+        "assets": "http://dev.casino-8.net/static/{}/machines/{}/104.zip"
+    }, {
+        "id": 105,
+        "name": "Lucha Machine",
+        "version": 1,
+        "enabled": false,
+        "lines": 25,
+        "required_level": 10,
+        "assets": "http://dev.casino-8.net/static/{}/machines/{}/105.zip"
+    }, {
+        "id": 106,
+        "name": "Vikingos",
+        "version": 1,
+        "enabled": false,
+        "lines": 30,
+        "required_level": 12,
+        "assets": "http://dev.casino-8.net/static/{}/machines/{}/106.zip"
+    }, {
+        "id": 107,
+        "name": "Sr. Ardilla",
+        "version": 1,
+        "enabled": false,
+        "lines": 30,
+        "required_level": 14,
+        "assets": "http://dev.casino-8.net/static/{}/machines/{}/107.zip"
+    }, {
+        "id": 109,
+        "name": "Zombies",
+        "version": 1,
+        "enabled": false,
+        "lines": 25,
+        "required_level": 16,
+        "assets": "http://dev.casino-8.net/static/{}/machines/{}/109.zip"
+    }, {
+        "id": 108,
+        "name": "Navi Punk",
+        "version": 1,
+        "enabled": false,
+        "lines": 30,
+        "required_level": 18,
+        "assets": "http://dev.casino-8.net/static/{}/machines/{}/108.zip"
+    }]
+}

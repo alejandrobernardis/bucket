@@ -1,0 +1,246 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	template="/templates/tmplAdmin.xhtml">
+
+	<ui:define name="workarea">
+		<f:loadBundle var="label" basename="labels.labels" />
+		<script>
+		function blockNonNumbers( e ){
+			var key;
+			var isCtrl = false;
+			var keychar;
+			var reg;
+			if(window.event) {
+				key = window.event.keyCode;
+				isCtrl = window.event.ctrlKey
+			}
+			else if(e.which) {
+				key = e.which;
+				isCtrl = e.ctrlKey;
+			}
+			if (isNaN(key)) return true;
+			keychar = String.fromCharCode(key);
+			if (key == 8 || isCtrl)	{
+				return true;
+			}
+			reg = /\d/;
+			return reg.test(keychar);
+		}
+		</script>
+		
+		<style>
+			.rich-fileupload-table-td {
+				height: 15px;
+				padding-top: 0px;
+				padding-bottom: 0px;
+				border: 0px;
+			}
+		
+		</style>
+		<a4j:form>
+			<a4j:keepAlive beanName="publicationForm"/>
+			<h:panelGrid columnClasses="title" width="100%">
+				<h:outputText value="#{label.add} #{label.publication}" rendered="#{publicationForm.selectedPublication.idPublication == null}"/>
+				<h:outputText value="#{label.edit} #{label.publication}" rendered="#{publicationForm.selectedPublication.idPublication != null}"/>
+			</h:panelGrid>
+			<rich:spacer height="15px"/>
+			<h:panelGrid width="100%">
+				<table align="right"><tr><td>
+					<a4j:commandButton value="#{label.back}" style="background-image: url('#{request.contextPath}/web-resources/img/icons/back.png')" 
+						immediate="true" action="#{publicationCtrl.listPublications}"  
+						styleClass="button" onmouseover="this.className='buttonHover'" onmouseout="this.className='button'"/>
+				</td></tr></table>
+			</h:panelGrid>
+			<h:panelGrid width="100%" id="message">
+			<h:panelGrid width="100%" rendered="#{publicationCtrl.error != null}" >
+				<h:panelGrid rendered="#{publicationCtrl.error}" styleClass="bad">
+					<h:panelGroup>
+						<h:graphicImage  value="/web-resources/img/icons/error.png" />
+						<rich:spacer width="15px"/>
+						<h:outputText value="#{publicationCtrl.message}"  />
+					</h:panelGroup>
+				</h:panelGrid>
+				<h:panelGrid rendered="#{!publicationCtrl.error}" styleClass="good">
+					<h:panelGroup>
+						<h:outputText value="#{publicationCtrl.message}"  />
+					</h:panelGroup>
+				</h:panelGrid>
+			</h:panelGrid>
+			</h:panelGrid>
+			<h:panelGrid style="width: 100%;height: 485px; border: 1pt solid #B6AD84; padding: 20px;" columnClasses="alignTop">
+				<h:panelGrid columns="3" columnClasses="userFormLabel,contentFormField,userFormMessage">
+					<h:outputText value="#{label.category}"/>				
+					<h:outputText value="#{publicationForm.selectedContentType.contentTypeName}"/>
+					<h:outputText value=" "/>
+					
+					<h:outputText value="#{label.id}"/>				
+					<h:outputText value="#{publicationForm.selectedPublication.idPublication}"/>
+					<h:outputText value=" "/>
+					
+					<h:panelGrid>
+						<h:panelGroup>
+							<h:outputText value="#{label.image}"/>
+							<h:outputLabel value="*" styleClass="error"/>
+						</h:panelGroup>
+						<rich:fileUpload fileUploadListener="#{publicationCtrl.listener}" addControlLabel="#{label.uploadImage}" autoclear="true"
+	                		maxFilesQuantity="20" id="upload" immediateUpload="true"
+	                		acceptedTypes="jpg,png,gif" allowFlash="false" listHeight="74px" listWidth="200">
+	                			<a4j:support event="onuploadcomplete" reRender="image" />
+	            		</rich:fileUpload>
+					
+					</h:panelGrid>
+					<a4j:mediaOutput id="image" element="img" cacheable="false" session="true" 
+						style="height:140px;" createContent="#{publicationCtrl.paint}" value="" mimeType="image/jpeg" >
+        				 <f:param value="#{publicationCtrl.dummy}" name="dummy"/>  	
+        			</a4j:mediaOutput>
+					<rich:message for="image" styleClass="error">
+						<f:facet name="errorMarker">
+							<h:panelGroup>
+								<h:graphicImage value="/web-resources/img/icons/error.png" />
+								<rich:spacer width="5px"/>
+							</h:panelGroup>
+						</f:facet>
+					</rich:message>
+				
+					<h:panelGrid cellspacing="0" cellpadding="0">
+						<h:panelGroup>
+							<h:outputLabel value="#{label.image}"/>
+							<h:outputLabel value="*" styleClass="error"/>
+						</h:panelGroup>
+						<h:panelGrid id="uploadPageContiner" cellspacing="0" cellpadding="0">
+							<rich:fileUpload fileUploadListener="#{publicationCtrl.listenerPage}" addControlLabel="#{label.uploadImage}" autoclear="true"
+			                		maxFilesQuantity="50" id="uploadPage" immediateUpload="false"
+			                		acceptedTypes="jpg,png,gif" allowFlash="false" listHeight="74px" listWidth="200" fileEntryClass="fileEntry">
+			                	<a4j:support event="onuploadcomplete" reRender="page" />
+			                </rich:fileUpload>
+		                </h:panelGrid>
+					</h:panelGrid>
+					
+					<h:panelGrid id="page" width="100%" >
+						<rich:dataGrid value="#{publicationForm.pages}" var="page" rowKeyVar="index" columns="4">
+							<h:panelGrid cellspacing="0" cellpadding="0">
+								<h:panelGrid  cellspacing="0" cellpadding="0">
+									<a4j:mediaOutput id="image" element="img" cacheable="false" session="true" 
+										style="height:100px;"
+			        					createContent="#{publicationCtrl.paintPage}" value="#{index}" mimeType="image/jpeg" >
+			        					 <f:param value="#{publicationCtrl.dummy}" name="dummy"/>  	
+			        				</a4j:mediaOutput>
+			        			</h:panelGrid>
+			        			<h:panelGrid bgcolor="white" width="100%" cellspacing="0" cellpadding="0">
+			        				<table align="center" cellspacing="2" cellpadding="0"><tr><td>
+										<h:panelGrid columns="3" cellspacing="0" cellpadding="0" columnClasses="controlAnimation,controlAnimation,controlAnimation">
+											<rich:spacer width="16px" rendered="#{index == 0}"/>
+											<a4j:commandButton image="/web-resources/img/icons/arrowLeftChico.png" action="#{publicationCtrl.moveLeft}" rendered="#{index != 0}" 
+												immediate="true" reRender="page" style="height: 16px">
+												<a4j:actionparam name="pageIndex" assignTo="#{publicationCtrl.pageIndex}" value="#{index}"/>
+											</a4j:commandButton>
+											<a4j:commandButton image="/web-resources/img/icons/delete.png" action="#{publicationCtrl.deletePage}" 
+												immediate="true" reRender="page"  style="height: 16px">
+												<a4j:actionparam name="pageIndex" assignTo="#{publicationCtrl.pageIndex}" value="#{index}"/>
+											</a4j:commandButton>
+											<a4j:commandButton image="/web-resources/img/icons/arrowRightChico.png" action="#{publicationCtrl.moveRight}" rendered="#{index != publicationForm.numPages - 1}" 
+												immediate="true" reRender="page"  style="height: 16px">
+												<a4j:actionparam name="pageIndex" assignTo="#{publicationCtrl.pageIndex}" value="#{index}"/>
+											</a4j:commandButton>
+											<rich:spacer width="16px" rendered="#{index == publicationForm.numPages - 1}"/>
+										</h:panelGrid>
+									</td></tr></table>
+			        			</h:panelGrid>
+		        			</h:panelGrid>
+			        	</rich:dataGrid>
+					</h:panelGrid>
+					<rich:message for="pageType" styleClass="error">
+						<f:facet name="errorMarker">
+							<h:panelGroup>
+								<h:graphicImage value="/web-resources/img/icons/error.png" />
+								<rich:spacer width="5px"/>
+							</h:panelGroup>
+						</f:facet>
+					</rich:message>
+					
+					<h:panelGroup>
+							<h:outputLabel value="#{label.order}"/>
+							<h:outputLabel value="*" styleClass="error"/>
+					</h:panelGroup>
+					<h:inputText label="#{label.order}" id="order" value="#{publicationForm.selectedPublication.order}" 
+						onkeypress="return blockNonNumbers(event);" maxlength="5" style="width: 300px" >
+						<rich:ajaxValidator event="onblur" />
+					</h:inputText>
+					
+					<rich:message for="order" styleClass="error">
+						<f:facet name="errorMarker">
+							<h:panelGroup>
+								<h:graphicImage value="/web-resources/img/icons/error.png" />
+								<rich:spacer width="5px"/>
+							</h:panelGroup>
+						</f:facet>
+					</rich:message>
+					
+					
+					
+					<h:panelGroup>
+						<h:outputLabel value="#{label.active}"/>
+						<h:outputLabel value="*" styleClass="error"/>
+					</h:panelGroup>
+					<h:selectBooleanCheckbox id="active" value="#{publicationForm.selectedPublication.active}">
+						<rich:ajaxValidator event="onblur" />
+					</h:selectBooleanCheckbox>
+					<rich:message for="active" styleClass="error">
+						<f:facet name="errorMarker">
+							<h:panelGroup>
+								<h:graphicImage value="/web-resources/img/icons/error.png" />
+								<rich:spacer width="5px"/>
+							</h:panelGroup>
+						</f:facet>
+					</rich:message>
+					
+					
+					
+	            		
+				</h:panelGrid>
+				
+			</h:panelGrid>
+			
+			<h:panelGrid width="100%" id="message2">
+				<h:panelGrid width="100%"  rendered="#{publicationCtrl.error != null}" >
+					<h:panelGrid rendered="#{publicationCtrl.error}" styleClass="bad">
+						<h:panelGroup>
+							<h:graphicImage  value="/web-resources/img/icons/error.png" />
+							<rich:spacer width="15px"/>
+							<h:outputText value="#{publicationCtrl.message}"  />
+						</h:panelGroup>
+					</h:panelGrid>
+					<h:panelGrid rendered="#{!publicationCtrl.error}" styleClass="good">
+						<h:panelGroup>
+							<h:outputText value="#{publicationCtrl.message}"  />
+						</h:panelGroup>
+					</h:panelGrid>
+				</h:panelGrid>
+			</h:panelGrid>
+			
+			<h:panelGrid width="100%">
+				<table align="right"><tr><td>
+					<h:panelGrid columns="2">
+						<a4j:commandButton value="#{label.save}" style="background-image: url('#{request.contextPath}/web-resources/img/icons/save.png')" 
+							action="#{publicationCtrl.savePublication}" reRender="message,message2"
+							styleClass="buttonPrefered" onmouseover="this.className='buttonPreferedHover'" onmouseout="this.className='buttonPrefered'"/>
+								
+						<a4j:commandButton value="#{label.cancel}" style="background-image: url('#{request.contextPath}/web-resources/img/icons/cancel.png')" 
+							action="#{publicationCtrl.listPublications}" immediate="true"
+							styleClass="button" onmouseover="this.className='buttonHover'" onmouseout="this.className='button'"/>			
+									
+					</h:panelGrid>
+				</td></tr></table>
+			</h:panelGrid>
+			
+		</a4j:form>
+	</ui:define>
+
+</ui:composition>
+

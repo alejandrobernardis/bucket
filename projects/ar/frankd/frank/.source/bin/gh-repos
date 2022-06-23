@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+
+set -e
+
+cmd=${BASH_SOURCE[0]}
+[ ! -h "${cmd}" ] || cmd=$(readlink ${cmd})
+
+pth=$(dirname -- ${cmd}})
+for x in '00/00_environ.sh' '00/49_common.sh' '00/99_boot.sh'; do
+  source "${pth}/../script/${x}"
+done
+
+boot
+
+gh auth login \
+  --with-token <<< ${GH_ACCESS_TOKEN}
+
+[ "$?" -eq '0' ] || error_and_exit 'Github login error'
+
+echo -en "\r\033[K${YELLOW} * Downloading repos...${RESET}"
+
+x=$(gh repo list ${GH_ORGANIZATION} \
+  --private \
+  --no-archived \
+  --limit ${GH_JSON_LIMIT} \
+  --json ${GH_JSON_TEMPLATE} \
+);
+
+[ -d "${DY_CACHE}" ] || error_and_exit 'Cache folder not found'
+[ -z "${x}"        ] || echo ${x} >"${DY_CACHE}/repos.list"
+
+echo -e "\r\033[K${GREEN} Done.${RESET}"

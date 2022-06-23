@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+<recordset>
+
+	<base>/activia/simon/applications/avatar</base>
+
+	<HomeScreen>
+		<item id="HomeScreen">/home</item>
+	</HomeScreen>
+	
+</recordset>
+
+
+

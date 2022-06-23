@@ -1,0 +1,112 @@
+<form id="js-form" class="form-horizontal" action="javascript:void();">
+    <fieldset>
+        {% raw xsrf_form_html() %}
+        <input type="hidden" id="uid" name="uid" value="">
+        <input type="hidden" id="token" name="token" value="">
+        <input type="hidden" id="url_id" name="url_id" value="">
+        <input type="hidden" id="image_id" name="image_id" value="">
+        <div class="control-group">
+            <h5>Datos del Evento</h5>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="date_day">Fecha *</label>
+            <div class="controls">
+                <input type="text" class="input-mini" id="date_day" name="date_day" placeholder="d&iacute;a">&nbsp;/
+                <input type="text" class="input-mini" id="date_month" name="date_month" placeholder="mes">&nbsp;/
+                <input type="text" class="input-mini" id="date_year" name="date_year" placeholder="a&ntilde;o">
+                <input type="hidden" id="date" name="date" value="" data-alert-name="Fecha">
+                <span class="help-block">Ej: 31 / 12 / 1980</span>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="title">Titulo *</label>
+            <div class="controls">
+                <input class="input-block-level" type="text" id="title" name="title" data-alert-name="Titulo">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="place">Lugar *</label>
+            <div class="controls">
+                <input class="input-block-level" type="text" id="place" name="place" data-alert-name="Lugar">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="phone">Tel&eacute;fono</label>
+            <div class="controls">
+                <input class="input-block-level" type="text" id="phone" name="phone" data-alert-name="Tel&eacute;fono">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="enabled">Visible</label>
+            <div class="controls">
+                <input id="enabled" name="enabled" type="checkbox" value="1">
+            </div>
+        </div>
+        <hr>
+        <div class="control-group">
+            <h5>Liga del Evento</h5>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="url_title">Titulo</label>
+            <div class="controls">
+                <input class="input-block-level" type="text" id="url_title" name="url_title" data-alert-name="Titulo Liga">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="url_value">Valor</label>
+            <div class="controls">
+                <input class="input-block-level" type="text" id="url_value" name="url_value" data-alert-name="Valor Liga">
+                <span class="help-block">Ej: http://www.domain.com, mailto:info@dominio.com</span>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="track_category">Categor&iacute;a</label>
+            <div class="controls">
+                <input class="input-block-level" type="text" id="track_category" name="track_category" value="event" disabled>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="track_action">Acci&oacute;n</label>
+            <div class="controls">
+                <input class="input-block-level" type="text" id="track_action" name="track_action" value="click" disabled>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="track_label">Etiqueta</label>
+            <div class="controls">
+                <input class="input-block-level" type="text" id="track_label" name="track_label" data-alert-name="Categor&iacute;a Track">
+            </div>
+        </div>
+        <hr>
+        <div class="control-group">
+            <h5>Imagen del Evento</h5>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="image_alt">Descripci&oacute;n</label>
+            <div class="controls">
+                <input class="input-block-level" type="text" id="image_alt" name="image_alt" data-alert-name="Descripci&oacute;n Imagen">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="image_src">Imagen</label>
+            <div class="controls">
+                <input class="input-block-level" type="text" id="image_src" name="image_src" data-alert-name="Imagen" disabled>
+            </div>
+        </div>
+    </fieldset>
+</form>
+<form id="js-form-upload" class="form-horizontal" action="javascript:void();">
+    <fieldset>
+        {% raw xsrf_form_html() %}
+        <div class="control-group">
+            <label class="control-label"></label>
+            <div class="controls">
+                <span class="fileinput-button btn btn-small">
+                    <span>Elegir una Imagen</span>
+                    <input id="image_upload" type="file" name="files" data-url="/a/event/upload" accept="image/png,image/jpeg,image/pjpeg,image/jpg,image/gif" multiple>
+                </span>
+                <span class="js-image-percentage help-inline"></span>
+            </div>
+        </div>
+    </fieldset>
+</form>

@@ -1,0 +1,6 @@
+#Build Version for ANT. Do not edit!
+#Wed Aug 04 15:39:37 CDT 2010
+project.version.test=0
+project.version.major=0
+project.version.minor=0
+project.version.build=0

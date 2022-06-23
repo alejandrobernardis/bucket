@@ -1,0 +1,70 @@
+{% block news %}
+<div class="">
+    <div class="alert alert-warning text-center">
+        <span class="fa fa-warning"></span>
+        Versi&oacute;n <strong>Beta</strong>, a&uacute;n no es productiva.
+    </div>
+</div>
+{% end %}
+{% block header %}
+<nav class="navbar navbar-default navbar-static-top" role="navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="navbar-header navbar-left">
+                    <p class="navbar-text">
+                        <span class="glyphicon glyphicon-user"></span>
+                        Hola, {{ current_user.get('first_name') }}
+                    </p>
+                </div>
+                <div class="navbar-header navbar-right">
+                    <p class="navbar-text">
+                        <a href="/profile" class="">
+                            <span class="fa fa-gear"></span>
+                                Perfil (<small>{{ current_user.get('username') }}</small>)
+                        </a>
+                    </p>
+                    <p class="navbar-text">
+                        <a href="/" class="">
+                            <span class="fa fa-search"></span>
+                            Buscar
+                        </a>
+                    </p>
+                    {% if handler.identity.is_admin %}
+                    <p class="navbar-text">
+                        <a href="/a/users" class="">
+                            <span class="fa fa-users"></span>
+                            Usuarios
+                        </a>
+                    </p>
+                    <p class="navbar-text">
+                        <a href="/a/register" class="">
+                            <span class="fa fa-tasks"></span>
+                            Registros
+                        </a>
+                    </p>
+                    <!--<p class="navbar-text">
+                        <a href="/a/stores" class="">
+                            <span class="fa fa-briefcase"></span>
+                            Tiendas / Empresas
+                        </a>
+                    </p>-->
+                    <!--<p class="navbar-text">
+                        <a href="/a/activity" class="">
+                            <span class="fa fa-eye"></span>
+                            Actividad
+                        </a>
+                    </p>-->
+                    {% end %}
+                    <p class="navbar-text">
+                        <a href="/auth/signout" class="">
+                            <span class="fa fa-power-off"></span>
+                            Cerrar Sesi&oacute;n
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+{% end %}

@@ -1,0 +1,71 @@
+{% extends '../master.html' %}
+{% block body_tag %}<body class="body-auth">{% end %}
+{% block content %}
+{% if not thanks %}
+<div class="col-lg-12">
+    <div class="panel panel-default panel-evaluation">
+        <div class="panel-body">
+            <form role="form" class="form-auth form-request" method="post">
+                {% module xsrf_form_html() %}
+                <fieldset>
+                    <h3>{{handler.settings.get('site_title').lower()}} / <small>Evaluaci&oacute;n</small></h3>
+                    <small class="text-muted">
+                        <span class="fa fa-exclamation-triangle"></span>&nbsp;
+                        Hola {{ cookie.first_name }}, recuerda que la evaluaci&oacute;n expira el d&iacute;a {{ cookie.tz_mexico.replace(' ', ' a las ') }} hora(s).
+                    </small>
+                    <hr>
+                    {% if form.errors %}
+                        {% module ViewErrors(form.errors) %}
+                    {% end %}
+                </fieldset>
+                <fieldset>
+                    <div class="form-group">
+                        <label for="comments">Calificaci&oacute;n</label><br>
+                        {% set rate = str(form.rate.data) %}
+                        <div class="btn-group hidden-xs" data-toggle="buttons">
+                            {% include '../ui_modules/default-rate.html' %}
+                        </div>
+                        <div class="btn-group-vertical btn-block visible-xs" data-toggle="buttons">
+                            {% include '../ui_modules/default-rate-mobile.html' %}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="comments">Comentarios <small class="text-muted">(opcional)</small></label>
+                        <textarea class="form-control" required="1" name="comments" id="comments" rows="6" value="{{ form.comments.data }}"></textarea>
+                        <small id="form-answer-counter" class="help-block"></small>
+                    </div>
+                    <div class="checkbox">
+                        <label><input required="1" name="policy" value="1" type="checkbox" {{ 'checked' if form.policy.data else '' }}/> Acepto el <a href="/legal/privacy">Aviso de Privacidad</a>.</label>
+                    </div>
+                    <hr>
+                    <div class="form-group">
+                        <a href="/" class="btn btn-default">Cancelar</a>
+                        <button type="submit" id="btn-submit" class="btn btn-success pull-right" disabled>Enviar</button>
+                    </div>
+                </fieldset>
+            </form>
+
+        </div>
+    </div>
+</div>
+{% else %}
+<div class="col-lg-12">
+    <div class="panel panel-default panel-auth">
+        <div class="panel-body">
+            <div class="form-auth">
+                <h3>{{handler.settings.get('site_title').lower()}} / <small>Evaluaci&oacute;n finalizada</small></h3>
+                <hr>
+                <div class="text-center">
+                    <h2 class="text-primary">{{ cookie.first_name }}</h2>
+                    <p class="lead">Gracias por realizar la evaluaci&oacute;n.</p>
+                    <p class="text-muted"><small>En un lapso de 48 horas <br>nos pondremos en contacto con usted.</small></p>
+                </div>
+                <hr>
+            </div>
+            <a href="/auth/signin" class="btn btn-block btn-success">Finalizar</a>
+        </div>
+    </div>
+</div>
+{% end %}
+{% end %}
+{% block body_scripts_init %}{% include '../ui_modules/default-counter.html' %}{% end %}

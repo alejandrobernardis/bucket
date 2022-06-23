@@ -1,0 +1,6 @@
+<jboss-web>
+	<resource-ref>
+        <res-ref-name>DS/CMS</res-ref-name>
+        <jndi-name>java:/DS/CMS</jndi-name>
+    </resource-ref>
+</jboss-web>

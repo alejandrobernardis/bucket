@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+<recordset>
+	<info>
+		<guid><![CDATA[]]></guid>
+		<client><![CDATA[]]></client>
+		<brand><![CDATA[]]></brand>
+		<project><![CDATA[]]></project>
+		<description><![CDATA[]]></description>
+		<url><![CDATA[]]></url>
+		<email><![CDATA[]]></email>
+	</info>
+	<allowDomain default="*">
+		<domain></domain>
+	</allowDomain>
+	<paths>
+		<path id="base"><![CDATA[]]></path>
+		<path id="static"><![CDATA[../]]></path>
+		<path id="staticCss"><![CDATA[{paths.path.@id:static}css/]]></path>
+		<path id="staticImg"><![CDATA[{paths.path.@id:static}img/]]></path>
+		<path id="staticSnd"><![CDATA[{paths.path.@id:static}snd/]]></path>
+		<path id="staticSwf"><![CDATA[]]></path>
+		<path id="staticVid"><![CDATA[{paths.path.@id:static}vid/]]></path>
+		<path id="data"><![CDATA[{paths.path.@id:static}data/]]></path>
+		<path id="dataConfig"><![CDATA[{paths.path.@id:data}config/]]></path>
+		<path id="imgBackground"><![CDATA[{paths.path.@id:staticImg}background/]]></path>
+		<path id="imgAssets"><![CDATA[{paths.path.@id:staticImg}assets/]]></path>
+	</paths>
+	<datalayer>
+		<item id="application"><![CDATA[{paths.path.@id:dataConfig}application.xml]]></item>
+		<item id="applicationAssets"><![CDATA[{paths.path.@id:dataConfig}assets.xml]]></item>
+		<item id="tracking"><![CDATA[{paths.path.@id:dataConfig}tracking.xml]]></item>
+	</datalayer>
+	<assets>
+		<item id="assets"><![CDATA[{paths.path.@id:staticSwf}application_assets.swf]]></item>
+		<item id="assetsPath"><![CDATA[{paths.path.@id:staticSwf}application_path.swf]]></item>
+		<item id="bgDefault"><![CDATA[{paths.path.@id:imgBackground}default.jpg]]></item>
+	</assets>
+	<applicationContent>
+		<![CDATA[{paths.path.@id:staticSwf}application_content.swf]]>
+	</applicationContent>
+</recordset>

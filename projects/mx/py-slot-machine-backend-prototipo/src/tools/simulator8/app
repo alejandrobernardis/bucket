@@ -1,0 +1,12 @@
+#!/bin/bash
+# -*- coding: utf-8 -*-
+# Copyright (c) 2013 Asumi Kamikaze Inc.
+# Copyright (c) 2013 The Octopus Apps Inc.
+# Licensed under the Apache License, Version 2.0 (the "License")
+# Author: Alejandro M. Bernardis
+# Email: alejandro.bernardis at gmail.com
+# Created: 24/Oct/2013 15:55
+echo "Casino 8 - B07010"
+base_dir=`echo "${0}" | sed 's/app//g'`
+cd ${base_dir}
+/usr/bin/python app.py

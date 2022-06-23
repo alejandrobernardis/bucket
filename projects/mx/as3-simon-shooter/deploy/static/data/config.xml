@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<recordset>
+	<config>		
+		<info>
+			<client></client>
+			<brand></brand>
+			<project><![CDATA[]]></project>
+			<url></url>
+			<email></email>
+		</info>
+		<allowDomain>
+			<domain>*</domain>
+			<domain>apps.facebook.com</domain>
+			<domain>apps.*.facebook.com</domain>
+		</allowDomain>
+		<paths>
+			<base><![CDATA[../]]></base>
+			<swf>swf</swf>
+			<xml>data</xml>
+			<img>img</img>
+			<snd>snd</snd>
+			<php>includes</php>
+		</paths>
+		<game>{config.paths.base}{config.paths.xml}/config/game.xml</game>
+		<debug>
+			<level>all</level> 
+			<appender>firefox</appender> 
+			<filter>*</filter> 
+			<separator>|</separator> 
+		</debug>
+	</config>
+</recordset>

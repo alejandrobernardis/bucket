@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="snax-pcq" default="create" basedir="../">
+	
+	<property file="deploy/build.properties"/>
+	
+	<macrodef name="using-config">
+		<element name="tasks" optional="yes"/>
+		<sequential>
+			<tstamp prefix="time">
+				<format property="UID" 
+					pattern="yyyyMMddhhmmss" locale="es,MX"/>
+			</tstamp>
+			<tasks/>
+		</sequential>
+	</macrodef>
+	
+	<macrodef name="deploy-create">
+		<sequential>
+			<using-config>
+				<tasks>
+					<property name="deploy.name" 
+						value="${project.name}_${time.UID}"/>
+					<property name="deploy.date" 
+						value="${time.DSTAMP}${time.TSTAMP}"/>
+					<property name="deploy.path" 
+						value="${basedir}/${build.path}/${deploy.name}"/>
+					<property name="deploy.bin" 
+						value="${deploy.path}/bin"/>
+					<property name="deploy.tar" 
+						value="${deploy.path}/${deploy.name}.tar.gz"/>
+					<delete includeemptydirs="true" verbose="true" 
+						failonerror="false">
+						<fileset dir="${deploy.path}">
+							  <include name="**/*"/>
+						</fileset>
+					</delete>
+					<mkdir dir="${deploy.path}"/>
+					<mkdir dir="${deploy.bin}"/>
+					<copy todir="${deploy.bin}" verbose="true">
+						<fileset dir="${build.bin}"></fileset>
+					</copy>
+					<tar compression="gzip" destfile="${deploy.tar}">
+						<tarfileset dir="${deploy.bin}" prefix="${deploy.name}"></tarfileset>
+					</tar>
+				</tasks>
+			</using-config>
+		</sequential>
+	</macrodef>
+	
+	<macrodef name="deploy-ftp">
+		<sequential>
+			<deploy-create/>
+			<ftp server="${ftp.server}" port="${ftp.port}" remotedir="${ftp.remotedir}"
+				userid="${ftp.userid}" password="${ftp.password}">
+				<fileset dir="${deploy.path}">
+					<include name="**/*.tar.gz"/>
+					<include name="**/*.zip"/>
+				</fileset>
+			</ftp>
+		</sequential>
+	</macrodef>
+	
+	<target name="create">
+		<deploy-create/>
+	</target>
+	
+	<target name="create-ftp">
+		<deploy-ftp/>
+	</target>
+	
+</project>

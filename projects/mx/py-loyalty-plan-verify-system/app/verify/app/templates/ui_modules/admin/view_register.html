@@ -1,0 +1,66 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="text-right">
+                    <ul class="js-paginator pagination pagination-sm"></ul>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12">
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Empresa</th>
+                                        <th>Nombre(s)</th>
+                                        <th>Apellido(s)</th>
+                                        <th>Email</th>
+                                        <th>Tel&eacute;fono</th>
+                                        <th>Fecha de Solicitud</th>
+                                        <th class="text-center">Activar</th>
+                                        <th class="text-center">Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for user in users %}
+                                    {% set user = helpers.normalize_user(user) %}
+                                    {% set email_verify = getattr(user, 'activation_hash', False) %}
+                                    <tr data-token="{{ user.id }}">
+                                        <td>{{ user.company }}</td>
+                                        <td>{{ user.first_name }}</td>
+                                        <td>{{ user.last_name }}</td>
+                                        <td>{{ user.email }}</td>
+                                        <td>{{ user.phone_lada }} {{ user.phone_number }}</td>
+                                        <td>{{ helpers.normalize_last_login(user.created) }}</td>
+                                        <td class="text-center">
+                                            {% if not email_verify %}
+                                            <span class="label label-warning"><i class="fa fa-warning"></i>&nbsp;&nbsp;Email No Verificado</span>
+                                            {% else %}
+                                            <button type="button" class="js-button btn btn-xs btn-success" data-action="register-allow" data-token="{{ user.id }}">
+                                                <span class="fa fa-check"></span>&nbsp;Activar
+                                            </button>
+                                            {% end %}
+                                        </td>
+                                        <td class="text-center">
+                                            <button type="button" class="js-button btn btn-xs btn-default" data-action="register-deny" data-token="{{ user.id }}">
+                                                <span class="fa fa-trash-o"></span>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    {% end %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <div class="text-right">
+                    <ul class="js-paginator pagination pagination-sm"></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

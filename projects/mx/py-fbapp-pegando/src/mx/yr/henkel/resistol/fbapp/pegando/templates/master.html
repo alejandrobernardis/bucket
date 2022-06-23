@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:fb="http://ogp.me/ns/fb#" class="no-js" lang="en">
+	<head>
+		<!-- Henkel, Resistol, Pegando Historias -->
+		<!-- Made by Young and Rubicam Digital -->
+		<!-- Site: http://www.yr.com.mx -->
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<title>Resistol, Pegando Historias</title>
+		<meta name="author" content="/humans.txt">
+		<meta name="copyright" content="Copyright 2011. All Rights Reserved.">
+		{% if handler.settings.get('google_site_verification') %}
+		<meta name="google-site-verification" content="{{ handler.settings.get('google_site_verification') }}"/>{% end %}
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+		<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+		<link rel="icon" href="/favicon.ico" type="image/ico">
+		{% block head_metada %}
+		{% if handler.settings["facebook_app_id"] %}
+		<meta name="title" content="Resistol, Pegando Historias">
+		<meta name="description" content="El 40% de las personas vive lejos de lo que ama, el 100% sigue en contacto.">
+		<meta property="og:image" content="{{ static_url('img/facebook.png') }}"/>
+		<meta property="og:title" content="Resistol, Pegando Historias"/>
+		<meta property="og:description" content="El 40% de las personas vive lejos de lo que ama, el 100% sigue en contacto."/>
+		<meta property="og:url" content="https://apps.facebook.com/pegando_historias/"/>
+		<meta property="og:site_name" content="Resistol, Pegando Historias"/>
+		<meta property="og:type" content="website"/>
+		<meta property="fb:app_id" content="{{ handler.settings.get('facebook_app_id') }}" />
+		<meta property="fb:admins" content="{{ handler.settings.get('facebook_uid') }}" />{% end %}
+		{% end %}
+		{% block head_style %}
+		<link rel="stylesheet" type="text/css" media="print" href="{{ static_url('css/print.css') }}">
+		<link rel="stylesheet" type="text/css" media="screen" href="{{ static_url('css/styles.css') }}">{% end %}
+		{% block head_style_extra %}{% end %}
+		{% block head_script %}
+		<script type="text/javascript" src="{{ static_url('js/underscore.js') }}"></script>
+		<script type="text/javascript" src="{{ static_url('js/jquery.js') }}"></script>
+		<!-- <script type="text/javascript" src="{{ static_url('js/scripts.js') }}"></script> -->{% end %}
+		{% block head_script_extra %}{% end %}
+		<!--[if lt IE 9]>
+			<script src="{{ static_url('js/html5.js') }}"></script>
+		<![endif]-->
+		{% if handler.settings.get('google_analytics_id') %}
+		<script type="text/javascript">
+			var _gaq = _gaq || [];
+			_gaq.push(['_setAccount', '{{ handler.settings.get("google_analytics_id") }}']);
+			{% if handler.settings.get("google_analytics_sdomains") or handler.settings.get("google_analytics_mdomains") %}_gaq.push(['_setDomainName', '{{ handler.settings.get("google_analytics_domain") }}']);{% end %}
+			{% if handler.settings.get("google_analytics_mdomains") %}_gaq.push(['_setAllowLinker', true]);{% end %}
+			_gaq.push(['_trackPageview']);
+			(function() {
+				var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+				ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+				var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+			})();
+		</script>{% end %}
+	</head>
+	<body>
+		{% block body_wrap_container %}
+		<div class="wrap">
+			{% block body_header_container %}
+			<div class="main-header">
+				{% block body_header %}{% end %}
+			</div>{% end %}
+			{% block body_content_container %}
+			<div class="main-content">
+				{% block body_content %}{% end %}
+			</div>{% end %}
+			{% block body_footer_container %}
+			<div class="main-footer">
+				{% block body_footer %}{% end %}
+			</div>{% end %}
+		</div>{% end %}
+		<script type="text/javascript" src="{{ static_url('js/bootstrap.js') }}"></script>
+		{% block body_script_ready %}{% end %}
+	</body>
+</html>

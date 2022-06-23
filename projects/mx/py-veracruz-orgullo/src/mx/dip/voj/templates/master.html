@@ -1,0 +1,86 @@
+<!doctype html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="es-MX"><![endif]-->
+<!--[if IE 7]><html class="no-js lt-ie9 lt-ie8" lang="es-MX"><![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9" lang="es-MX"><![endif]-->
+<!--[if gt IE 8]><!--><html class="no-js" lang="es-MX"><!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>{{ handler.settings.get('site_name') }}</title>
+        <meta name="description" content="{{ handler.settings.get('site_description') }}">
+        <meta name="country" content="MX">
+        <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0">
+        <link rel="author" type="text/plain" href="/humans.txt" />
+        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144x144-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/apple-touch-icon-114x114-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/apple-touch-icon-72x72-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" sizes="57x57" href="/apple-touch-icon-57x57-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" href="/apple-touch-icon-precomposed.png">
+        <link rel="shortcut icon" href="/favicon.ico">
+        <link rel="stylesheet" href="{{ static_url('css/bootstrap.min.css') }}">
+        <link rel="stylesheet" href="{{ static_url('css/bootstrap-responsive.min.css') }}">
+        {% block head_styles_fixes %}
+        <link rel="stylesheet" href="{{ static_url('css/bootstrap-fixes.min.css') }}">
+        {% end %}
+        {% block head_styles %}{% end %}
+        <!--[if lt IE 9]><script src="{{ static_url('js/html5.min.js') }}"></script><![endif]-->
+        {% block head_scripts %}{% end %}
+    </head>
+    <body>
+        {% block body %}
+        {% block header %}
+        <div class="header">
+            {% block header_container %}
+            <div class="navbar navbar-fixed-top">
+                <div class="navbar-inner">
+                    <div class="container">
+                        <a class="btn btn-navbar" data-toggle="collapse" data-target=".navbar-inverse-collapse">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </a>
+                        <a class="brand" href="/a">Admin</a>
+                        <div class="nav-collapse collapse navbar-inverse-collapse">
+                            <ul class="js-nav-menu nav">
+                                <li><a href="/a"><i class="icon-home"></i> | Home</a></li>
+                                <li><a href="/a/registers"><i class="icon-list"></i> | Registers</a></li>
+                                <li><a href="/a/events"><i class="icon-star"></i> | Events</a></li>
+                            </ul>
+                            <ul class="js-nav-menu nav pull-right">
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                        <i class="icon-user"></i> | {{ handler.get_user_value('username') }} <b class="caret"></b>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="/auth/logout">Sign out</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% end %}
+        </div>
+        {% end %}
+        {% block content %}
+        <div class="content">
+            {% block content_container %}{% end %}
+        </div>
+        {% end %}
+        {% block footer %}
+        <div class="footer">
+            {% block footer_container %}{% end %}
+        </div>
+        {% end %}
+        {% end %}
+        {% block body_html %}{% end %}
+        {% block body_scripts %}
+        <script src="{{ static_url('js/jquery.min.js') }}"></script>
+        <script src="{{ static_url('js/bootstrap.min.js') }}"></script>
+        <script src="{{ static_url('js/underscore.min.js') }}"></script>
+        <script src="{{ static_url('js/ak.min.js') }}"></script>
+        {% end %}
+        {% block body_script_init %}{% end %}
+    </body>
+</html>

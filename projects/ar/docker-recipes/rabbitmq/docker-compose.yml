@@ -1,0 +1,15 @@
+version: '3.9'
+x-common: &common
+  restart: unless-stopped
+  tty: true
+services:
+  rabbitmq:
+    <<: *common
+    image: rabbitmq:3.9-management
+    ports:
+      - 14500:5672
+      - 14580:15672
+    volumes:
+      - /tmp/docker-recipes/rabbitmq/conf:/etc/rabbitmq:delegated
+      - /tmp/docker-recipes/rabbitmq/data:/var/lib/rabbitmq:delegated
+      - /tmp/docker-recipes/rabbitmq/logs:/var/log/rabbitmq:delegated

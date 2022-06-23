@@ -1,0 +1,128 @@
+#!/bin/sh
+# /etc/rc.d/init.d/supervisord
+#
+# Supervisor is a client/server system that
+# allows its users to monitor and control a
+# number of processes on UNIX-like operating
+# systems.
+#
+# chkconfig:    345 83 04
+#
+# description: supervisor is a process control utility. It has a web based
+#              xmlrpc interface as well as a few other nifty features.
+# processname: supervisord
+# config: /etc/supervisord.conf
+# pidfile: /var/run/supervisord.pid
+
+# service cfg
+NAME=supervisord
+USER=supervisord
+DAEMON=/usr/local/bin/supervisord
+DAEMON_ARGS="-c /etc/supervisord.conf"
+DAEMON_CTL=/usr/local/bin/supervisorctl
+CONFIGFILE=/etc/supervisord.conf
+PIDFILE=/var/run/supervisord.pid
+SOCKFILE=/tmp/supervisord.sock
+LOCKFILE=/var/lock/subsys/supervisord.lock
+PATH=/sbin:/usr/sbin:/bin:/usr/bin
+RETVAL=0
+
+# functions
+. /etc/rc.d/init.d/functions
+
+# actions
+do_start() {
+    [ ! -e $PIDFILE ] || exit 1
+    [ -x $DAEMON ] || exit 5
+
+    echo -n $"$NAME ... Starting "
+    daemon --pidfile "$PIDFILE" $DAEMON $DAEMON_ARGS
+    RETVAL=$?
+    echo
+
+    $DAEMON_CTL -c $CONFIGFILE status
+
+    [ $RETVAL = 0 ] && touch $LOCKFILE
+    return $RETVAL
+
+}
+
+do_stop() {
+    [ -e $PIDFILE ] || exit 1
+    [ -x $DAEMON_CTL ] || exit 5
+
+    $DAEMON_CTL -c $CONFIGFILE stop all
+
+    echo -n $"$NAME ... Stopping "
+    killproc -p $PIDFILE $NAME
+    RETVAL=$?
+    echo
+
+    [ $RETVAL = 0 ] && rm -f $PIDFILE $SOCKFILE $LOCKFILE
+    return $RETVAL
+
+}
+
+do_status() {
+    [ -e $PIDFILE ] || exit 1
+    [ -x $DAEMON_CTL ] || exit 5
+
+    echo $"$NAME ... Get status "
+    $DAEMON_CTL -c $CONFIGFILE status
+    echo
+
+}
+
+do_restart() {
+    [ -e $PIDFILE ] || exit 1
+    [ -x $DAEMON_CTL ] || exit 5
+
+    echo $"$NAME ... Restarting "
+    $DAEMON_CTL -c $CONFIGFILE restart all
+    echo
+
+}
+
+rh_status() {
+    status -p $PIDFILE $NAME
+
+}
+
+rh_status_q() {
+    rh_status >/dev/null 2>&1
+
+}
+
+case "$1" in
+    start)
+        rh_status_q && exit 0
+        do_start
+        ;;
+
+    stop)
+        rh_status_q || exit 0
+        do_stop
+        ;;
+
+    reload)
+        rh_status_q || exit 0
+        do_stop
+        do_start
+        ;;
+
+    status)
+        rh_status_q || exit 0
+        do_status
+        ;;
+
+    restart)
+        rh_status_q || exit 0
+        do_restart
+        ;;
+
+    *)
+        echo $"Usage: $NAME {start|stop|reload|status|restart}"
+        exit 1
+
+esac
+exit $RETVAL

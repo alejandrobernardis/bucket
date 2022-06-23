@@ -1,0 +1,69 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:s="http://jboss.com/products/seam/taglib">
+
+	<f:view locale="#{util.locale}">
+		<head>
+			<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+			<title>Administrator</title>
+			<link rel="stylesheet" href="#{request.contextPath}/web-resources/css/general.css?dumy=#{util.dummy}" type="text/css" />
+		</head>
+		<body>
+			<table width="100%" align="CENTER" cellspacing="0" cellpadding="0" border="0">
+				<tr>
+					<td>
+						<table
+							style="background-image: url('#{request.contextPath}/web-resources/img/back.jpg'); background-position: top"
+							width="100%" align="CENTER" cellspacing="0" cellpadding="0"
+							border="0">
+							<tr>
+								<td style="text-align: left; padding: 10px" width="250">
+									<img
+										src="#{request.contextPath}/web-resources/img/logos/logoaxoChico.png"
+										alt="AXO" width="90" height="44" border="0" hspace="0"
+										vspace="0" />
+
+								</td>
+								<td style="text-align: center; padding: 10px" valign="bottom">
+									<ui:include src="/common/greetings.xhtml" />
+								</td>
+								<td valign="bottom" width="250">
+									<table align="right" cellspacing="0" cellpadding="0" border="0">
+										<tr>
+											<td
+												style="text-align: right; padding: 10px; vertical-align: bottom">
+												<ui:include src="/common/languageBar.xhtml" />
+											</td>
+											<td
+												style="text-align: center; padding: 10px; vertical-align: bottom"
+												align="center">
+												<ui:include src="/common/logOut.xhtml" />
+											</td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<ui:include src="/common/menu.xhtml" />
+					</td>
+				</tr>
+				<tr>
+					<td style="padding: 20px" bgcolor="white">
+						<ui:insert name="workarea" />
+					</td>
+				</tr>
+			</table>
+		</body>
+
+	</f:view>
+</html>

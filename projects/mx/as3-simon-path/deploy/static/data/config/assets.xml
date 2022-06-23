@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+<recordset>
+	<items path="{paths.path.@id:staticSwf}contents/">
+		<item id="1" name="mcFloraBuena" src="flora_intestinal.swf" canvas_x="" canvas_y="" canvas_w="450" canvas_h="350"/>
+		<item id="1" name="mcFloraBuenaAbsrobe" src="digestion.swf" canvas_x="" canvas_y="" canvas_w="450" canvas_h="350"/>
+		<item id="1" name="mcBacteriaBuenaCapa" src="flora_ayuda.swf" canvas_x="" canvas_y="" canvas_w="450" canvas_h="350"/>
+		<item id="1" name="mcBacteriaBuenaCharla" src="flora_ayuda.swf" canvas_x="" canvas_y="" canvas_w="450" canvas_h="350"/>
+		<item id="1" name="mcBacteriaBuenaVuela01" src="probioticos.swf" canvas_x="" canvas_y="" canvas_w="450" canvas_h="350"/>
+		<item id="1" name="mcBacteriaBuenaVuela02" src="probioticos.swf" canvas_x="" canvas_y="" canvas_w="450" canvas_h="350"/>
+		<item id="1" name="mcBacteriaBuenaVuela03" src="probioticos.swf" canvas_x="" canvas_y="" canvas_w="450" canvas_h="350"/>
+		<item id="1" name="mcBacteriasMalas" src="flora_intestinal_enferma.swf" canvas_x="" canvas_y="" canvas_w="450" canvas_h="350"/>
+		<item id="1" name="mcComidaBuena01" src="dieta_balanceada.swf" canvas_x="" canvas_y="" canvas_w="450" canvas_h="350"/>
+		<item id="1" name="mcComidaBuena02" src="dieta_balanceada.swf" canvas_x="" canvas_y="" canvas_w="450" canvas_h="350"/>
+		<item id="1" name="mcComidaBuena03" src="dieta_balanceada.swf" canvas_x="" canvas_y="" canvas_w="450" canvas_h="350"/>
+		<item id="1" name="mcFlujo01" src="transito.swf" canvas_x="" canvas_y="" canvas_w="450" canvas_h="350"/>
+		<item id="1" name="mcFlujo02" src="transito.swf" canvas_x="" canvas_y="" canvas_w="450" canvas_h="350"/>
+		<item id="1" name="mcFloraMala" src="flora_intestinal_enferma.swf" canvas_x="" canvas_y="" canvas_w="450" canvas_h="350"/>
+		<item id="1" name="mcComidaMala01" src="dieta_balanceada.swf" canvas_x="" canvas_y="" canvas_w="450" canvas_h="350"/>
+		<item id="1" name="mcpelea" src="flora_ayuda.swf" canvas_x="" canvas_y="" canvas_w="450" canvas_h="350"/>
+	</items>
+</recordset>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

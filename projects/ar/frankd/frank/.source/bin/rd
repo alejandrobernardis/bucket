@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+set -e
+
+cmd=${BASH_SOURCE[0]}
+[ ! -h "${cmd}" ] || cmd=$(readlink ${cmd})
+
+pth=$(dirname -- ${cmd}})
+for x in '00/00_environ.sh' '00/49_common.sh' 'help.sh'; do
+  source "${pth}/../script/${x}"
+done
+
+read -p "${YELLOW} ! Remove all services... [yes/NO]:${RESET} " remove_srv
+[[ "${remove_srv^^}" =~ ^[Y]ES?$ ]] || exit 0
+
+for x in service config secret; do
+  echo -en " * ${BLUE}${x}${RESET}... "
+  v=$(dkr ${x} ls -q)
+  [ -z "${v}" ] || dkr ${x} rm ${v} >/dev/null
+  echo "${GREEN} Done.${RESET}"
+done

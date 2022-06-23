@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html 
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a="http://richfaces.org/a4j"
+	xmlns:s="http://jboss.com/products/seam/taglib">
+
+	<f:view locale="es">
+		<head>
+			<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+			<title>Administrator</title>
+			<link rel="stylesheet" href="#{request.contextPath}/web-resources/css/general.css?dumy=#{util.dummy}" type="text/css" />
+		</head>
+		<body bgcolor="black">
+		
+			<table style="width: 600px; height: 350px" class="certerScreen" cellspacing="0" cellpadding="0" border="0">
+				<tr >
+					<td  style="text-align: center; padding: 10px;background-image: url('#{request.contextPath}/web-resources/img/back.jpg');background-position: top;" class="login_up" >
+						<img src="#{request.contextPath}/web-resources/img/logos/logoaxoGde.png" alt="AXO"  border="0" hspace="0" vspace="0" />
+					</td>
+				</tr>
+				<tr >
+					<td height="98" style="text-align: center; padding: 10px; background-color: white;"  class="login_down" >
+						<ui:insert name="workarea" />
+					</td>
+				</tr>
+			</table>
+		
+		</body>
+	</f:view>
+</html>

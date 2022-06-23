@@ -1,0 +1,8 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource>
+    <file>assets/table_new.png</file>
+    <file>assets/table_open.png</file>
+    <file>assets/table_save.png</file>
+    <file>assets/run.png</file>
+</qresource>
+</RCC>

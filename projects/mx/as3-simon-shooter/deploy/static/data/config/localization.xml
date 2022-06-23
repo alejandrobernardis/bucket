@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<recordset>      
+	
+	<!-- LabelTest x="" y="">
+		<label 
+			x="" 
+			y="" 
+			alpha="" 
+			selectable="false" 
+			tabIndex=""
+			tabEnabled=""
+			wordWrap="true"
+			multiline="true"
+			color=""
+			align=""
+			size=""
+			background=""
+			backgroundColor=""
+			border=""
+			borderColor=""
+			case="upper|lower">
+			<![CDATA[abcdefghijklmnopqrstuvwxyz1234567890¿?¡!@#$%^&*()_+}{|":?`-="[]\';./,<br/>ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÑÒÓÔÕÖÙÚÛÜàáâãäåæçèéêëíìîïñòóôõöùúûüýÿ]]>
+		</label>
+	</LabelTest -->   
+		
+	<!-- HEADER -->
+	
+	<lbHeaderBarTwoExit>
+		<label><![CDATA[Salir]]></label>
+	</lbHeaderBarTwoExit>		
+	<lbHeaderBarTwoInstructions>
+		<label><![CDATA[Instrucciones]]></label>
+	</lbHeaderBarTwoInstructions>	
+	<lbHeaderBarTwoTime>
+		<label><![CDATA[{1}:{2}]]></label>
+	</lbHeaderBarTwoTime>	
+	<lbHeaderBarTwoScore>
+		<label><![CDATA[x@ddd@]]></label>
+		<replace id="@ddd@">score_value</replace>
+	</lbHeaderBarTwoScore>	
+	<lbHeaderBarThreeExit>
+		<label><![CDATA[Salir]]></label>
+	</lbHeaderBarThreeExit>	
+	<lbHeaderBarFourExit>
+		<label><![CDATA[Salir]]></label>
+	</lbHeaderBarFourExit>
+	<lbHeaderBarFourPlayAgain>
+		<label><![CDATA[Volvé a jugar]]></label>
+	</lbHeaderBarFourPlayAgain>
+	
+	<lbHeaderBarBacterias>
+		<label><![CDATA[Bacterias]]></label>
+	</lbHeaderBarBacterias>
+	
+	<!-- GHOME -->
+	
+	<lbGHomePlayTheGame>
+		<label><![CDATA[COMENZAR A JUGAR]]></label>     
+	</lbGHomePlayTheGame>
+	<lbGHomeInstructions>
+		<label><![CDATA[INSTRUCCIONES]]></label>      
+	</lbGHomeInstructions>	
+	<lbGHomeTitle1>
+		<label><![CDATA[Ayuda a equilibrar<br/>la flora intestinal.]]></label>
+	</lbGHomeTitle1>	
+	<lbGHomeTitle2>
+		<label><![CDATA[]]></label>
+	</lbGHomeTitle2>
+	<lbGHomeViewMap>
+		<label><![CDATA[]]></label>
+	</lbGHomeViewMap>
+	
+	<!-- GInstructions -->
+	
+	<lbGInstructionsPlay>
+		<label><![CDATA[JUGAR]]></label> 
+	</lbGInstructionsPlay>
+	<lbGInstructionsNext>
+		<label><![CDATA[SIGUIENTE]]></label> 
+	</lbGInstructionsNext>
+	<lbGInstructionsPrev>
+		<label><![CDATA[ANTERIOR]]></label> 
+	</lbGInstructionsPrev>	
+	<lbGInstructionsS1Title>
+		<label><![CDATA[INSTRUCCIONES]]></label> 
+	</lbGInstructionsS1Title>	
+	<lbGInstructionsS1P1>
+		<title><![CDATA[EL OBJETIVO:]]></title> 
+		<detail><![CDATA[Desactivar la mayor cantidad de bombas de protones que despiden ácido<br/>en el estómago, en el menor tiempo posible, para lograr la paz en tu estómago.]]></detail> 
+	</lbGInstructionsS1P1>	
+	<lbGInstructionsS1P2>
+		<title><![CDATA[Aziatop:]]></title> 
+		<detail><![CDATA[Cierra las bombas que están abiertas despidiendo ácido.]]></detail> 
+	</lbGInstructionsS1P2>	
+	<lbGInstructionsS1P3>
+		<title><![CDATA[Bombas de protones abiertas:]]></title> 
+		<detail><![CDATA[Desactivarlas equivale a 1 punto (para desactivarlas deberás hacer click sobre las bombas).]]></detail> 
+	</lbGInstructionsS1P3>	
+	<lbGInstructionsS1P4>
+		<title><![CDATA[Ácido:]]></title> 
+		<detail><![CDATA[Causante de la acidez frecuente despedido por las bombas abiertas.]]></detail> 
+	</lbGInstructionsS1P4>	
+	<lbGInstructionsS1P5>
+		<title><![CDATA[Amenazas:]]></title> 
+		<detail><![CDATA[Si clickeás sobre los íconos de las<br/>amenazas, restás 2 puntos.]]></detail> 
+	</lbGInstructionsS1P5>	
+	<lbGInstructionsS2P1>
+		<title><![CDATA[Aliados:]]></title> 
+		<detail><![CDATA[Si clickeás sobre los íconos de los aliados, neutralizás las bombas<br/>que en ese momento estén abiertas.]]></detail>
+	</lbGInstructionsS2P1>	
+	<lbGInstructionsS2P2>
+		<title><![CDATA[Barra de síntomas:]]></title> 
+		<detail1><![CDATA[Cuantas menos bombas desactives, más síntomas aparecerán.]]></detail1> 
+		<detail2><![CDATA[1- Regurgitación ácida.<br/>2- Sensación de ardor y quemazón.<br/>3- Dolor en la boca del estómago.]]></detail2> 
+	</lbGInstructionsS2P2>	
+	
+	<!-- GContainer -->
+	
+	<lbGameInstructions>
+		<label><![CDATA[INSTRUCCIONES]]></label>      
+	</lbGameInstructions>
+	<lbGameExit>
+		<label><![CDATA[SALIR]]></label>
+	</lbGameExit>
+	
+	<!-- GOver -->
+	
+	<lbGOverScoreRegiste>
+		<label><![CDATA[Salir]]></label>      
+	</lbGOverScoreRegiste>
+	<lbGOverPlayAgain>
+		<label><![CDATA[Volver a jugar]]></label>      
+	</lbGOverPlayAgain>
+	<lbGOverTitle>
+		<label><![CDATA[ELIMINASTE]]></label>
+	</lbGOverTitle>	
+	<lbGOverScore>
+		<label><![CDATA[@score@ bacterias malas]]></label>
+		<replace id="@score@">score_value</replace> <!-- DATALAYER -->
+	</lbGOverScore>
+	
+	<!-- GExit -->
+	
+	<lbGExitQuestion>
+		<label><![CDATA[¿Deseas abandonar<br/>el juego?]]></label>      
+	</lbGExitQuestion>		
+	<lbGExitYes>
+		<label size="17.5" y="-4"><![CDATA[SI]]></label>      
+	</lbGExitYes>	
+	<lbGExitNo>
+		<label size="17.5" y="-4"><![CDATA[NO]]></label>      
+	</lbGExitNo>
+	
+	<!-- GScoreRegiste -->
+	
+	<lbGScoreRegisteTitle>
+		<label><![CDATA[INGRESÁ TU NOMBRE]]></label>
+	</lbGScoreRegisteTitle>	
+	<lbGScoreRegisteSend>
+		<label><![CDATA[Ingresar]]></label>
+	</lbGScoreRegisteSend>
+	<lbGScoreRegisteError>
+		<label><![CDATA[]]></label>
+		<validateName><![CDATA[Completá tu nombre.]]></validateName>
+		<sending><![CDATA[Tu puntaje está siendo enviado, aguardá un instante.]]></sending>
+		<success><![CDATA[Tu puntaje fue recibido exitosamente.]]></success>
+		<error1><![CDATA[Tu puntaje no pudo ser enviado, volvé a intentar.]]></error1>
+		<error2><![CDATA[El servidor no responde, volvé a intentar más tarde.]]></error2>
+		<uncontrolledError><![CDATA[Error no controlado.]]></uncontrolledError>
+	</lbGScoreRegisteError>
+	
+	<!-- GRanking -->
+	
+	<lbGRankingTitle>
+		<label><![CDATA[RANKING]]></label>
+	</lbGRankingTitle>
+	<lbGRankingSocialNetworkTitle>
+		<label><![CDATA[Publicá el resultado en tus redes sociales.]]></label>
+	</lbGRankingSocialNetworkTitle>	
+	<lbGRankingFacebookShare>
+		<label><![CDATA[COMPARTIR]]></label>
+	</lbGRankingFacebookShare>	
+	<lbGRankingFacebookWall>
+		<label><![CDATA[PUBLICÁ TU<br/>RESULTADO]]></label>
+	</lbGRankingFacebookWall>	
+	<lbGRankingLoading>
+		<label><![CDATA[Cargando Datos...]]></label>
+		<error1><![CDATA[Los datos no se encuentran disponibles.]]></error1>
+		<uncontrolledError><![CDATA[Error no controlado.]]></uncontrolledError>
+	</lbGRankingLoading>
+	<lbGRankingCell offset="-5">
+		<name><![CDATA[{1}]]></name>
+		<position><![CDATA[{1} -]]></position>
+		<score><![CDATA[ x {1}]]></score>
+	</lbGRankingCell>
+	
+</recordset>

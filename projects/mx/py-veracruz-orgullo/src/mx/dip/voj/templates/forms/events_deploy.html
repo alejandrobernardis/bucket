@@ -1,0 +1,34 @@
+<form id="js-form-deploy" class="form-horizontal" action="javascript:void();">
+    <fieldset>
+        {% raw xsrf_form_html() %}
+        <div class="control-group">
+            <label class="control-label" for="date_year">Año</label>
+            <div class="controls">
+                <input type="text" class="input-mini" id="date_year_select" name="date_year_select" placeholder="Actual">
+                <span class="help-inline">Ej: 1980, 1990, 2000</span>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="date_month_select">Mes</label>
+            <div class="controls">
+                <select id="date_month_select" name="date_month_select" class="input-block-level">
+                    <option value="0">Todos</option>
+                    <option value="1">Enero</option>
+                    <option value="2">Febrero</option>
+                    <option value="3">Marzo</option>
+                    <option value="4">Abril</option>
+                    <option value="5">Mayo</option>
+                    <option value="6">Junio</option>
+                    <option value="7">Julio</option>
+                    <option value="8">Agosto</option>
+                    <option value="9">Septiembre</option>
+                    <option value="10">Octubre</option>
+                    <option value="11">Noviembre</option>
+                    <option value="12">Diciembre</option>
+                </select>
+            </div>
+        </div>
+    </fieldset>
+</form>
+
+

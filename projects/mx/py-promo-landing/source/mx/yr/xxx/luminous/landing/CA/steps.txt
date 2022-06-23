@@ -1,0 +1,27 @@
+
+# KEY's
+eyJzdGF0dXMiOiB0cnVlLCAidXNlciI6IHsidXNlcm5hbWUiOiAic3lzYWRtaW4iLCAiZmlyc3R
+fbmFtZSI6ICJBbGVqYW5kcm8iLCAibGFzdF9uYW1lIjogIkJlcm5hcmRpcyIsICJtaWRkbGVfbm
+FtZSI6ICJNIiwgImVuYWJsZWQiOiB0cnVlLCAiZW1haWwiOiAiYWxlamFuZHJvLmJlcm5hcmRpc
+0BnbWFpbC5jb20iLCAicm9sZV9uYW1lIjogImFkbWluIiwgImxhc3RfbG9naW4iOiAiMjAxMi8w
+My8xNSAxNDoyNzoyOCIsICJyb2xlIjogNDI5NTAzMjgzMywgImlkIjogIjRmNjE0YzIxOTYwMTQ
+
+# 0
+mkdir -p -m 0755 local/private local/certs local/newcerts local/crl; touch local/openssl.my.cnf; touch local/openssl.cnf; touch local/index.txt; echo '01' > local/serial;
+
+# 1
+openssl req -config openssl.cnf -new -x509 -extensions v3_ca -keyout private/local_ca.key -out certs/local_ca.crt -days 1825
+
+# 2
+openssl req -config openssl.my.cnf -new -nodes -keyout private/server.key -out server.csr -days 365
+
+# 3
+openssl ca -config openssl.my.cnf -policy policy_anything -out certs/server.crt -infiles server.csr
+
+# 4
+openssl x509 -subject -issuer -enddate -noout -in certs/server.crt
+
+# 5
+openssl x509 -in certs/server.crt -noout -text
+
+

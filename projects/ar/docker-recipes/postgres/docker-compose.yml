@@ -1,0 +1,16 @@
+version: '3.9'
+x-common: &common
+  restart: unless-stopped
+  tty: true
+services:
+  postgres:
+    <<: *common
+    image: postgres:14.1-bullseye
+    environment:
+      POSTGRES_DB: ${POSTGRES_DATABASE}
+      POSTGRES_USER: ${POSTGRES_USERNAME}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - 14400:5432
+    volumes:
+      - /tmp/docker-recipes/postgres:/var/lib/postgresql/data:delegated

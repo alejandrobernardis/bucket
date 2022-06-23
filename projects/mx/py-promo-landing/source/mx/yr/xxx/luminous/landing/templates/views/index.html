@@ -1,0 +1,262 @@
+{% extends "../master.html" %}
+{% block head_script_extra %}
+<link rel="stylesheet" href="{{ static_url('css/redmond/jquery-ui.css') }}" type="text/css"/>
+<script type="text/javascript" src="{{ static_url('js/jquery-ui.js') }}"></script>
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+{% end %}
+{% block body_content %}
+<div class="container container-body">
+	<!--  -->
+	<div class="home-section-1 span12">	
+		<div class="span6">
+			<h2>Con los productos xxx<br>Luminous White gana un viaje<br>a Europa todo pagado.</h2>
+			<p>xxx Luminous White te puede llevar a una de las tres ciudades m&aacute;s importantes de la moda en Europa.</p>
+			<p>1.- Registrando los c&oacute;digos de los accesorios y flyers que estaremos regalando.</p>
+			<p>2.- Registrando tu ticket de compra de nuestros productos xxx Luminous White.</p>
+			<p>3.- Acumulando puntos extra, al participar en nuestro juego.</p>
+			<p>4.- Si logras ser la persona que obtenga m&aacute;s puntos al final de la promoci&oacute;n, podr&aacute;s disfrutar este viaje con un acompa&ntilde;ante todo pagado.</p>
+			<p>Sonr&iacute;ele a tu pr&oacute;ximo viaje con xxx Luminous White.</p>
+			<br>
+			<p><a href="/terms">Consulta las bases completas.</a></p>
+		</div>
+	</div>
+	<!--  -->
+	<div class="home-section-2 span12">
+		<div class="title-section span12">
+			<h2>Eventos</h2>
+			<p>Encuentra los horarios y lugares en donde se estar&aacute;n regalando los accesorios con los c&oacute;digos xxx Luminous White.</p>
+		</div>
+		<div class="row">
+			<div class="span3">
+				<div class="home-section-2-datepicker-calendar" id="datepicker">
+					&nbsp;
+				</div>
+				<div class="home-section-2-datepicker-detail">
+					&nbsp;
+				</div>
+			</div>
+			<div class="map-canvas-container span9">
+				<div id="map_canvas"></div>
+			</div>
+		</div>
+	</div>
+	<!--  -->
+	<div class="home-section-3 span12">
+		<div class="title-section span12">
+			<h2>Registra tus puntos</h2>
+			<p>Registra el ticket de compra de cualquier producto xxx Luminous White o los c&oacute;digos que encuentres en los accesorios y flyers que estaremos regalando en distintos lugares de la ciudad para acumular la mayor cantidad de puntos.</p>
+		</div>
+		<form class="module span11" action="javascript:void();" method="post">
+			<table>
+				<tr>
+					<td width="470px" align="center">
+						<label>
+							<table>
+								<tr align="center">
+									<td>
+										<a href="/redeem/tickets">
+											<img src="{{ static_url('img/template/home-section-3-type-product.jpg') }}" alt="">
+										</a>
+									</td>
+								<tr>
+								<tr align="center"><td><input type="radio" name="redeem-type" id="type1" value="1"></td><tr>
+								<tr align="center"><td>Registra tus Productos</td><tr>
+							</table>
+						</label>
+					</td>
+					<td width="470px" align="center">
+						<label>
+							<table>
+								<tr align="center">
+									<td>
+										<a href="/redeem/codes">
+											<img src="{{ static_url('img/template/home-section-3-type-accesory.jpg') }}" alt="">
+										</a>
+									</td>
+								<tr>
+								<tr align="center"><td><input type="radio" name="redeem-type" id="type2" value="2"></td><tr>
+								<tr align="center"><td>Accesorios y Flyers</td><tr>
+							</table>
+						</label>
+					</td>
+				</tr>
+			</table>
+		</form>
+		<!-- div class="home-section-3-action">
+			<a href="javascript: void();" class="btn btn-large pull-right" >Siguiente</a>
+			<br class="clearfix">
+		</div -->
+	</div>
+	<!--  -->
+	<div class="home-section-4 span12">
+		<div class="title-section span12">
+			<h2>&iquest;Necesitas m&aacute;s puntos?</h2>
+			<p>Juega, divi&eacute;rtete, acumula puntos extra aqu&iacute; y sonr&iacute;e a tu pr&oacute;ximo viaje. &iquest;Crees lograrlo?</p>
+		</div>
+		<a href="/game">
+			<span class="home-section-4-iphone span12">&nbsp;</span>
+		</a>
+	</div>
+	<!--  -->
+</div>
+<script type="text/javascript">
+	$(document).ready(function(){
+		
+		var pin_1200_1900 = new google.maps.MarkerImage(
+			"{{ static_url('img/template/pin-1200_1900.png') }}",
+			new google.maps.Size(100, 85),
+			new google.maps.Point(0, 0),
+			new google.maps.Point(0, 80)
+		);
+		
+		var pin_1300_1700 = new google.maps.MarkerImage(
+			"{{ static_url('img/template/pin-1300_1700.png') }}",
+			new google.maps.Size(100, 85),
+			new google.maps.Point(0, 0),
+			new google.maps.Point(0, 80)
+		);
+		
+		var pin_1300_1900 = new google.maps.MarkerImage(
+			"{{ static_url('img/template/pin-1300_1900.png') }}",
+			new google.maps.Size(100, 85),
+			new google.maps.Point(0, 0),
+			new google.maps.Point(0, 80)
+		);
+		
+		var list_locations = [
+			['Parque MŽxico', new google.maps.LatLng(19.411868,-99.16882), pin_1300_1700],
+			['Parque Espa–a', new google.maps.LatLng(19.415136,-99.171889), pin_1300_1700],
+			['Chedraui Polanco', new google.maps.LatLng(19.440357,-99.206627), pin_1200_1900],
+			['Parque de los Venados', new google.maps.LatLng(19.414914,-99.171567), pin_1300_1700],
+			['Plaza San Jacinto', new google.maps.LatLng(19.344675,-99.192338), pin_1300_1700],
+			['Centro Comercial Perisur', new google.maps.LatLng(19.304051,-99.190112), pin_1300_1900]
+		];
+		
+		var myOptions = { 
+			zoom:12, 
+			center: new google.maps.LatLng(19.420135,-99.187617), 
+			mapTypeId: google.maps.MapTypeId.ROADMAP,
+			panControl: true,
+			zoomControl: true,
+			mapTypeControl: false,
+			scaleControl: false,
+			streetViewControl: true,
+			overviewMapControl: true
+	    }; 
+		
+		map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+	    
+		var marker_list = [];
+		
+		function set_points(value, center){
+			if(marker_list){
+				while(marker_list.length){
+					var marker = marker_list.pop();
+					marker.setMap(null);
+				}	
+			}
+			
+			marker_list = [];
+			
+			for(var a=0; a<value.length; a++){
+				var marker = new google.maps.Marker({
+					position: value[a][1], 
+					map: map,
+					icon: value[a][2],
+				}); marker_list.push(marker);
+			} 
+			
+			if(center){
+				map.setCenter(center);
+			}
+			
+			map.setZoom(12);
+			
+		}
+		
+		var dates = new Array({
+    		date: new Date(2012,04,28),
+    		list: [list_locations[0], list_locations[1], list_locations[2]],
+    		position: new google.maps.LatLng(19.420135,-99.187617),
+    		content: "<h3>28 Abril, 13:00 a 17:00 hrs</h3><ul><li>Parque M&eacute;xico Av. M&eacute;xico y Av. Michoac&aacute;n Col. Condesa C.P.06000 M&eacute;xico D.F.</li><li>Parque Espa&ntilde;a Av. Sonora s/n  Condesa, Cuauht&eacute;moc, C.P.06140 M&eacute;xico, D.F.</li><li>ALTERNATIVOS: Zona de Restaurantes  Condesa  Av.Michoacan  y Parral, Tamaulipas, Oaxaca, Cuernavaca. Col.Condesa, C.P 06000 M&eacute;xico, D.F.</li></ul><h3>28 Abril, 12:00 a 19:00 hrs</h3><ul><li>Chedraui Polanco Miguel de Cervantes 397 Irrigaci&oacute;n, Miguel Hidalgo, C.P. 11000, M&eacute;xico, D.F.</li></ul>"
+		},{
+    		date: new Date(2012,04,29),
+    		list: [list_locations[0], list_locations[1], list_locations[2]],
+    		position: new google.maps.LatLng(19.420135,-99.187617),
+    		content: "<h3>29 Abril, 13:00 a 17:00 hrs</h3><ul><li>Parque M&eacute;xico Av. M&eacute;xico y Av. Michoac&aacute;n Col. Condesa C.P.06000 M&eacute;xico D.F.</li><li>Parque Espa&ntilde;a Av. Sonora s/n  Condesa, Cuauht&eacute;moc, C.P.06140 M&eacute;xico, D.F.</li><li>ALTERNATIVOS: Zona de Restaurantes  Condesa  Av.Michoacan  y Parral, Tamaulipas, Oaxaca, Cuernavaca. Col.Condesa, C.P 06000 M&eacute;xico, D.F.</li></ul><h3>29 Abril, 12:00 a 19:00 hrs</h3><ul><li>Chedraui Polanco Miguel de Cervantes 397 Irrigaci&oacute;n, Miguel Hidalgo, C.P. 11000, M&eacute;xico, D.F.</li></ul>"
+		},{
+    		date: new Date(2012,05,5),
+    		list: [list_locations[3], list_locations[4]],
+    		position: new google.maps.LatLng(19.394914,-99.171567),
+    		content: "<h3>5 de Mayo, 13:00 a 17:00 hrs</h3><ul><li>Parque San Jacinto, Miram&oacute;n S/N, Col. San Angel. CP. 01000, Delegaci&oacute;n Alvaro Obreg&oacute;n, (enfrente del restaurante La Camelia de San Angel)</li><li>Alterno: Zona de restaurantes de la Condesa.</li></ul>"
+    	},{
+    		date: new Date(2012,05,6),
+    		list: [list_locations[3], list_locations[4]],
+    		position: new google.maps.LatLng(19.394914,-99.171567),
+    		content: "<h3>6 de Mayo, 13:00 a 17:00 hrs</h3><ul><li>Zona de restaurantes de la Condesa</li><li>Alterno: Parque Espa&ntilde;a</li></ul>"
+    	},{
+    		date: new Date(2012,05,19),
+    		list: [list_locations[4]],
+    		position: new google.maps.LatLng(19.394914,-99.171567),
+    		content: "<h3>19 de Mayo, 13:00 a 19:00 hrs</h3><ul><li>Parque San Jacinto, Miram&oacute;n S/N, Col. San Angel. CP. 01000, Delegaci&oacute;n Alvaro Obreg&oacute;n, (enfrente del restaurante La Camelia de San Angel)</li></ul>"
+    	},{
+    		date: new Date(2012,05,20),
+    		list: [list_locations[0]],
+    		position: new google.maps.LatLng(19.420135,-99.187617),
+    		content: "<h3>20 Abril, 11:00 a 17:00 hrs</h3><ul><li>Parque M&eacute;xico Av. M&eacute;xico y Av. Michoac&aacute;n Col. Condesa C.P.06000 M&eacute;xico D.F.</li></ul>"
+		},{
+    		date: new Date(2012,05,26),
+    		list: [list_locations[5]],
+    		position: new google.maps.LatLng(19.304051,-99.190112),
+    		content: "<h3>26 de Mayo, 13:00 a 19:00 hrs</h3><ul><li>Centro Comercial Perisur Anillo Perif&eacute;rico Boulevard Adolfo L&oacute;pez Mateos 4690, Coyoac&aacute;n, Distrito Federal, M&eacute;xico</li></ul>"
+    	},{
+    		date: new Date(2012,05,27),
+    		list: [list_locations[5]],
+    		position: new google.maps.LatLng(19.304051,-99.190112),
+    		content: "<h3>27 de Mayo, 13:00 a 19:00 hrs</h3><ul><li>Centro Comercial Perisur Anillo Perif&eacute;rico Boulevard Adolfo L&oacute;pez Mateos 4690, Coyoac&aacute;n, Distrito Federal, M&eacute;xico</li></ul>"
+    	});
+		
+	    $("#datepicker").datepicker({
+			dateFormat: "@",
+			onSelect: function(dateText, inst){
+				var _date = null;
+				for(var a=0; a<dates.length; a++){
+					_date = dates[a]; 
+					if(_date.date.getDate() == inst.currentDay 
+						&& (_date.date.getMonth()-1) == inst.currentMonth 
+						&&  _date.date.getFullYear() == inst.currentYear){
+						var ref = $(".home-section-2-datepicker-detail");
+						ref.empty();
+						ref.append(_date.content);
+						set_points(_date.list, _date.position);
+					}
+				}
+			},
+			beforeShowDay: function(date){
+				for(var a=0; a<dates.length; a++){
+					if(date.getMonth() == (dates[a].date.getMonth()-1)
+						&& date.getDate() == (dates[a].date.getDate())
+						&& date.getFullYear() == (dates[a].date.getFullYear())){
+						return [true, "", "Event Name"];
+					}
+				}
+				return [false, ""];
+			}
+		});
+	    
+	    var url = $.url().attr('fragment');
+	    
+	    if(url.match(/^\/events/ig)){
+	    	$("html, body").animate({scrollTop:620}, 400);	
+	    } 
+	    
+	    $('input[name=redeem-type]:radio').change(function(e){
+			var url;
+			switch($(this).attr('value')){
+				case '1': url = '/redeem/tickets'; break;
+				case '2': url = '/redeem/codes'; break;
+			} if(url) window.location.href = url;
+		});
+	});
+</script>
+{% end %}

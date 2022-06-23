@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+<recordset>
+	<assets sex="female" path="{paths.path.@id:imgAssets}female/">
+		<items category="accessory_hair" key="AVATAR_ACCESSORY_HAIR" x="20" y="160">
+			<item id="20110726021921784331" src="mujer_accesorios_01.png" x="129" y="12" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110726021921784460" src="mujer_accesorios_02.png" x="129" y="12" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110726021921784509" src="mujer_accesorios_03.png" x="129" y="12" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110726021921784554" src="mujer_accesorios_04.png" x="129" y="12" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110726021921784598" src="mujer_accesorios_05.png" x="12" y="-9" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110726021921784642" src="mujer_accesorios_06.png" x="12" y="-9" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110726021921784685" src="mujer_accesorios_07.png" x="12" y="-9" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110726021921784729" src="mujer_accesorios_08.png" x="12" y="-9" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110726021921784947" src="mujer_accesorios_13.png" x="14.05" y="57.5" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110726021921784990" src="mujer_accesorios_14.png" x="14" y="62" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110726021921785077" src="mujer_accesorios_16.png" x="12" y="-48" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110726021921785124" src="mujer_accesorios_17.png" x="12" y="-48" w="" h="" mask="" mask_x="" mask_y=""/>
+		</items>
+		<items category="accessory_body" key="AVATAR_ACCESSORY_BODY" x="20" y="270">
+			<item id="20110726021921785034" src="mujer_accesorios_15.png" x="37.5" y="169" w="" h="" mask="vtMaskUpMochila" mask_x="37" mask_y="169"/>
+			<item id="20110726021921784772" src="mujer_accesorios_09.png" x="95" y="186" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110726021921784816" src="mujer_accesorios_10.png" x="95" y="186" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110726021921784859" src="mujer_accesorios_11.png" x="95" y="186" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110726021921784903" src="mujer_accesorios_12.png" x="95" y="186" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110805095255615847" src="mujer_accesorios_18.png" x="84" y="238" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110805095255615971" src="mujer_accesorios_20.png" x="84" y="256" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110805095255616006" src="mujer_accesorios_21.png" x="84" y="256" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110805095255616041" src="mujer_accesorios_22.png" x="84" y="256" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110805095255616076" src="mujer_accesorios_23.png" x="40" y="201" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110805095255616110" src="mujer_accesorios_24.png" x="100" y="288" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110805095255616144" src="mujer_accesorios_25.png" x="115" y="272" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110805095255616178" src="mujer_accesorios_26.png" x="101" y="261" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110805095255616213" src="mujer_accesorios_27.png" x="92" y="263" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110805095255616247" src="mujer_accesorios_28.png" x="72" y="247" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110805095255616281" src="mujer_accesorios_29.png" x="40" y="200" w="" h="" mask="" mask_x="" mask_y=""/>
+            <item id="20110808200855616281" src="mujer_accesorios_30.png" x="-5.5" y="212" w="" h="" mask="" mask_x="" mask_y=""/>
+		</items>
+		<items category="accessory_foot" key="AVATAR_ACCESSORY_FOOT" x="20" y="380">
+			<item id="20110805095255615934" src="mujer_accesorios_19.png" x="124" y="317" w="" h="" mask="" mask_x="" mask_y=""/>
+		</items>
+		<items category="hair" key="AVATAR_HAIR" x="20" y="160">
+			<item id="20110726021921786126" src="mujer_pelo_01_cafe.png" x="0" y="-13" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110726021921786170" src="mujer_pelo_01_claro.png" x="0" y="-13" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110726021921786209" src="mujer_pelo_01_negro.png" x="0" y="-13" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110726021921786248" src="mujer_pelo_01_rojo.png" x="0" y="-13" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110726021921786287" src="mujer_pelo_01_rubio.png" x="0" y="-13" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110726021921786331" src="mujer_pelo_02_cafe.png" x="8" y="-30" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110726021921786370" src="mujer_pelo_02_claro.png" x="8" y="-30" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110726021921786409" src="mujer_pelo_02_negro.png" x="8" y="-30" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110726021921786447" src="mujer_pelo_02_rojo.png" x="8" y="-30" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110726021921786486" src="mujer_pelo_02_rubio.png" x="8" y="-30" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110726021921786525" src="mujer_pelo_03_cafe.png" x="-60" y="-28" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110726021921786568" src="mujer_pelo_03_claro.png" x="-60" y="-28" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110726021921786607" src="mujer_pelo_03_negro.png" x="-60" y="-28" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110726021921786646" src="mujer_pelo_03_rojo.png" x="-60" y="-28" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110726021921786685" src="mujer_pelo_03_rubio.png" x="-60" y="-28" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110726021921786724" src="mujer_pelo_04_cafe.png" x="-3" y="-14" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110726021921786763" src="mujer_pelo_04_claro.png" x="-3" y="-14" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110726021921786802" src="mujer_pelo_04_negro.png" x="-3" y="-14" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110726021921786841" src="mujer_pelo_04_rojo.png" x="-3" y="-14" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110726021921786880" src="mujer_pelo_04_rubio.png" x="-3" y="-14" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110726021921786919" src="mujer_pelo_05_cafe.png" x="-3" y="-29" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110726021921786958" src="mujer_pelo_05_claro.png" x="-3" y="-29" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110726021921786997" src="mujer_pelo_05_negro.png" x="-3" y="-29" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110726021921787036" src="mujer_pelo_05_rojo.png" x="-3" y="-29" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110726021921787075" src="mujer_pelo_05_rubio.png" x="-3" y="-29" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110726021921787114" src="mujer_pelo_06_cafe.png" x="-6" y="-15" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110726021921787153" src="mujer_pelo_06_claro.png" x="-6" y="-15" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110726021921787192" src="mujer_pelo_06_negro.png" x="-6" y="-15" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110726021921787231" src="mujer_pelo_06_rojo.png" x="-6" y="-15" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110726021921787270" src="mujer_pelo_06_rubio.png" x="-6" y="-15" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110726021921787309" src="mujer_pelo_07_cafe.png" x="-9" y="-39" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110726021921787348" src="mujer_pelo_07_claro.png" x="-9" y="-39" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110726021921787387" src="mujer_pelo_07_negro.png" x="-9" y="-39" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110726021921787426" src="mujer_pelo_07_rojo.png" x="-9" y="-39" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110726021921787465" src="mujer_pelo_07_rubio.png" x="-9" y="-39" w="" h="" mask="" mask_x="" mask_y=""/>
+		</items>
+		<items category="tshirt" key="AVATAR_TSHIRT" x="20" y="270">
+			<item id="20110726021921787504" src="mujer_remera_01.png" x="15" y="172" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110726021921787543" src="mujer_remera_02.png" x="15" y="172" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110726021921787582" src="mujer_remera_03.png" x="15" y="172" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110726021921787621" src="mujer_remera_04.png" x="15" y="172" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110726021921787659" src="mujer_remera_05.png" x="15" y="172" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110726021921787698" src="mujer_remera_06.png" x="15" y="172" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110726021921787738" src="mujer_remera_07.png" x="15" y="172" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110726021921787777" src="mujer_remera_08.png" x="15" y="172" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110726021921787816" src="mujer_remera_09.png" x="15" y="172" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110726021921787854" src="mujer_remera_10.png" x="15" y="172" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110726021921787894" src="mujer_remera_11.png" x="15" y="172" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110726021921787932" src="mujer_remera_12.png" x="15" y="172" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110726021921787971" src="mujer_remera_13.png" x="15" y="172" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110726021921788011" src="mujer_remera_14.png" x="15" y="172" w="" h="" mask="" mask_x="" mask_y=""/>
+		</items>
+		<items category="pants" key="AVATAR_PANTS" x="20" y="380">
+			<item id="20110726021921785169" src="mujer_falda_01.png" x="42.85" y="299.5" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110726021921785328" src="mujer_falda_02.png" x="42.85" y="299.5" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110726021921785375" src="mujer_falda_03.png" x="42.85" y="299.5" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110726021921785429" src="mujer_falda_04.png" x="42.85" y="299.5" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110726021921785470" src="mujer_falda_05.png" x="42.85" y="299.5" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110726021921785509" src="mujer_falda_06.png" x="42.85" y="299.5" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110726021921785548" src="mujer_falda_07.png" x="42.85" y="299.5" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110726021921785587" src="mujer_falda_08.png" x="42.85" y="299.5" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110726021921785626" src="mujer_falda_09.png" x="27" y="299.5" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110726021921785691" src="mujer_falda_10.png" x="27" y="299.5" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110726021921785730" src="mujer_falda_11.png" x="27" y="299.5" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110726021921785773" src="mujer_falda_12.png" x="27" y="299.5" w="" h="" mask="" mask_x="" mask_y=""/>
+		</items>
+	</assets>
+	<assets sex="male" path="{paths.path.@id:imgAssets}male/">
+		<items category="accessory_hair" key="AVATAR_ACCESSORY_HAIR" x="20" y="160">
+			<item id="20110720151605073677" src="hombre_accesorios_01.png" x="-56.5" y="-13" w="" h="" mask="vtMaskSombrero" mask_x="-100" mask_y="25"/>
+			<item id="20110720151605073790" src="hombre_accesorios_02.png" x="-56.5" y="-13" w="" h="" mask="vtMaskSombrero" mask_x="-100" mask_y="25"/>
+			<item id="20110720151605073829" src="hombre_accesorios_03.png" x="-56.5" y="-13" w="" h="" mask="vtMaskSombrero" mask_x="-100" mask_y="25"/>
+			<item id="20110720151605073898" src="hombre_accesorios_05.png" x="13" y="51" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110720151605073937" src="hombre_accesorios_06.png" x="13" y="51" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110720151605073972" src="hombre_accesorios_07.png" x="13" y="51" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110720151605074006" src="hombre_accesorios_08.png" x="13" y="51" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110720151605074040" src="hombre_accesorios_09.png" x="13" y="51" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110720151605074074" src="hombre_accesorios_10.png" x="-2" y="-9" w="" h="" mask="vtMaskGorra" mask_x="-45" mask_y="53"/>
+			<item id="20110720151605074108" src="hombre_accesorios_11.png" x="-2" y="-9" w="" h="" mask="vtMaskGorra" mask_x="-45" mask_y="53"/>
+			<item id="20110720151605074142" src="hombre_accesorios_12.png" x="-2" y="-9" w="" h="" mask="vtMaskGorra" mask_x="-45" mask_y="53"/>
+			<item id="20110720151605074176" src="hombre_accesorios_13.png" x="14.05" y="57.5" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110720151605074210" src="hombre_accesorios_14.png" x="14" y="62" w="" h="" mask="" mask_x="" mask_y=""/>
+		</items>
+		<items category="accessory_body" key="AVATAR_ACCESSORY_BODY" x="20" y="270">
+			<item id="20110720151605074244" src="hombre_accesorios_15.png" x="37.5" y="163" w="" h="" mask="vtMaskUpMochila" mask_x="37" mask_y="163"/>
+			<item id="20110805094715980841" src="hombre_accesorios_18.png" x="84" y="256" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110805094715980877" src="hombre_accesorios_19.png" x="84" y="256" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110805094715980913" src="hombre_accesorios_20.png" x="84" y="256" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110805094715980983" src="hombre_accesorios_22.png" x="100" y="288" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110805094715981018" src="hombre_accesorios_23.png" x="115" y="272" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110805094715981053" src="hombre_accesorios_24.png" x="101" y="261" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110805094715981088" src="hombre_accesorios_25.png" x="92" y="263" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110805094715981123" src="hombre_accesorios_26.png" x="72" y="247" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110805094715981159" src="hombre_accesorios_27.png" x="40" y="200" w="" h="" mask="" mask_x="" mask_y=""/>
+            <item id="20110808201000616281" src="hombre_accesorios_28.png" x="-5.5" y="212" w="" h="" mask="" mask_x="" mask_y=""/>
+		</items>
+		<items category="accessory_foot" key="AVATAR_ACCESSORY_FOOT" x="20" y="380">
+			<item id="20110720151605073864" src="hombre_accesorios_04.png" x="-21" y="316" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110805094715980714" src="hombre_accesorios_16.png" x="124" y="317" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110805094715980802" src="hombre_accesorios_17.png" x="90" y="244" w="" h="" mask="" mask_x="" mask_y=""/>
+		</items>
+		<items category="hair" key="AVATAR_HAIR" x="20" y="160">
+			<item id="20110720151605074593" src="hombre_pelo_01_cafe.png" x="3.5" y="-4" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110720151605074627" src="hombre_pelo_01_claro.png" x="3.5" y="-4" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110720151605074661" src="hombre_pelo_01_negro.png" x="3.5" y="-4" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110720151605074696" src="hombre_pelo_01_rojo.png" x="3.5" y="-4" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110720151605074730" src="hombre_pelo_01_rubio.png" x="3.5" y="-4" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110720151605074764" src="hombre_pelo_02_cafe.png" x="11.5" y="-16.5" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110720151605074798" src="hombre_pelo_02_claro.png" x="11.5" y="-16.5" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110720151605074832" src="hombre_pelo_02_negro.png" x="11.5" y="-16.5" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110720151605074866" src="hombre_pelo_02_rojo.png" x="11.5" y="-16.5" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110720151605074900" src="hombre_pelo_02_rubio.png" x="11.5" y="-16.5" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110720151605074934" src="hombre_pelo_03_cafe.png" x="-12.5" y="-42.5" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110720151605074968" src="hombre_pelo_03_claro.png" x="-12.5" y="-42.5" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110720151605075002" src="hombre_pelo_03_negro.png" x="-12.5" y="-42.5" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110720151605075036" src="hombre_pelo_03_rojo.png" x="-12.5" y="-42.5" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110720151605075070" src="hombre_pelo_03_rubio.png" x="-12.5" y="-42.5" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110720151605075103" src="hombre_pelo_04_cafe.png" x="7" y="-33.5" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110720151605075137" src="hombre_pelo_04_claro.png" x="7" y="-33.5" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110720151605075171" src="hombre_pelo_04_negro.png" x="7" y="-33.5" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110720151605075205" src="hombre_pelo_04_rojo.png" x="7" y="-33.5" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110720151605075239" src="hombre_pelo_04_rubio.png" x="7" y="-33.5" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110720151605075274" src="hombre_pelo_05_cafe.png" x="-16.5" y="-43" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110720151605075308" src="hombre_pelo_05_claro.png" x="-16.5" y="-43" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110720151605075342" src="hombre_pelo_05_negro.png" x="-16.5" y="-43" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110720151605075376" src="hombre_pelo_05_rojo.png" x="-16.5" y="-43" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110720151605075410" src="hombre_pelo_05_rubio.png" x="-16.5" y="-43" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110720151605075444" src="hombre_pelo_06_cafe.png" x="-7" y="-17" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110720151605075478" src="hombre_pelo_06_claro.png" x="-7" y="-17" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110720151605075512" src="hombre_pelo_06_negro.png" x="-7" y="-17" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110720151605075546" src="hombre_pelo_06_rojo.png" x="-7" y="-17" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110720151605075580" src="hombre_pelo_06_rubio.png" x="-7" y="-17" w="" h="" mask="" mask_x="" mask_y=""/>
+		</items>
+		<items category="tshirt" key="AVATAR_TSHIRT" x="20" y="270">
+			<item id="20110720151605075756" src="hombre_remera_01.png" x="15" y="172" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110720151605075792" src="hombre_remera_02.png" x="15" y="172" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110720151605075826" src="hombre_remera_03.png" x="15" y="172" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110720151605075860" src="hombre_remera_04.png" x="15" y="172" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110720151605075894" src="hombre_remera_05.png" x="15" y="172" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110720151605075928" src="hombre_remera_06.png" x="15" y="172" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110720151605075962" src="hombre_remera_07.png" x="15" y="172" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110720151605075995" src="hombre_remera_08.png" x="15" y="172" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110720151605076029" src="hombre_remera_09.png" x="15" y="172" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110720151605076062" src="hombre_remera_10.png" x="15" y="172" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110720151605076096" src="hombre_remera_11.png" x="15" y="172" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110720151605076130" src="hombre_remera_12.png" x="15" y="172" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110720151605076163" src="hombre_remera_13.png" x="15" y="172" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110720151605076197" src="hombre_remera_14.png" x="15" y="172" w="" h="" mask="" mask_x="" mask_y=""/>
+		</items>
+		<items category="pants" key="AVATAR_PANTS" x="20" y="380">
+			<item id="20110720151605076231" src="hombre_shorts_01.png" x="42.85" y="299.5" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110720151605076264" src="hombre_shorts_02.png" x="42.85" y="299.5" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110720151605076298" src="hombre_shorts_03.png" x="42.85" y="299.5" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110720151605076332" src="hombre_shorts_04.png" x="42.85" y="299.5" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110720151605076366" src="hombre_shorts_05.png" x="42.85" y="299.5" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110720151605076399" src="hombre_shorts_06.png" x="42.85" y="299.5" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110720151605076433" src="hombre_shorts_07.png" x="42.85" y="299.5" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110720151605076467" src="hombre_shorts_08.png" x="42.85" y="299.5" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110720151605076500" src="hombre_shorts_09.png" x="42.85" y="299.5" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110720151605074278" src="hombre_pantalones_01.png" x="49.45" y="301.8" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110720151605074312" src="hombre_pantalones_02.png" x="49.45" y="301.8" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110720151605074346" src="hombre_pantalones_03.png" x="49.45" y="301.8" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110720151605074380" src="hombre_pantalones_04.png" x="49.45" y="301.8" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110720151605074454" src="hombre_pantalones_05.png" x="49.45" y="301.8" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110720151605074490" src="hombre_pantalones_06.png" x="49.45" y="301.8" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110720151605074525" src="hombre_pantalones_07.png" x="49.45" y="301.8" w="" h="" mask="" mask_x="" mask_y=""/>
+			<item id="20110720151605074559" src="hombre_pantalones_08.png" x="49.45" y="301.8" w="" h="" mask="" mask_x="" mask_y=""/>
+		</items>
+	</assets>
+</recordset>

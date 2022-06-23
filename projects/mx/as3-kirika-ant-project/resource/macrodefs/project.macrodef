@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+	
+	<!-- project.startup -->
+
+	<macrodef name="project.startup">
+		<sequential>
+			<common.version.reset/>
+			<common.version.increase.major/>
+			<common.manifest file="${file.manifest.startup}"/>
+			<delete file="${basedir}/${file.manifest.shutdown}"/>
+		</sequential>
+	</macrodef>
+	
+	<!-- project.startup.full -->
+
+	<macrodef name="project.startup.full">
+		<sequential>
+			<delete includeemptydirs="true" verbose="true">
+				<fileset dir="${basedir}" excludes="${file.excludes.shutdown}">
+					<include name="**/*"/>
+				</fileset>
+			</delete>
+			<mkdir dir="${dir.assets}"/>
+			<mkdir dir="${dir.debug}"/>
+			<mkdir dir="${dir.deploy}"/>
+			<mkdir dir="${dir.deploy.libs}"/>
+			<mkdir dir="${dir.lib}"/>
+			<mkdir dir="${dir.lib.bin}"/>
+			<mkdir dir="${dir.src}"/>
+			<mkdir dir="${dir.src.test}"/>
+			<project.startup/>
+		</sequential>
+	</macrodef>
+
+	<!-- project.shutdown -->
+
+	<macrodef name="project.shutdown">
+		<sequential>
+			
+			<tstamp/>
+			<common.manifest file="${file.manifest.shutdown}"/>
+			
+			<property name="kc.project.shutdown.file" 
+				value="${DSTAMP}${TSTAMP}_${file.shutdown.temp}"/>
+			
+			<common.compress
+				excludes="${file.excludes.shutdown}"
+				file="${kc.project.shutdown.file}"
+				input="${basedir}"
+				output="${dir.temp}"/>
+			
+			<delete includeemptydirs="true" verbose="true">
+				<fileset dir="${basedir}" excludes="${file.excludes.shutdown}">
+					<include name="**/*"/>
+				    <exclude name="**/${file.manifest.startup}"/>
+				    <exclude name="**/${file.manifest.shutdown}"/>
+				</fileset>
+			</delete>
+			
+			<move
+				file="${dir.temp}/${kc.project.shutdown.file}"
+				tofile="${basedir}/${file.shutdown.compress}"
+				overwrite="true"/>
+			
+		</sequential>
+	</macrodef>
+
+	<!-- project.reopen -->
+
+	<macrodef name="project.reopen">
+		<sequential>
+			<common.uncompress
+				file="${basedir}/${file.shutdown.compress}"
+				output="${basedir}"/>
+			<delete file="${basedir}/${file.shutdown.compress}"/>
+			<delete file="${basedir}/${file.manifest.shutdown}"/>
+		</sequential>
+	</macrodef>
+
+</project>

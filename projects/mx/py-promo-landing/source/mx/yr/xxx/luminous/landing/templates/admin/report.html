@@ -1,0 +1,160 @@
+{% extends "../master.html" %}
+{% block body_content %}
+<style>
+	body {background: #DCE7EB;}
+	.container {margin-bottom: 24px;}
+	.container hr {margin-top: 4px;}
+</style>
+{% from mx.yr.tornado.models import Location %}
+{% from mx.yr.tornado.utils import datetime_to_str %}
+<div class="container container-body">
+	<div class="well">
+		<h2>{{ user.last_name }}, {{ user.first_name }} ({{user.username}})</h2>
+		<p>
+			<strong>Creado:</strong> {{ datetime_to_str(user.created) }}<br>
+			<strong>Modificado:</strong> {{ datetime_to_str(user.modified) }}<br>
+			<strong>Puntos:</strong> {{ report_points }}<br>
+			{% if user.facebook_uid %}<span class="label label-info">facebook</span>{% end %}
+		</p>
+		<br>
+		
+		{% if report_tickets %}
+		<br>
+		<h3>Tickets:</h3>
+		<hr>
+		<p>
+			<strong>Total:</strong> {{report_tickets.count()}} (<a href="/_/admin/microreport?u={{user.id}}">Micro Reporte</a>)<br>
+		</p>
+		<table class="table table-bordered table-striped table-report">
+			<thead>
+				<tr>
+					<th width="20%">Redimido</th>
+					<th width="30%">Token</th>
+					<th width="30%">RFC</th>
+					<th width="20%">Fecha y Hora</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for a in report_tickets %}
+				<tr>
+					<td>{{ datetime_to_str(a.created) }}</td>
+					<td>{{ a.token }}</td>
+					<td>{{ a.rfc }}</td>
+					<td>{{ a.date_and_time }}</td>
+				</tr>
+				{% end %}
+			</tbody>
+		</table>
+		<table class="table table-bordered table-striped table-report">
+			<thead>
+				<tr>
+					<th width="20%">Categor&iacute;a</th>
+					<th width="40%">Cantidad</th>
+					<th width="40%">Puntos</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Cepillos</td>
+					<td>{{ report_tickets_list[1] }}</td>
+					<td>{{ report_tickets_points_list[1] }}</td>
+				</tr>
+				<tr>
+					<td>Pastas</td>
+					<td>{{ report_tickets_list[2] }}</td>
+					<td>{{ report_tickets_points_list[2] }}</td>
+				</tr>
+				<tr>
+					<td>Enjuagues</td>
+					<td>{{ report_tickets_list[3] }}</td>
+					<td>{{ report_tickets_points_list[3] }}</td>
+				</tr>
+				<tr>
+					<td>&nbsp;</td>
+					<td>{{ report_tickets_list[0] }}</td>
+					<td>{{ report_tickets_points_list[0] }}</td>
+				</tr>
+			</tbody>
+		</table>
+		{% end %}
+		
+		{% if report_codes %}
+		<br>
+		<h3>C&oacute;digos:</h3>
+		<hr>
+		<p>
+			<strong>Total:</strong> {{report_codes.count()}}<br>
+			<strong>Puntos Acumulados:</strong> {{int(report_codes.sum('points'))}} puntos.
+		</p>
+		<table class="table table-bordered table-striped table-report">
+			<thead>
+				<tr>
+					<th width="20%">Redimido</th>
+					<th width="20%">Categot&iacute;a</th>
+					<th width="60%">C&oacute;digo</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for a in report_codes %}
+				<tr>
+					<td>{{ datetime_to_str(a.modified) }}</td>
+					<td>{{ a.get_category() }}</td>
+					<td>{{ a.token }}</td>
+				</tr>
+				{% end %}
+			</tbody>
+		</table>
+		{% end %}
+		
+		{% if report_game %}
+		<br>
+		<h3>Juego:</h3>
+		<hr>
+		<p>
+			<strong>Intentos:</strong> {{report_game.count()}}<br>
+			<strong>Puntos Acumulados:</strong> {{int(report_game.sum('points'))}} puntos.
+		</p>
+		<table class="table table-bordered table-striped table-report">
+			<thead>
+				<tr>
+					<th width="20%">Creado</th>
+					<th width="80%">Puntos</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for a in report_game %}
+				<tr>
+					<td>{{ datetime_to_str(a.created) }}</td>
+					<td>{{ a.points }}</td>
+				</tr>
+				{% end %}
+			</tbody>
+		</table>
+		{% end %}
+		
+		{% if report_audit %}
+		<br>
+		<h3>Auditorias:</h3>
+		<hr>
+		<p><strong>Total:</strong> {{report_audit.count()}}</p>
+		<table class="table table-bordered table-striped table-report">
+			<thead>
+				<tr>
+					<th width="20%">Creado</th>
+					<th width="80%">Mensaje</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for a in report_audit %}
+				<tr>
+					<td>{{ datetime_to_str(a.created) }}</td>
+					<td>{{ a.menssage }}</td>
+				</tr>
+				{% end %}
+			</tbody>
+		</table>
+		{% end %}
+		
+	</div>
+</div>
+{% end %}

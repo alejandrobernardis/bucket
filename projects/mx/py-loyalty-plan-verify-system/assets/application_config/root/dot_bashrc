@@ -1,0 +1,17 @@
+# .bashrc
+
+# Helpers
+alias mv="mv -i"
+alias rm="rm -i"
+
+# Get the aliases and functions
+if [ -f /etc/bashrc ]; then
+    . /etc/bashrc
+fi
+
+# Encoding (en_US, UTF-8)
+encoding="en_US.UTF-8"
+export LANGUAGE=$encoding
+export LANG=$encoding
+export LC_CTYPE=$encoding
+export LC_ALL=$encoding

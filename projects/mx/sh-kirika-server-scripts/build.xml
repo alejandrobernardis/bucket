@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="sh-kirika-clarus-server-scripts" basedir=".">
+
+    <property name="ssh.username" value="pjx"/>
+	<property name="ssh.password" value="P4s5w0Rd"/>
+	<property name="ssh.host" value="205.186.147.229"/>
+	
+	<target name="upload">
+		
+		<sshexec 
+			host="${ssh.host}" 
+			username="${ssh.username}"
+			password="${ssh.password}"
+			command="rm -fR /home/pjx/scripts; mkdir /home/pjx/scripts;"/>
+		
+		<scp todir="${ssh.username}:${ssh.password}@${ssh.host}:/home/pjx/scripts" verbose="true">
+			<fileset dir=".">
+				<include name="**/*"/>
+				<exclude name="build.xml"/>
+				<exclude name="**/project/**"/>
+			</fileset>
+		</scp>
+
+		<sshexec 
+			host="${ssh.host}" 
+			username="${ssh.username}"
+			password="${ssh.password}"
+			command="chmod -R +x /home/pjx/scripts/source/*"/>
+		
+	</target>
+	
+	<property name="ssh.local.username" value="root"/>
+	<property name="ssh.local.password" value="qwe123"/>
+	<property name="ssh.local.host" value="192.168.1.115"/>
+	<!-- property name="ssh.local.host" value="192.168.0.7"/ -->
+
+	<target name="upload-local">
+		
+		<sshexec 
+			host="${ssh.local.host}" 
+			username="${ssh.local.username}"
+			password="${ssh.local.password}"
+			command="rm -fR /root/kcs; mkdir /root/kcs;"/>
+		
+		<scp todir="${ssh.local.username}:${ssh.local.password}@${ssh.local.host}:/root/kcs" verbose="true">
+			<fileset dir=".">
+				<include name="**/*"/>
+				<exclude name="build.xml"/>
+			</fileset>
+		</scp>
+
+		<sshexec 
+			host="${ssh.local.host}" 
+			username="${ssh.local.username}"
+			password="${ssh.local.password}"
+			command="chmod -R +x /root/kcs/source/*"/>
+		
+	</target>
+	
+</project>

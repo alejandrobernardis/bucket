@@ -1,0 +1,7 @@
+<div class="alert alert-danger">
+    {% for k, v in errors.items() %}
+        {% for e in v %}
+        <p>{{ e }}</p>
+        {% end %}
+    {% end %}
+</div>

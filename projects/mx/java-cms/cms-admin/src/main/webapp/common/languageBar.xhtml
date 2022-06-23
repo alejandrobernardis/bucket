@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+
+
+		<f:loadBundle var="label" basename="labels.labels" />
+		<h:form id="languageForm">
+			<a4j:keepAlive beanName="categoryForm"/>
+			<a4j:keepAlive beanName="userForm"/>
+			<a4j:keepAlive beanName="contentForm"/>
+			<h:panelGrid id="flags" columns="2" styleClass="languageBar">
+				<h:commandLink action="#{util.selectLocale}">
+					<f:param name="LANG" value="es" />
+					<h:panelGrid cellspacing="0" cellpadding="0">
+						<h:graphicImage value="/web-resources/img/flags/Spain.png"
+							style="border: 0" />
+						<h:outputText value="#{label.spanish}" />
+					</h:panelGrid>
+				</h:commandLink>
+				<h:commandLink action="#{util.selectLocale}">
+					<f:param name="LANG" value="en" />
+					<h:panelGrid cellspacing="0" cellpadding="0">
+						<h:graphicImage value="/web-resources/img/flags/UK.png"
+							style="border: 0" />
+						<h:outputText value="#{label.english}" />
+					</h:panelGrid>
+				</h:commandLink>
+			</h:panelGrid>
+		</h:form>
+</ui:composition>
+

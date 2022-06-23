@@ -1,0 +1,181 @@
+TimeZone
+========
+
+$: cp /etc/localtime /etc/localtime.old
+$: cp -f /usr/share/zoneinfo/Mexico/General /etc/localtime
+
+-------------------------------------------------------------------------------
+
+Base
+====
+
+$: mkdir -p ~/backups ~/downloads
+
+-------------------------------------------------------------------------------
+
+Joe & Tree
+==========
+
+$: yum install joe tree
+
+-------------------------------------------------------------------------------
+
+Python 2.7
+==========
+
+Download
+--------
+$: cd ~/downloads
+$: wget http://www.python.org/ftp/python/2.7.3/Python-2.7.3.tar.bz2
+$: tar xvjf Python-2.7.3.tar.bz2
+$: cd Python-2.7.3
+
+Install
+-------
+$: yum install gcc gcc-c++.x86_64 compat-gcc-34-c++.x86_64 openssl-devel.x86_64 zlib*.x86_64 readline-devel gdbm-devel sqlite-devel ncurses-devel bzip2-devel
+$: ./configure
+$: make
+$: make install (or: make altinstall)
+
+-------------------------------------------------------------------------------
+
+Setuptools
+==========
+
+Download
+--------
+$: cd ~/downloads
+$: wget http://pypi.python.org/packages/source/s/setuptools/setuptools-0.6c11.tar.gz#md5=7df2a529a074f613b509fb44feefe74e
+$: tar xfvz setuptools-0.6c11.tar.gz
+$: cd setuptools-0.6c11
+
+Install
+-------
+$: python setup.py install
+
+-------------------------------------------------------------------------------
+
+Supervisor & PIP
+================
+$: easy_install supervisor
+$: easy_install pip
+
+-------------------------------------------------------------------------------
+
+MongoDB
+=======
+$: touch /etc/yum.repos.d/10gen.repo
+$: joe /etc/yum.repos.d/10gen.repo
+
+- paste -
+[10gen]
+name=10gen Repository
+baseurl=http://downloads-distro.mongodb.org/repo/redhat/os/x86_64
+gpgcheck=0
+- paste -
+
+update
+------
+$: yum update
+
+install
+-------
+$: yum install mongo-10gen.x86_64 mongo-10gen-server.x86_64
+
+config
+------
+$: /etc/init.d/mongod stop
+$: cp /etc/mongod.conf /etc/mongod.conf.old
+$: joe /etc/mongod.conf
+
+- paste -
+# mongo.conf
+logpath=/var/log/mongo/mongod.log
+logappend=true
+fork=true
+dbpath=/var/lib/mongo
+auth=true
+bind_ip=127.0.0.1
+rest=false
+nohttpinterface=true
+- paste -
+
+$: /etc/init.d/mongod start
+
+$: mongo
+> use admin
+> db.addUser("admin", "1G#r+jI2s:1")
+> db.auth("admin", "1G#r+jI2s:1")
+
+#: --
+
+use mx-dip-voj-local-users
+db.addUser("admin", "1G#r+jI2s:1")
+
+use mx-dip-voj-local-events
+db.addUser("admin", "1G#r+jI2s:1")
+
+#: --
+
+/bin/dbconfig.py => Create and Set all DBs
+
+-------------------------------------------------------------------------------
+
+PIL
+===
+
+$: yum install freetype freetype-devel libjpeg libjpeg-devel libpng libpng-devel zlib zlib-devel
+$: cd ~/downloads
+$: wget http://effbot.org/downloads/Imaging-1.1.7.tar.gz
+$: tar xfvz Imaging-1.1.7.tar.gz
+$: cd Imaging-1.1.7
+
+Install
+-------
+$: python setup.py install
+
+Alternative (best choice)
+-------------------------
+
+$: pip install pillow
+
+-------------------------------------------------------------------------------
+
+CRON
+====
+
+$: touch /var/www/vhosts/orgullojarocho.mx/backoffice/cron/ratui.py
+
+-- paste --
+file: bin/ratui.py
+-- paste --
+
+$: chmod +x /var/www/vhosts/orgullojarocho.mx/backoffice/cron/ratui.py
+$: crontab -l
+$: crontab -e
+
+-- paste --
+0 1 * * 6 /var/www/vhosts/orgullojarocho.mx/backoffice/cron/ratui.py -i > /tmp/pythonc.log
+-- paste --
+
+-------------------------------------------------------------------------------
+
+SERVICE
+=======
+
+$: touch /etc/rc.d/init.d/supervisord
+
+-- paste --
+file: supervisord
+-- paste --
+
+$: chmod +x /etc/rc.d/init.d/supervisord
+
+$: chkconfig --list
+$: chkconfig --add supervisord
+$: chkconfig supervisord on (or-->) chkconfig –level 345 supervisord on
+
+$: service supervisord start
+$: service supervisord stop
+$: service supervisord reload
+

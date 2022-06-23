@@ -1,0 +1,28 @@
+<VirtualHost domain.com.ar:80>
+	
+	## Basic
+	ServerAdmin alejandro.bernardis@clarusdigital.com
+	ServerName domain.com.ar
+	ServerAlias www.domain.com.ar
+	
+	## Log
+	LogLevel info
+	CustomLog /data/www/ar/com/domain/logs/access.log combined
+	ErrorLog /data/www/ar/com/domain/logs/error.log
+	
+	## Directory
+	
+	DocumentRoot /data/www/ar/com/domain/htdocs
+	
+	<Directory /data/www/ar/com/domain/htdocs>
+		AddType text/html .html
+		AddOutputFilter INCLUDES .html
+		AddType text/html .shtml
+		AddOutputFilter INCLUDES .shtml
+		Options -Indexes +Includes FollowSymLinks MultiViews
+		AllowOverride None
+		Order allow,deny
+		allow from all
+	</Directory>
+	
+</VirtualHost>

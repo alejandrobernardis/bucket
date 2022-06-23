@@ -1,0 +1,27 @@
+{% extends "../master.html" %}
+{% block body_content %}
+<style>
+	body {background: #DCE7EB;} 
+	.container {margin-bottom: 32px;}
+	.hero-unit{
+		margin-top: 32px;
+		background-repeat: no-repeat;
+		background-position: 550px;
+		background-image: url({{ static_url('img/template/success-background.png') }});}
+	.hero-unit h3,
+	.hero-unit h1,
+	.red-label{color: #900;}
+</style>
+<div class="container">
+	<div class="hero-unit">
+		<h2>Felicidades!,</h2>
+		<h3>Tu puntaje actual es de:</h3>
+		<h1>{{points}} puntos</h1>
+		<br>
+		<p>Ahora estas m&aacute;s cerca de ser el ganador de un viaje <br>
+		a <span class="red-label">Europa</span> todo pagado con <span class="red-label">xxx Luminous White.</span>
+		<br>
+		<p><a href="{{next}}" class="btn btn-large">Continuar</a></p>
+	</div>
+</div>
+{% end %}

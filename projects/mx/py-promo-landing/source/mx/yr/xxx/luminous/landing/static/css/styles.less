@@ -1,0 +1,320 @@
+* {text-rendering: optimizeLegibility;}
+
+body {
+	background: #DCE7EB url(../img/template/body-background.jpg) top no-repeat;
+	margin: 60px 0;
+}
+
+/* import's */
+@import "bootstrap.css";
+
+/* style's */
+
+.navbar .brand {
+	color: #666;
+	text-indent: -99999px;
+	width: 260px;
+}
+
+.navbar-inner {
+	background-image: url(../img/template/navbar-background.png);
+	background-repeat: no-repeat;
+	background-position: top;
+}
+
+.navbar .nav > li > a {
+  color: #666;
+  text-shadow: none;
+}
+
+.navbar .nav > li > a:hover {
+  background-color: transparent;
+  color: #900;
+}
+
+.navbar .nav .active > a,
+.navbar .nav .active > a:hover {
+  color: #900;
+  text-decoration: none;
+  background-color: none;
+}
+
+.navbar .nav .active-user > a,
+.navbar .nav .active-user > a:hover {
+	color: #900;
+}
+
+.navbar .divider-vertical {
+	background-color: #e4e4e4;
+	border-right: 1px solid #fff;
+}
+
+.navbar .nav .register-button,
+.navbar .nav .login-button { 
+	padding: 0; 
+	margin: 0;
+}
+
+/*.navbar .nav .register-button span {	
+	width: 174px;
+	height: 29px;
+	display: block;
+	background-image: url(../img/template/master-register-button.jpg);
+	background-repeat: no-repeat;
+	position: relative;
+	top: 5px;
+}*/
+
+.container-body {
+	color: #999;
+}
+
+.main-footer {
+	display: block;
+	height: 22px;
+	background-color: #d00;
+	background-image: url(../img/template/master-footer.png);
+	background-repeat: no-repeat;
+	background-position: top;
+	
+}
+
+/* section's */
+
+.ui-widget-header  {
+	border: none;
+	background: none;
+}
+
+.well,
+.hero-unit {
+	background: #fff;
+}
+
+.module,
+.module-form {
+	background: #fff;
+	padding: 32px 24px;
+	-webkit-border-radius: 8px;
+  	   -moz-border-radius: 8px;
+            border-radius: 8px;
+}
+
+.module-form {
+	margin-bottom: 32px;
+}
+
+/* home-section-1 */
+
+.home-section-1 h2,
+.home-section-2 h2,
+.home-section-3 h2,
+.home-section-4 h2 {
+	font-weight: normal;	
+}
+
+.home-section-1 {
+	background-image: url(../img/template/home-section-1-background.png);
+	background-repeat: no-repeat;
+	background-position: bottom;
+	height: 606px;
+}
+
+.home-section-1 p {
+	line-height: 15px;
+}
+
+.home-section-1 h2 {
+	color: #900;
+	font-weight: normal;
+	line-height: 30px;
+	padding-top: 20px;
+	margin-bottom: 32px;
+}
+
+.home-section-1 a {
+	color: #900;
+}
+
+/* home-section-2 */
+
+.home-section-2 {
+	height: 570px;
+}
+
+.home-section-2 .title-section h2 {
+	color: #fff;
+	margin-bottom: 4px;
+}
+	
+.home-section-2 .title-section p {
+	color: #fff;
+	margin-bottom: 16px;
+	font-weight: normal;
+}
+
+.home-section-2 #map_canvas {
+	border: 1px solid #f00;
+	height: 400px;
+}
+
+.ui-datepicker {
+	margin-top: -19px;
+}
+
+/* home-section-3 */
+
+.home-section-3 {
+	height: 520px;
+}
+
+.home-section-3 h2 {
+	color: #900;
+}
+.home-section-3 h3 {
+	font-weight: normal;
+	margin-bottom: 24px;
+}
+
+.home-section-3 .title-section {
+	margin-bottom: 24px;
+}
+
+.home-section-3 .type-product,
+.home-section-3 .type-accesory {
+	width: 300px;
+	height: 300px;
+	display: block;
+	background-color: #fff;
+}
+
+.home-section-3-action {
+	margin-top: 24px;
+}
+
+/* home-section-4 */
+
+.home-section-4 {
+	height: 510px;
+}
+
+.home-section-4 h2 {
+	color: #fff;
+	margin-bottom: 32px;
+}
+
+.home-section-4-iphone {
+	background-image: url(../img/template/home-section-4-iphone.png);
+	background-repeat: no-repeat;
+	background-position: top;
+	background-position-y: 40px;
+	height: 390px;
+	cursor: pointer;
+}
+
+.home-section-4 .title-section h2 {
+	color: #fff;
+	margin-bottom: 4px;
+}
+	
+.home-section-4 .title-section p {
+	color: #fff;
+	margin-bottom: 16px;
+	font-weight: normal;
+}
+
+.form-title {
+	color: #900;
+	font-size: 28px;
+	font-weight: normal;
+	margin-bottom: 24px;	
+}
+
+
+/*  */
+
+.title-left {
+	margin-left: 32px;
+}
+
+.title {
+	display: block;
+	margin-bottom: 32px;
+}
+
+.title h1 {
+	float: left;
+	display: block;
+	width: 32px;
+	height: 32px;
+	font-size: 40px;
+	color: #900;
+	padding-right: 8px;
+}
+
+.title h3 {
+	float: left;
+	display: block;
+	line-height: 20px;
+	color: #900;
+	font-weight: normal;
+}
+
+.product-image-icon {
+	display: block;
+	width: 59px;
+	height: 59px;
+	background-color: #ccc;
+	float: left;
+	margin-top: -22px;
+	margin-right: 16px; 
+}
+
+.product-image-pasta {
+	background-image: url(../img/template/thumb_pasta.jpg);
+}
+
+.product-image-cepillo {
+	background-image: url(../img/template/thumb_cepillo.jpg);
+}
+
+.product-image-enjuague {
+	background-image: url(../img/template/thumb_enjuague.jpg);
+}
+
+div.home-section-2-datepicker-detail {
+	margin-top: 8px;
+	color: #fff;
+	line-height: 16px;
+	margin-left: 20px;
+}
+
+div.home-section-2-datepicker-detail h3 {
+	font-size: 14px;
+	line-height: 16px;
+	margin-bottom: 8px;
+}
+
+div.home-section-2-datepicker-detail ul li {
+	font-size: 11px;
+	line-height: 12px;
+	margin-bottom: 8px;
+}	
+	
+.home-section-2-datepicker-calendar {
+	margin-left: 20px;
+}
+	
+	
+	
+	
+.table-report thead{
+	background-color: #D00;
+	color: #fff;
+}
+
+
+.username {
+	font-size: 14px; 
+	color: #666;
+}

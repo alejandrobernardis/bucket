@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<recordset>
+	
+	<config>
+		<time>360000</time>
+		<delay>150</delay>
+		<countdown>3</countdown>
+		<canvas>
+			<axis>8 40</axis>
+			<size>621 380</size>
+		</canvas> 		
+		<localization>{config.paths.base}{config.paths.xml}/config/localization.xml</localization>
+	</config>
+	
+	<exit>
+		<action id="standalone" target=""><![CDATA[js://salirJuego]]></action>
+		<action id="facebook" target="_self"><![CDATA[http://www.pazentuestomago.com]]></action>
+	</exit>
+
+	<serverSide>
+		<scoreregiste>
+			<param id="score_name">name</param>
+			<param id="score_value">score</param>
+			<url>{config.paths.base}{config.paths.php}/score.php</url>
+		</scoreregiste>
+		<ranking>
+			<pattern><![CDATA[<record id="{1}" score="{2}">{3}</record>]]></pattern>
+			<url>{config.paths.base}{config.paths.php}/ranking_xml.php</url>
+		</ranking>
+	</serverSide>
+	
+	<socialNetworks>
+		<twitter target="_blank">
+			<message><![CDATA[@twitter@Jugué con #aziatop y declaré la paz en mi estómago. ¿Quién se atreve a superar las @score@ bombas desactivadas? www.pazentuestomago.com]]></message>			
+			<replace id="@score@">score_value</replace>
+			<replace id="@twitter@">http://twitter.com/home?status=</replace>
+		</twitter>
+		<facebook target="_blank">
+			<message><![CDATA[{config.paths.base}{config.paths.php}/facebook.php?name=@name@&score=@score@]]></message>
+			<replace id="@name@">score_name</replace>
+			<replace id="@score@">score_value</replace>
+		</facebook>
+	</socialNetworks>
+	
+	<facebook>
+		<share>
+			<![CDATA[http://apps.facebook.com/testaziatop/invite.php]]>
+		</share>
+		<wall>
+			<method>resultado</method>
+			<param id="score_value">score</param>
+		</wall>
+	</facebook>
+
+	<screens>
+		<screen id="home" 			controller="activia.simon.shooter.ui.screens::GHome"/>
+		<screen id="instructions"	controller="activia.simon.shooter.ui.screens::GInstructions"/>
+		<screen id="game" 			controller="activia.simon.shooter.ui.screens::GContainer"/>
+		<screen id="gameover" 		controller="activia.simon.shooter.ui.screens::GOver"/>
+		<screen id="gameexit" 		controller="activia.simon.shooter.ui.screens::GExit"/>
+		<screen id="scoreregiste" 	controller="activia.simon.shooter.ui.screens::GScoreRegiste"/>
+		<screen id="ranking" 		controller="activia.simon.shooter.ui.screens::GRanking"/>
+	</screens>
+	
+	<tween>
+		<speedx>2</speedx>
+		<speedy>.2</speedy>
+		<desacx>33.3333</desacx>
+		<desacy>.8</desacy>
+		<angle>270</angle>
+		<range>20</range>
+		<delta>100</delta>
+		<duration>66</duration>
+	</tween>
+	
+	<sounds>
+		<sound id="fxDefault">fxDefault</sound>
+		<sound id="fxAlliesBomb">fxAlliesBomb</sound>
+		<sound id="fxProtonsBomb">fxProtonsBomb</sound>
+		<sound id="fxThreastsBomb">fxThreastsBomb</sound>
+	</sounds>
+	
+	<actors>
+		<area>621 380</area>
+		<origin>left</origin>
+		<framerate>60</framerate>
+		<critical>30</critical>
+		<delay>
+			<level id="1">4000</level>
+			<level id="2">3000</level>
+			<level id="3">2000</level>
+		</delay>
+		<assets max="16" min="4">
+			<asset id="acid" controller="activia.simon.shooter.ui.actors::Acid">
+				<scmin>.5</scmin>
+				<scmax>.8</scmax>
+				<spmin>1</spmin>
+				<spmax>5</spmax>
+				<value></value>
+				<coef>10</coef>
+				<sound></sound>
+			</asset>
+			<asset id="allies" controller="activia.simon.shooter.ui.actors::AlliesBomb">
+				<scmin>.5</scmin>
+				<scmax>.8</scmax>
+				<spmin>4</spmin>
+				<spmax>5</spmax>
+				<value>*</value>
+				<coef>25</coef>
+				<sound>fxAlliesBomb</sound>
+			</asset>
+			<asset id="protons" controller="activia.simon.shooter.ui.actors::ProtonsBomb">
+				<scmin>.5</scmin>
+				<scmax>.8</scmax>
+				<spmin>.8</spmin>
+				<spmax>4</spmax>
+				<value>+01</value> 
+				<coef>0</coef>
+				<sound>fxProtonsBomb</sound>
+			</asset>
+			<asset id="threats" controller="activia.simon.shooter.ui.actors::ThreatsBomb">
+				<scmin>.2</scmin>
+				<scmax>.5</scmax>
+				<spmin>1</spmin>
+				<spmax>2</spmax>
+				<value>-02</value>
+				<coef>4</coef>
+				<sound>fxThreastsBomb</sound>
+			</asset>
+		</assets>
+	</actors>
+
+</recordset>

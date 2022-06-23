@@ -1,0 +1,27 @@
+{% extends '../master.html' %}
+{% include '../ui_modules/navbar.html' %}
+{% block content_container %}
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default panel-search">
+            <div class="panel-body">
+                <form role="form" class="form-auth form-recovery" method="post">
+                    <fieldset>
+                        <h3>{{handler.settings.get('site_title').lower()}} / <small>Mis evaluaciones</small></h3>
+                        {% if form.errors %}
+                            <hr>
+                            {% module ViewErrors(form.errors) %}
+                        {% end %}
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% if evaluations %}
+    {% module ViewMyEvaluations(form, evaluations) %}
+{% end %}
+{% end %}
+{% block body_scripts_init %}
+{% include '../ui_modules/default-paginator.html' %}
+{% end %}
