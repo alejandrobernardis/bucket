@@ -1,0 +1,24 @@
+
+syntax = "proto3";
+
+package proto.api.v1;
+option go_package = "github.com/alejandrobernardis/bucket/ar/go_grpc-template/proto/api/v1/health";
+import "google/protobuf/empty.proto";
+import "google/api/annotations.proto";
+
+message Response {
+  string message = 1;
+}
+
+service HealthService {
+  rpc Ping(google.protobuf.Empty) returns (Response) {
+    option (google.api.http) = {
+      get : "/v1/ping"
+    };
+  };
+  rpc Health(google.protobuf.Empty) returns (Response) {
+    option (google.api.http) = {
+      get : "/v1/health"
+    };
+  };
+}

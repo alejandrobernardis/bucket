@@ -28,7 +28,7 @@ TARGET="image"
 PLATFORM="linux/amd64"
 PROGRESS="plain"
 WORKDIR=/app
-COMPILER_IMAGE="py-compiler:local"
+COMPILER_IMAGE="py-pb-compiler:local"
 
 # .github
 GH_IMAGE_DST:="${GH_IMAGE}:v$(shell date +'%Y.%m.%d')-rc"
@@ -39,10 +39,7 @@ define f_build
 	  --file $(2) \
 	  --platform ${PLATFORM} \
 	  --progress ${PROGRESS} \
-	  --ssh default="${SSH_PATH}/id_rsa_1636457559" \
 	  --build-arg PY_VERSION=${PY_VERSION} \
-	  --build-arg GH_ACCESS_TOKEN=${GH_ACCESS_TOKEN} \
-	  --build-arg GH_PROTOCOL=${GH_PROTOCOL} \
 	  --tag $(3) \
 	  --target $(4) $(5)
 endef
@@ -63,43 +60,54 @@ build-compiler: ## Make compiler (COMPILER_IMAGE)
 	$(call f_build,${SRC_PATH},${DOCKERFILE},${COMPILER_IMAGE},compiler,${BUILD_ARGS})
 
 # === run ======================================================================
+.PHONY: grpc
+grpc: ## Run GRPC server
+	$(run_cmd) -p 50051:50051 -v ${PWD}/.env:/app/.env:ro ${IMAGE_LCL}
+.PHONY: check-deps
 check-deps: ## List of dependencies
 	$(run_cmd) ${IMAGE_LCL} pip list -v
 run_cmd:=@docker run --rm -ti
 
-# === deps =====================================================================
-.PHONY: core-uninstall
-core-uninstall: ## Uninstall Core Framework
-	pip uninstall -y core
-.PHONY: core-shh
-core-ssh: core-uninstall ## Install Core Framework via SSH
-	pip install -U git+ssh://git@${PY_CORE}
-.PHONY: core-https
-core-https: core-uninstall ## Install Core Framework via HTTPS
-	pip install -U git+https://${GH_ACCESS_TOKEN}@${PY_CORE};
-.PHONY: venv
-venv: ## Make virtualenv
-	@python -m virtualenv .venv
+# === protobuf =================================================================
+proto: ## Compile all protocols (alias `p`)
+	@docker run --rm -ti -u ${UID}:${GID} -v ${SRC_PATH}:${WORKDIR}:rw ${COMPILER_IMAGE} sh -c '\
+	  pth="$(WORKDIR)/src"; \
+	  for item in `find $$pth -type f -name "*.proto"`; do \
+	  	python -m grpc_tools.protoc \
+	  	  --proto_path=$$pth \
+	  	  --proto_path=/app/third_party \
+	      --python_out=$$pth \
+	      --grpc_python_out=$$pth \
+	    $$item; \
+	  done;'
+.PHONY: p
+p: proto
+.PHONY: proto-build-compiler
+proto-build-compiler: build-compiler proto ## Make compiler first and then compile all protocols
 
 # === clean ====================================================================
 .PHONY: clean
 clean: ## Cleans generated files
+	@find . -type f -name '*_pb2.py' -delete
+	@find . -type f -name '*_pb2_grpc.py' -delete
 	@sudo rm -f ${PWD}/certs/*
 	@sudo rm -fr ${PWD}/.cache ${PWD}/.data
 	@docker buildx prune -f
 
 # === first ====================================================================
 .PHONY: first
-first: venv dotenv build-compiler build-no-cache ## Creates compiler and tries to compile the project (start here)
-	@chmod 600 ${SSH_PATH}/*
+first: dotenv proto-build-compiler build-no-cache ## Creates compiler and tries to compile the project (start here)
+	@python -m virtualenv .venv
+	@poetry shell
 .PHONY: dotenv
 dotenv: ## Creates (dot)env file
 	@cp -f ${PWD}/example.env ${PWD}/.env
 
 # === help =====================================================================
-.PHONY: help
+.PHONY: help h
 help:
+	@printf '\n \033[33mCommand `$(PROJECT_NAME)` help - \033[m\n\n'
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' ${PWD}/Makefile | awk \
-	  'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
-.PHONY: h
+	  'BEGIN {FS = ":.*?## "}; {printf "\033[37m + \033[34m%-20s\033[37m %s\n", $$1, $$2}'
+	@printf '\n\033[m'
 h: help

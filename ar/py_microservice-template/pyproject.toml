@@ -1,8 +1,8 @@
 [tool.poetry]
 name = "service"
 version = "1.0.0"
-description = "Project description here..."
-authors = ["Full NAME <full.name@mail.com>"]
+description = "Template para proyectos con AIOHTTP en Python (full-stack)"
+authors = ["Alejandro M. BERNARDIS <alejandro.bernardis@gmail.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.9"
