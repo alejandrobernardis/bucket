@@ -1,0 +1,5 @@
+#!/usr/bin/env sh
+set -e
+export ENV_FILE=${ENV_FILE:-'.env'}
+export ENV_MODULE=${ENV_MODULE:-'service'}
+python -m "${ENV_MODULE}.cli" "$@"
